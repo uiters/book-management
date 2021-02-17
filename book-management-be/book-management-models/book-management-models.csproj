@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <RootNamespace>book_management_models</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="DTOs" />
+    </ItemGroup>
+
+</Project>
