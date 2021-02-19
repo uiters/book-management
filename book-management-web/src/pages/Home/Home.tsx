@@ -54,6 +54,8 @@ const Home = () => {
             </svg>
             <button className="rounded-full w-8 h-8 bg-blue-900">T</button>
             <p className="font-bold">EN</p>
+            <a href= "" className="font-bold text-lg text-blue-900">Login</a>
+            <a href= "" className="font-bold">Signout</a>
           </div>
         </div>
         <div className="body h-40 mt-8">
