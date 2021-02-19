@@ -7,16 +7,17 @@ import Login from "./pages/Login/Login";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/">
-          <Home />
-        </Route>
-      </Switch>
-    </BrowserRouter>
+    // <BrowserRouter>
+    //   <Switch>
+    //     <Route path="/login">
+    //       <Login />
+    //     </Route>
+    //     <Route path="/">
+    //       <Home />
+    //     </Route>
+    //   </Switch>
+    // </BrowserRouter>
+    <Routes></Routes>
   );
 }
 
