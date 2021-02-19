@@ -1,13 +1,16 @@
 //@ts-ignore
-import {Switch, Route} from 'react-router-dom'
-import Home from '../pages/Home/Home';
+import { Switch, Route } from "react-router-dom";
+import React from "react";
+import Home from "../pages/Home/Home";
 
 const HomeRoutes = () => {
-    return (
-        <Switch>
-            <Route exact path="/" render={() => <Home/>}></Route>
-        </Switch>
-    )
-}
+  return (
+    <Switch>
+      <Route path="/">
+        <Home></Home>
+      </Route>
+    </Switch>
+  );
+};
 
-export default HomeRoutes;
+export default React.memo(HomeRoutes);
