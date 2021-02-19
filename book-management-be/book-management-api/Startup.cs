@@ -1,5 +1,9 @@
+using book_management_helpers;
 using book_management_persistence.Contexts;
-using book_management_services;
+using book_management_persistence.Implements;
+using book_management_persistence.Repositories;
+using book_management_services.Implements;
+using book_management_services.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -32,7 +36,10 @@ namespace book_management_api
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnections"),
                     b => b.MigrationsAssembly("book-management-api")));
 
-            services.AddScoped<IUserService, UserService>();
+            services.AddAutoMapper(typeof(AutoMapperProfile));
+
+            services.AddScoped<IUnitOfWorks, UnitOfWorks>();
+            services.AddScoped<IBookService, BookServiceImpl>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,7 +51,8 @@ namespace book_management_api
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "book_management_api v1"));
             }
-
+            
+            app.UseExceptionHandler("/error");
             app.UseHttpsRedirection();
 
             app.UseRouting();

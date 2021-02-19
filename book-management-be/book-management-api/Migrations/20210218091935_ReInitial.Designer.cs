@@ -10,8 +10,8 @@ using book_management_persistence.Contexts;
 namespace book_management_api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210217070946_Intial migration")]
-    partial class Intialmigration
+    [Migration("20210218091935_ReInitial")]
+    partial class ReInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,11 +23,11 @@ namespace book_management_api.Migrations
 
             modelBuilder.Entity("BookCategory", b =>
                 {
-                    b.Property<int>("BooksId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("BooksId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("CategoriesId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CategoriesId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("BooksId", "CategoriesId");
 
@@ -38,11 +38,11 @@ namespace book_management_api.Migrations
 
             modelBuilder.Entity("BookTag", b =>
                 {
-                    b.Property<int>("BooksId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("BooksId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("TagsId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("TagsId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("BooksId", "TagsId");
 
@@ -53,10 +53,9 @@ namespace book_management_api.Migrations
 
             modelBuilder.Entity("book_management_models.Author", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -77,13 +76,12 @@ namespace book_management_api.Migrations
 
             modelBuilder.Entity("book_management_models.Book", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("AuthorId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<float>("AvgRating")
                         .HasColumnType("real");
@@ -100,8 +98,8 @@ namespace book_management_api.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("PublisherId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("PublisherId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -123,10 +121,9 @@ namespace book_management_api.Migrations
 
             modelBuilder.Entity("book_management_models.Cart", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -137,8 +134,8 @@ namespace book_management_api.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -150,16 +147,15 @@ namespace book_management_api.Migrations
 
             modelBuilder.Entity("book_management_models.CartItem", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("BookId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("CartId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CartId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -181,10 +177,9 @@ namespace book_management_api.Migrations
 
             modelBuilder.Entity("book_management_models.Category", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -205,10 +200,9 @@ namespace book_management_api.Migrations
 
             modelBuilder.Entity("book_management_models.Publisher", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -226,13 +220,12 @@ namespace book_management_api.Migrations
 
             modelBuilder.Entity("book_management_models.Review", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("BookId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -246,8 +239,8 @@ namespace book_management_api.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -260,10 +253,9 @@ namespace book_management_api.Migrations
 
             modelBuilder.Entity("book_management_models.Tag", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -281,10 +273,9 @@ namespace book_management_api.Migrations
 
             modelBuilder.Entity("book_management_models.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
@@ -292,7 +283,7 @@ namespace book_management_api.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateofBirth")
+                    b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")

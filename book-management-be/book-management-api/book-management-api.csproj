@@ -23,6 +23,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\book-management-helpers\book-management-helpers.csproj" />
       <ProjectReference Include="..\book-management-models\book-management-models.csproj" />
       <ProjectReference Include="..\book-management-persistence\book-management-persistence.csproj" />
       <ProjectReference Include="..\book-management-services\book-management-services.csproj" />

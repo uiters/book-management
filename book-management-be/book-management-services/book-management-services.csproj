@@ -5,4 +5,9 @@
         <RootNamespace>book_management_services</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\book-management-models\book-management-models.csproj" />
+      <ProjectReference Include="..\book-management-persistence\book-management-persistence.csproj" />
+    </ItemGroup>
+
 </Project>

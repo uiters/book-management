@@ -5,4 +5,12 @@
         <RootNamespace>book_management_helpers</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\book-management-persistence\book-management-persistence.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="10.1.1" />
+    </ItemGroup>
+
 </Project>

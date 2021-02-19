@@ -5,8 +5,4 @@
         <RootNamespace>book_management_models</RootNamespace>
     </PropertyGroup>
 
-    <ItemGroup>
-      <Folder Include="DTOs" />
-    </ItemGroup>
-
 </Project>
