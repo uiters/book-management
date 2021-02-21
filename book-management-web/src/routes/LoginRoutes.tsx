@@ -1,13 +1,16 @@
 //@ts-ignore
-import {Switch, Route} from 'react-router-dom'
-import Login from '../pages/Login/Login'
+import { Switch, Route } from "react-router-dom";
+import React from "react";
+import Login from "../pages/Login/Login";
 
 const LoginRoutes = () => {
-    return (
-        <Switch>
-            <Route exact path="/login" render={() => <Login></Login>}></Route>
-        </Switch>
-    )
-}
+  return (
+    <Switch>
+      <Route path="/login">
+        <Login></Login>
+      </Route>
+    </Switch>
+  );
+};
 
-export default LoginRoutes;
+export default React.memo(LoginRoutes);

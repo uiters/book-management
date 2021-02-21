@@ -2,7 +2,6 @@
 using System.Net;
 using AutoMapper;
 using book_management_helpers.CustomException;
-using book_management_models;
 using book_management_models.DTOs.BookDTOs;
 using book_management_services.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace book_management_api.Controllers
 {
     [ApiController]
-    [Route("/api/book")]
+    [Route("/api/book/")]
     public class BookController : ControllerBase
     {
         private readonly IBookService _bookService;
@@ -22,7 +21,7 @@ namespace book_management_api.Controllers
             this._mapper = mapper;
         }
 
-        [HttpGet("/all")]
+        [HttpGet("all")]
         public IActionResult GetListBooks()
         {
             var listBooks = _bookService.GetListBooks();
@@ -36,7 +35,7 @@ namespace book_management_api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("/category")]
+        [HttpGet("category")]
         public IActionResult GetBooksByCategory([FromQuery] string categoryName)
         {
             var listBooksByCategory = _bookService.GetBooksByCategory(categoryName);

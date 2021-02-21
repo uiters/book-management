@@ -7,6 +7,7 @@ using book_management_services.Implements;
 using book_management_services.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -17,6 +18,9 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+
 
 namespace book_management_api
 {
@@ -35,9 +39,15 @@ namespace book_management_api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors();
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddControllers();
+            //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddControllers()
+                .AddNewtonsoftJson(opt =>
+                {
+                    opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                    opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    opt.SerializerSettings.Formatting = Formatting.Indented;
+                });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "book_management_api", Version = "v1"});
@@ -85,13 +95,19 @@ namespace book_management_api
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder => builder.WithOrigins("http://localhost:3000")
+                    .AllowCredentials()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+
             });
 
             services.AddAutoMapper(typeof(AutoMapperProfile));
 
             services.AddScoped<IUnitOfWorks, UnitOfWorks>();
             services.AddScoped<IBookService, BookServiceImpl>();
-
             services.AddScoped<IUserService, UserServiceImpl>();
         }
 
@@ -104,11 +120,20 @@ namespace book_management_api
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "book_management_api v1"));
             }
-            
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.RoutePrefix = string.Empty;
+            });
+
             app.UseExceptionHandler("/error");
+            app.UseRouting();
             app.UseHttpsRedirection();
 
-            app.UseRouting();
+            app.UseCors("CorsPolicy");
+
 
             // global cors policy
             app.UseCors(x => x
