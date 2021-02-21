@@ -1,7 +1,7 @@
 
 const Login = () => {
     return (
-        <div>Login Page</div>
+        <div>Commit test</div>
     );
 }
 
