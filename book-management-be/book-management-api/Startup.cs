@@ -39,7 +39,7 @@ namespace book_management_api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddControllers()
                 .AddNewtonsoftJson(opt =>
@@ -50,7 +50,7 @@ namespace book_management_api
                 });
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "book_management_api", Version = "v1"});
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "book_management_api", Version = "v1" });
             });
 
             services.AddDbContext<AppDbContext>(options =>
@@ -95,6 +95,8 @@ namespace book_management_api
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
+            });
+
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder => builder.WithOrigins("http://localhost:3000")

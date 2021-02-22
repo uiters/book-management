@@ -5,8 +5,9 @@ import Home from "./pages/Home/Home";
 import Routes from "./routes/Routes";
 import Login from "./pages/Login/Login";
 
+
 function App() {
-  return (
+    return (
     // <BrowserRouter>
     //   <Switch>
     //     <Route path="/login">
@@ -17,6 +18,8 @@ function App() {
     //     </Route>
     //   </Switch>
     // </BrowserRouter>
+
+    
     <Routes></Routes>
   );
 }

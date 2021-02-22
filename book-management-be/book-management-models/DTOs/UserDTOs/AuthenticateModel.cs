@@ -9,13 +9,13 @@ namespace book_management_models.DTOs.UserDTOs
 {
     public class AuthenticateModel
     {
-        [Required]
+        //[Required]
         public string Username { get; set; }
 
-        [Required]
+        //[Required]
         public string Password { get; set; }
 
-        [Required]
+        //[Required]
         public string Email { get; set; }
 
     }

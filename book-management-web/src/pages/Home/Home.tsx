@@ -5,17 +5,11 @@ import Banner from "./components/Banner";
 import ListBook from "./components/ListBook";
 import bookApi from "../../services/api/bookApi";
 import axios from "axios";
+import axiosPublicClient from "../../services/axios/axiosPublicClient";
 
 const Home = () => {
   const [data, setData] = useState({});
   
-  useEffect(async () => {
-    const result = await bookApi.getAllBooks();
-    console.log(result);
-    
-    setData(result);
-  })
-
   return (
     <div className="App flex justify-center h-60 w-full rounded-xl p-8">
       <div className="main-page h-full w-10/12 flex-row gap-y-5 justify-center rounded-xl text-center">
