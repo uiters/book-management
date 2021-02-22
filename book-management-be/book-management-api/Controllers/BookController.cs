@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using AutoMapper;
 using book_management_helpers.CustomException;
+using book_management_models;
 using book_management_models.DTOs.BookDTOs;
 using book_management_services.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -35,18 +37,54 @@ namespace book_management_api.Controllers
             return Ok(result);
         }
 
+        [HttpGet("{bookId}")]
+        public IActionResult GetBookById(Guid bookId)
+        {
+            var book = _bookService.GetBookById(bookId);
+            var bookForReturn = _mapper.Map<BookForListDTO>(book);
+
+            return Ok(bookForReturn);
+        }
+
         [HttpGet("category")]
         public IActionResult GetBooksByCategory([FromQuery] string categoryName)
         {
             var listBooksByCategory = _bookService.GetBooksByCategory(categoryName);
             var result = _mapper.Map<List<BookForListDTO>>(listBooksByCategory);
-            
+
             if (result.Count == 0)
             {
-                throw new MyEmptyResultException(HttpStatusCode.NotAcceptable, "Can't find book with given category in database!");
+                throw new MyEmptyResultException(HttpStatusCode.NotAcceptable,
+                    "Can't find book with given category in database!");
             }
 
             return Ok(result);
+        }
+
+        [HttpPost("")]
+        public ActionResult AddNewBook([FromBody] BookForCreateDTO newBook)
+        {
+            var book = _mapper.Map<Book>(newBook);
+            var result = _bookService.AddNewBook(book);
+
+            return Ok("Create book success!");
+        }
+
+        [HttpPut("{bookId}")]
+        public IActionResult UpdateBook([FromBody] BookForUpdateDto updateBook)
+        {
+            var book = _mapper.Map<Book>(updateBook);
+            var result = _bookService.UpdateBook(book);
+
+            return Ok("Update successful!");
+        }
+
+        [HttpDelete("{bookId}")]
+        public IActionResult DeleteBook(Guid bookId)
+        {
+            var result = _bookService.DeleteBook(bookId);
+
+            return Ok("Delete successful book with id : " + bookId);
         }
     }
 }

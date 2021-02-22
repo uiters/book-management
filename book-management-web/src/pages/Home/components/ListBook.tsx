@@ -8,7 +8,7 @@ import Book from './Book';
 
 type ListInfo = {
     title: string;
-
+    category: string;
 }
 
 const ListBook = (info: ListInfo) => {
@@ -19,14 +19,14 @@ const ListBook = (info: ListInfo) => {
           <p className="font-bold text-2xl">{info.title}</p>
         </div>
         <div className="view-all-btn flex-grow flex justify-end">
-          <button className="font-bold text-lg text-gray-300 focus:outline-none">
+          <a href={info.category} className="font-bold text-lg text-gray-300 focus:outline-none">
             View all
-          </button>
+          </a>
         </div>
       </div>
 
       <div className="popular-list mt-8 flex">
-        <Book
+        <Book 
           imageSrc={b1}
           author="John Gray"
           title="Đàn ông sao hỏa đàn bà sao kim"
