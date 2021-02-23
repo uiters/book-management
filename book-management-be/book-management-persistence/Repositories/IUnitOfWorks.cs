@@ -6,6 +6,7 @@ namespace book_management_persistence.Repositories
 {
     public interface IUnitOfWorks
     {
+        void Commit();
         Task<bool> SaveAsync();
         BookRepositoryImpl BookRepository();
         CategoryRepositoryImpl CategoryRepository();

@@ -70,5 +70,46 @@ namespace book_management_persistence.Implements
         {
             return await Context.SaveChangesAsync() > 0;
         }
+
+
+        public IEnumerable<T> QueryAll()
+        {
+            return Context.Set<T>().AsQueryable();
+        }
+
+        public void Add(T entity)
+        {
+            DbSet.Add(entity);
+        }
+
+        public void Update(T entity)
+        {
+            DbSet.Update(entity);
+        }
+
+        public void UpdateMany(IEnumerable<T> entity)
+        {
+            DbSet.UpdateRange(entity);
+        }
+
+        public void Delete(T entity)
+        {
+            DbSet.Remove(entity);
+        }
+
+        public void SaveChange()
+        {
+            Context.SaveChanges();
+        }
+
+        public void Remove(T entity)
+        {
+            DbSet.Remove(entity);
+        }
+
+        public virtual T GetById(object id)
+        {
+            return DbSet.Find(id);
+        }
     }
 }

@@ -4,15 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace book_management_models.DTOs.UserDTOs
+namespace book_management_models.DTOs.CategoryDTOs
 {
-    public class UserModel
+    public class CategoryViewModel
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public string Email { get; set; }
-        public string Username { get; set; }
-
-        public string Password { get; set; }
+        public string Details { get; set; }
     }
 }

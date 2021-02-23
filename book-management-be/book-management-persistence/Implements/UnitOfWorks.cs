@@ -47,6 +47,11 @@ namespace book_management_persistence.Implements
             return this.CategoryRepositoryImpl;
         }
 
+        public void Commit()
+        {
+            DbContext.SaveChanges();
+        }
+
         protected virtual void Dispose(bool disposing)
         {
             if (!this._disposed)

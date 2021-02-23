@@ -8,9 +8,9 @@ import RegisterRoutes from './RegisterRoutes';
 const Routes = () => {
   return (
     <BrowserRouter>
-      <HomeRoutes />
       <LoginRoutes />
       <RegisterRoutes />
+      <HomeRoutes />
     </BrowserRouter>
   );
 };
