@@ -9,9 +9,9 @@ namespace book_management_persistence.Implements
     {
         public AppDbContext DbContext { get; set; }
         public BookRepositoryImpl BookRepositoryImpl { get; set; }
+        public CategoryRepositoryImpl CategoryRepositoryImpl { get; set; }
         private bool _disposed = false;
-
-
+        
         public UnitOfWorks(AppDbContext context)
         {
             this.DbContext = context;
@@ -35,6 +35,16 @@ namespace book_management_persistence.Implements
             }
 
             return this.BookRepositoryImpl;
+        }
+
+        public CategoryRepositoryImpl CategoryRepository()
+        {
+            if (this.CategoryRepositoryImpl == null)
+            {
+                this.CategoryRepositoryImpl = new CategoryRepositoryImpl(DbContext);
+            }
+
+            return this.CategoryRepositoryImpl;
         }
 
         protected virtual void Dispose(bool disposing)

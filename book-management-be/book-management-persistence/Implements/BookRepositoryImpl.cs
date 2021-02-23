@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using book_management_models;
 using book_management_persistence.Contexts;
@@ -15,11 +16,20 @@ namespace book_management_persistence.Implements
 
         public IEnumerable<Book> GetBooksByCategory(string categoryName)
         {
-            var listBooks = this.Context.Books.Include(b => b.Categories.Where(c => c.Name.Equals(categoryName))).ToList();
+            var listBooks = this.Context.Books.Include(b => b.Categories.Where(c => c.Name.Equals(categoryName)))
+                .ToList();
 
             listBooks = listBooks.Where(b => b.Categories.Count > 0).ToList();
 
             return listBooks;
+        }
+
+        public Book GetBookById(Guid id)
+        {
+            var book = DbSet.Where(b => b.Id.Equals(id)).Include(b => b.Author).Include(b => b.Publisher)
+                .FirstOrDefault();
+
+            return book;
         }
     }
 }

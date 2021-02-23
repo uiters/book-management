@@ -2,7 +2,7 @@ const Header = () => {
   return (
     <div className="header flex gap-x-7 h-12 w-full">
       <div className="name w-32">
-        <p className="font-bold text-2xl ">Booksy</p>
+        <a href="/" className="font-bold text-2xl ">Booksy</a>
       </div>
       <div className="search_bar flex-grow max-w-xl flex bg-gray-200 rounded-lg px-6 py-2 mx-auto">
         <input
