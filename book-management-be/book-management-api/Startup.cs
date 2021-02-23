@@ -39,8 +39,12 @@ namespace book_management_api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             // services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddAutoMapper(typeof(AutoMapperProfile));
+
 
             services.AddControllers()
                 .AddNewtonsoftJson(opt =>
@@ -52,7 +56,7 @@ namespace book_management_api
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "book_management_api", Version = "v1"});
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "book_management_api", Version = "v1" });
             });
 
             services.AddDbContext<AppDbContext>(options =>
@@ -89,17 +93,20 @@ namespace book_management_api
 
                             return Task.CompletedTask;
                         }
-                    };
-                    x.RequireHttpsMetadata = false;
-                    x.SaveToken = true;
-                    x.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(key),
-                        ValidateIssuer = false,
-                        ValidateAudience = false
-                    };
-                });
+
+                        return Task.CompletedTask;
+                    }
+                };
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
 
 
             services.AddCors(options =>

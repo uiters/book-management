@@ -1,8 +1,11 @@
+//@ts-ignore
+import {Link} from 'react-router-dom';
+
 const Header = () => {
   return (
     <div className="header flex gap-x-7 h-12 w-full">
       <div className="name w-32">
-        <a href="/" className="font-bold text-2xl ">Booksy</a>
+        <Link to = {'/'} className="font-bold text-2xl" >Booksy</Link>
       </div>
       <div className="search_bar flex-grow max-w-xl flex bg-gray-200 rounded-lg px-6 py-2 mx-auto">
         <input
@@ -42,6 +45,8 @@ const Header = () => {
         </svg>
         <button className="rounded-full w-8 h-8 bg-blue-900"><a href='/login'>T</a></button>
         <p className="font-bold">EN</p>
+        <Link to = {'/login'} className="font-bold" >Login</Link>
+        <Link to = {'/register'} className="font-bold" >Register</Link>
       </div>
     </div>
   );

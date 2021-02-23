@@ -6,7 +6,7 @@ import Login from "../pages/Login/Login";
 const LoginRoutes = () => {
   return (
     <Switch>
-      <Route path="/login">
+      <Route exact path="/login">
         <Login></Login>
       </Route>
     </Switch>

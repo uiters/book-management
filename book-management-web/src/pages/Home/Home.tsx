@@ -2,8 +2,16 @@
 import React from "react";
 import Header from "../../components/Header";
 import Banner from "./components/Banner";
-import Tabs from "./components/Tabs";
 
+import ListBook from "./components/ListBook";
+import bookApi from "../../services/api/bookApi";
+import axios from "axios";
+import axiosPublicClient from "../../services/axios/axiosPublicClient";
+
+const Home = () => {
+  const [data, setData] = useState({});
+import Tabs from "./components/Tabs";
+  
 const Home = () => {
   return (
     <div className="App flex justify-center h-60 w-full rounded-xl">
