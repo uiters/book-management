@@ -7,7 +7,6 @@ using book_management_services.Implements;
 using book_management_services.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -18,6 +17,7 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -39,7 +39,12 @@ namespace book_management_api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            // services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddAutoMapper(typeof(AutoMapperProfile));
+
 
             services.AddControllers()
                 .AddNewtonsoftJson(opt =>
@@ -48,6 +53,7 @@ namespace book_management_api
                     opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                     opt.SerializerSettings.Formatting = Formatting.Indented;
                 });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "book_management_api", Version = "v1" });
@@ -55,7 +61,8 @@ namespace book_management_api
 
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnections"),
-                    b => b.MigrationsAssembly("book-management-api")));
+                        b => b.MigrationsAssembly("book-management-api"))
+                    .LogTo(Console.WriteLine, LogLevel.Information));
 
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
@@ -65,24 +72,28 @@ namespace book_management_api
             var appSettings = appSettingsSection.Get<AppSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
             services.AddAuthentication(x =>
-            {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(x =>
-            {
-                x.Events = new JwtBearerEvents
                 {
-                    OnTokenValidated = context =>
+                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(x =>
+                {
+                    x.Events = new JwtBearerEvents
                     {
-                        var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
-                        var userId = Guid.Parse(context.Principal.Identity.Name);
-                        var user = userService.GetById(userId);
-                        if (user == null)
+                        OnTokenValidated = context =>
                         {
-                            // return unauthorized if user no longer exists
-                            context.Fail("Unauthorized");
+                            var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
+                            var userId = Guid.Parse(context.Principal.Identity.Name);
+                            var user = userService.GetById(userId);
+                            if (user == null)
+                            {
+                                // return unauthorized if user no longer exists
+                                context.Fail("Unauthorized");
+                            }
+
+                            return Task.CompletedTask;
                         }
+
                         return Task.CompletedTask;
                     }
                 };
@@ -97,21 +108,26 @@ namespace book_management_api
                 };
             });
 
+
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder => builder.WithOrigins("http://localhost:3000")
                     .AllowCredentials()
                     .AllowAnyMethod()
                     .AllowAnyHeader());
-
             });
 
-            services.AddAutoMapper(typeof(AutoMapperProfile));
-
+            //Repositoríes register
             services.AddScoped<IUnitOfWorks, UnitOfWorks>();
+            services.AddScoped<IBookRepository, BookRepositoryImpl>();
+            services.AddScoped<ICategoryRepository, CategoryRepositoryImpl>();
+
+            //Servies register
             services.AddScoped<IBookService, BookServiceImpl>();
             services.AddScoped<IUserService, UserServiceImpl>();
+            services.AddScoped<ICategoryService, CategoryServiceImpl>();
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -135,13 +151,6 @@ namespace book_management_api
             app.UseHttpsRedirection();
 
             app.UseCors("CorsPolicy");
-
-
-            // global cors policy
-            app.UseCors(x => x
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
 
             app.UseAuthentication();
 
