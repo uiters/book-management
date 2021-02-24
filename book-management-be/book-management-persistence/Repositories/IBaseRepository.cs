@@ -13,5 +13,15 @@ namespace book_management_persistence.Repositories
         Task<bool> DeleteAsync(Guid id);
         Task<T> GetByIdAsync(Guid id);
         Task<bool> SaveAll();
+
+
+        IEnumerable<T> QueryAll();
+        void Add(T entity);
+        void Update(T entity);
+        void UpdateMany(IEnumerable<T> entity);
+        void Delete(T entity);
+        void SaveChange();
+        void Remove(T entity);
+        T GetById(object id);
     }
 }

@@ -13,6 +13,7 @@ const HomeRoutes = () => {
   return (
     <Switch>
       <Route
+        exact
         path="/"
         render={() => (
           <main className="App flex justify-center h-60 w-full rounded-xl pt-5">
