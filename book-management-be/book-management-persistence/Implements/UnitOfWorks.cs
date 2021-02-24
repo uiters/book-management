@@ -10,8 +10,10 @@ namespace book_management_persistence.Implements
         public AppDbContext DbContext { get; set; }
         public BookRepositoryImpl BookRepositoryImpl { get; set; }
         public CategoryRepositoryImpl CategoryRepositoryImpl { get; set; }
+        public AuthorRepositoryImpl AuthorRepositoryImpl { get; set; }
+        public PublisherRepositoryImpl PublisherRepositoryImpl { get; set; }
         private bool _disposed = false;
-        
+
         public UnitOfWorks(AppDbContext context)
         {
             this.DbContext = context;
@@ -45,6 +47,26 @@ namespace book_management_persistence.Implements
             }
 
             return this.CategoryRepositoryImpl;
+        }
+
+        public AuthorRepositoryImpl AuthorRepository()
+        {
+            if (this.AuthorRepositoryImpl == null)
+            {
+                this.AuthorRepositoryImpl = new AuthorRepositoryImpl(DbContext);
+            }
+
+            return this.AuthorRepositoryImpl;
+        }
+
+        public PublisherRepositoryImpl PublisherRepository()
+        {
+            if (this.PublisherRepositoryImpl == null)
+            {
+                this.PublisherRepositoryImpl = new PublisherRepositoryImpl(DbContext);
+            }
+
+            return this.PublisherRepositoryImpl;
         }
 
         protected virtual void Dispose(bool disposing)

@@ -31,5 +31,12 @@ namespace book_management_persistence.Implements
 
             return book;
         }
+
+        public IEnumerable<Book> GetAllBook()
+        {
+            var books = DbSet.Include(b => b.Author).Include(b => b.Publisher).ToList();
+
+            return books;
+        }
     }
 }

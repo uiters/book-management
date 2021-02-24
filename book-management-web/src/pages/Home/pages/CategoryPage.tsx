@@ -41,13 +41,9 @@ const CategoryPage = (category: Category) => {
   listBooks.forEach((book: BookModel) => {
     datas.push(
       <div className="w-1/5 h-3/4" key={book.id}>
-        <Book
-          imageSrc={b6}
-          author="Cảnh Thiên"
-          title={book.title}
-        ></Book>
+        <Book imageSrc={b6} author="Cảnh Thiên" title={book.title}></Book>
       </div>
-    )
+    );
   });
 
   return (
