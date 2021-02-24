@@ -1,5 +1,6 @@
 //@ts-ignore
 import { Switch, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import React from "react";
 import Tabs from "../pages/Home/components/Tabs";
 import Banner from "../pages/Home/components/Banner";
@@ -23,12 +24,12 @@ const HomeRoutes = () => {
                 <CategoryPageRoutes></CategoryPageRoutes>
                 <NewBookRoutes></NewBookRoutes>
                 <MainPageRoutes></MainPageRoutes>
+                <ToastContainer />
               </div>
             </div>
           </main>
         )}
-      >
-      </Route>
+      ></Route>
     </Switch>
   );
 };

@@ -8,5 +8,6 @@ namespace book_management_persistence.Repositories
     {
         IEnumerable<Book> GetBooksByCategory(string catergory);
         Book GetBookById(Guid id);
+        IEnumerable<Book> GetAllBook();
     }
 }

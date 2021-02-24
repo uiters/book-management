@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading.Tasks;
 using AutoMapper;
 using book_management_helpers.CustomException;
 using book_management_models;
@@ -62,12 +63,17 @@ namespace book_management_api.Controllers
         }
 
         [HttpPost("")]
-        public ActionResult AddNewBook([FromBody] BookForCreateDTO newBook)
+        public async Task<ActionResult> AddNewBook([FromBody] BookForCreateDTO newBook)
         {
             var book = _mapper.Map<Book>(newBook);
-            var result = _bookService.AddNewBook(book);
+            var result = await _bookService.AddNewBook(newBook);
 
-            return Ok("Create book success!");
+            if (result)
+            {
+                return Ok("Create book successful!");
+            }
+
+            return BadRequest("Create new book failed.");
         }
 
         [HttpPut("{bookId}")]

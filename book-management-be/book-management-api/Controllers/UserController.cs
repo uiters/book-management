@@ -99,7 +99,7 @@ namespace book_management_api.Controllers
         public IActionResult GetAll()
         {
             var users = _userService.GetAll();
-            var model = _mapper.Map<IList<UserModel>>(users);
+            var model = _mapper.Map<List<UserModel>>(users);
             return Ok(model);
         }
 

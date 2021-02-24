@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using book_management_models;
+using book_management_models.DTOs.BookDTOs;
 using book_management_persistence.Implements;
 using book_management_persistence.Repositories;
 using book_management_services.Services;
@@ -12,16 +14,23 @@ namespace book_management_services.Implements
     {
         private readonly IUnitOfWorks _unitOfWorks;
         private readonly BookRepositoryImpl _bookRepository;
+        private readonly AuthorRepositoryImpl _authorRepository;
+        private readonly PublisherRepositoryImpl _publisherRepository;
+        private readonly IMapper _mapper;
 
-        public BookServiceImpl(IUnitOfWorks unitOfWork)
+
+        public BookServiceImpl(IUnitOfWorks unitOfWork, IMapper mapper)
         {
             this._unitOfWorks = unitOfWork;
             this._bookRepository = this._unitOfWorks.BookRepository();
+            this._authorRepository = this._unitOfWorks.AuthorRepository();
+            this._publisherRepository = this._unitOfWorks.PublisherRepository();
+            this._mapper = mapper;
         }
 
         public IEnumerable<Book> GetListBooks()
         {
-            var result = this._bookRepository.GetList();
+            var result = this._bookRepository.GetAllBook();
 
             return result;
         }
@@ -40,12 +49,24 @@ namespace book_management_services.Implements
             return result;
         }
 
-        public Task<bool> AddNewBook(Book book)
+        public async Task<bool> AddNewBook(BookForCreateDTO newBook)
         {
-            Task<bool> result = _bookRepository.InsertAsync(book);
+            var author = _authorRepository.GetAuthorByName(newBook.AuthorName);
+            var publisher = _publisherRepository.GetPublisherByName(newBook.PublisherName);
 
-            return result;
+            if (author != null && publisher != null)
+            {
+                var book = _mapper.Map<Book>(newBook);
+                book.AuthorId = author.Id;
+                book.PublisherId = publisher.Id;
+
+                var result = await _bookRepository.InsertAsync(book);
+                return result;
+            }
+
+            return false;
         }
+
 
         public Task<bool> UpdateBook(Book bookForUpdate)
         {
