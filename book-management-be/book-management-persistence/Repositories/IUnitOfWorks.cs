@@ -10,5 +10,7 @@ namespace book_management_persistence.Repositories
         Task<bool> SaveAsync();
         BookRepositoryImpl BookRepository();
         CategoryRepositoryImpl CategoryRepository();
+        AuthorRepositoryImpl AuthorRepository();
+        PublisherRepositoryImpl PublisherRepository();
     }
 }

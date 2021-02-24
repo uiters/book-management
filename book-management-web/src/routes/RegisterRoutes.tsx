@@ -2,11 +2,12 @@
 import { Switch, Route } from "react-router-dom";
 import React from "react";
 import Register from "../pages/Register/Register";
+import { PATHS } from "../constants/paths";
 
 const RegisternRoutes = () => {
   return (
     <Switch>
-      <Route exact path="/register">
+      <Route exact path={PATHS.REGISTER}>
         <Register></Register>
       </Route>
     </Switch>

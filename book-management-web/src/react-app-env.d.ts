@@ -10,3 +10,7 @@ declare module "react" {
 declare module "react-router-dom" {
   export default any;
 }
+
+declare module "react-hook-form" {
+  export default any;
+}

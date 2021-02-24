@@ -6,14 +6,14 @@ namespace book_management_models
 {
     public class Book : BaseModel
     {
-        [Required] public string Title { get; set; }
-        [Required] public int Price { get; set; }
-        [Required] public string Description { get; set; }
-        [Required] public float AvgRating { get; set; }
-        [Required] public int Pages { get; set; }
-        [Required] public int Quantity { get; set; }
-        [Required] public string SKU { get; set; }
-        [Required] public string ThumbnailUrl { get; set; }
+        public string Title { get; set; }
+        public int Price { get; set; }
+        public string Description { get; set; }
+        public float AvgRating { get; set; }
+        public int Pages { get; set; }
+        public int Quantity { get; set; }
+        public string SKU { get; set; }
+        public string ThumbnailUrl { get; set; }
         public Guid AuthorId { get; set; }
         public Author Author { get; set; }
         public Guid PublisherId { get; set; }

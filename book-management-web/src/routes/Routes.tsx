@@ -1,5 +1,5 @@
 //@ts-ignore
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import React from "react";
 import HomeRoutes from "./HomeRoutes";
 import LoginRoutes from "./LoginRoutes";

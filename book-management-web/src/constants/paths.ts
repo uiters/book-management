@@ -1,5 +1,6 @@
 export const PATHS = {
     LOGIN: '/login',
+    REGISTER:'/register',
     MAIN: '/',
     POPULAR: '/popular',
     ECONOMIC: '/sach-kinh-te',
