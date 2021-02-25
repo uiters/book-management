@@ -6,5 +6,7 @@ export const PATHS = {
     ECONOMIC: '/sach-kinh-te',
     LITERATURE: '/sach-van-hoc',
     LIFESKILL: '/sach-ki-nang',
-    NEWBOOK:'/new-book'
+    NEWBOOK:'/new-book',
+    CATEGORY: '/category',
+    NEWCATEGORY:'/new-category'
 }

@@ -52,7 +52,7 @@ namespace book_management_persistence.Implements
         public void Commit()
         {
             DbContext.SaveChanges();
-
+        }
         public AuthorRepositoryImpl AuthorRepository()
         {
             if (this.AuthorRepositoryImpl == null)

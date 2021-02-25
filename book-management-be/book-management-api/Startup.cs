@@ -87,7 +87,7 @@ namespace book_management_api
                             // return unauthorized if user no longer exists
                             context.Fail("Unauthorized");
                         }
-<<<<<<< HEAD
+
                         return Task.CompletedTask;
                     }
                 };
@@ -101,19 +101,6 @@ namespace book_management_api
                     ValidateAudience = false
                 };
             });
-=======
-                    };
-                    x.RequireHttpsMetadata = false;
-                    x.SaveToken = true;
-                    x.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(key),
-                        ValidateIssuer = false,
-                        ValidateAudience = false
-                    };
-                });
->>>>>>> main
 
             services.AddCors(options =>
             {

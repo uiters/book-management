@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 //@ts-ignore
 import { useForm } from "react-hook-form";
 import axiosPublicClient from "../../services/axios/axiosPublicClient";
-
+import { toastError, toastSuccess } from "../../services/toastService";
 const Register = () => {
   const history = useHistory();
   interface FormData {
@@ -22,9 +22,12 @@ const Register = () => {
     // return axiosPublicClient.get(url);
 
     axiosPublicClient
-      .post("/api/Users/register", { Name, Username, Password, Email })
+      .post("Users/register", { Name, Username, Password, Email })
       .then((res) => {
         console.log(res);
+        if (res.status === 200) {
+          toastSuccess("Register success!");
+        }
         history.push("/");
       })
       .catch((err) => {
