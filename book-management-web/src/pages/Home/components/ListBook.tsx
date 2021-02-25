@@ -13,7 +13,7 @@ type ListInfo = {
 
 const ListBook = (info: ListInfo) => {
   return (
-    <div>
+    <div className="bg-white p-4">
       <div className="popular-section mt-8 flex">
         <div className="popular flex items-start">
           <p className="font-bold text-2xl">{info.title}</p>
@@ -25,7 +25,7 @@ const ListBook = (info: ListInfo) => {
         </div>
       </div>
 
-      <div className="popular-list mt-8 flex">
+      <div className="popular-list mt-8 flex space-x-3">
         <Book 
           imageSrc={b1}
           author="John Gray"

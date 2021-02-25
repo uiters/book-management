@@ -19,7 +19,7 @@ const Login = () => {
 
   const onSubmit = handleSubmit(({ Username, Password, Email }: FormData) => {
     axiosPublicClient
-      .post("/api/Users/login", { Username, Password, Email })
+      .post("/Users/login", { Username, Password, Email })
       .then((res) => {
         console.log(res);
         localStorage.setItem("token", res.data.token);

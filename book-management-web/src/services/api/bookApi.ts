@@ -1,4 +1,4 @@
-import { URLS } from "./../../constants/url";
+import { API_URLS } from "../../constants/api_url";
 import { AxiosResponse } from "axios";
 import BookModel from "../../types/models/BookModel";
 import axiosPublicClient from "../axios/axiosPublicClient";
@@ -6,12 +6,12 @@ import NewBookFormData from "../../types/form/NewBookFormData";
 
 const bookApi = {
   getAllBooks: () => {
-    const url = URLS.BOOK + "/all";
+    const url = API_URLS.BOOK + "/all";
     return axiosPublicClient.get(url);
   },
 
   getByCategory: (category: string): Promise<AxiosResponse<BookModel[]>> => {
-    const url = URLS.BOOK + "/category";
+    const url = API_URLS.BOOK + "/category";
 
     const config = {
       params: {
@@ -23,7 +23,7 @@ const bookApi = {
   },
 
   addNewBook: (newBook: NewBookFormData) => {
-    const url = URLS.BOOK + "/";
+    const url = API_URLS.BOOK + "/";
 
     return axiosPublicClient.post(url, newBook);
   },
