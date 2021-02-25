@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace book_management_api.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("/api/category/")]
     public class CategoryController : ControllerBase
@@ -76,8 +76,9 @@ namespace book_management_api.Controllers
         public IActionResult GetById(Guid id)
         {
             var category = _categoryService.GetById(id);
+            
             if (category == null)
-                throw new AppException("Category not found");
+                throw new MyEmptyResultException(HttpStatusCode.NotAcceptable, "Can't find Category in database!");
 
             var model = _mapper.Map<CategoryModel>(category);
             return Ok(model);

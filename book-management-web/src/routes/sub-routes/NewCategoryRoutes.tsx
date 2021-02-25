@@ -2,7 +2,7 @@
 import { Switch, Route } from "react-router-dom";
 import React from "react";
 import { PATHS } from "../../constants/paths";
-import NewCategory from "../../pages/Category/Category";
+import NewCategory from "../../pages/Category/pages/NewCategory";
 
 const NewCategoryRoutes = () => {
   return (

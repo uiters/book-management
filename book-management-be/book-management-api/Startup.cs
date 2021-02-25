@@ -114,11 +114,15 @@ namespace book_management_api
             services.AddScoped<IUnitOfWorks, UnitOfWorks>();
             services.AddScoped<IBookRepository, BookRepositoryImpl>();
             services.AddScoped<ICategoryRepository, CategoryRepositoryImpl>();
+            services.AddScoped<IPublisherRepository, PublisherRepositoryImpl>();
+            services.AddScoped<IAuthorRepository, AuthorRepositoryImpl>();
 
             //Servies register
             services.AddScoped<IBookService, BookServiceImpl>();
             services.AddScoped<IUserService, UserServiceImpl>();
             services.AddScoped<ICategoryService, CategoryServiceImpl>();
+            services.AddScoped<IPublisherService, PublisherServiceImpl>();
+            services.AddScoped<IAuthorService, AuthorServiceImpl>();
         }
 
 

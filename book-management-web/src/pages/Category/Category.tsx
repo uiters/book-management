@@ -1,7 +1,7 @@
 //@ts-ignore
 import React, { useState, useEffect, useCallback } from "react";
 //@ts-ignore
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { isConstructorTypeNode } from "typescript";
 import categoryApi from '../../services/api/categoryApi';
 import CategoryModel from '../../types/models/CategoryModel';
@@ -38,22 +38,29 @@ const Category = () => {
 
   useEffect(() => {
     fetchData();
-    elements = listCategorys.forEach((category: CategoryModel) => {
-      datas.push(
-        <tr key={category.id}>
-              <td className="border border-blue-600">{category.id}</td>
-              <td className="border border-blue-600">{category.name}</td>
-              <td className="border border-blue-600">{category.details}</td>
-            </tr>
-          );
-        });
   }, [listCategorys.length]);
- 
+
+  datas.push(<tr key={""}>
+    <td className="border border-blue-600">{""}</td>
+    <td className="border border-blue-600">{""}</td>
+    <td className="border border-blue-600">{""}</td>
+  </tr>)
+
+  listCategorys.forEach((category: CategoryModel) => {
+    datas.push(
+      <tr key={category.id}>
+        <td className="border border-blue-600"></td>
+        <td className="border border-blue-600">{category.id}</td>
+        <td className="border border-blue-600">{category.name}</td>
+        <td className="border border-blue-600">{category.details}</td>
+      </tr>
+    );
+  });
 
   return (
     <div>
       <br />
-      <Link to={'/'} className="py-2 px-4 bg-blue-600 hover:bg-blue-700 rounded-md text-white text-sm mt-8" >Add New</Link>
+      <Link to={'/new-category'} className="py-2 px-4 bg-blue-600 hover:bg-blue-700 rounded-md text-white text-sm mt-8" >Add New</Link>
 
       <table className='border-collapse border border-blue-800 mt-8'>
         <thead>
@@ -65,7 +72,7 @@ const Category = () => {
           </tr>
         </thead>
         <tbody>
-
+          {datas}
         </tbody>
       </table>
     </div>
