@@ -10,7 +10,7 @@ const Banner = () => {
               <p className="text-lg font-bold text-gray-400">
                 Buy two selected books and get one free
               </p>
-              <button className="font-bold text-lg px-6 py-2 bg-yellow-300 text-white rounded-xl focus:outline-none">
+              <button className="font-bold text-lg px-6 py-2 bg-yellow-200 text-white rounded-xl focus:outline-none">
                 View all
               </button>
             </div>

@@ -2,11 +2,6 @@
 import React from "react";
 import Header from "../../components/Header";
 import Banner from "./components/Banner";
-
-import ListBook from "./components/ListBook";
-import bookApi from "../../services/api/bookApi";
-import axios from "axios";
-import axiosPublicClient from "../../services/axios/axiosPublicClient";
 import Tabs from "./components/Tabs";
 
 const Home = () => {

@@ -49,10 +49,6 @@ namespace book_management_persistence.Implements
             return this.CategoryRepositoryImpl;
         }
 
-        public void Commit()
-        {
-            DbContext.SaveChanges();
-
         public AuthorRepositoryImpl AuthorRepository()
         {
             if (this.AuthorRepositoryImpl == null)
@@ -71,6 +67,11 @@ namespace book_management_persistence.Implements
             }
 
             return this.PublisherRepositoryImpl;
+        }
+
+        public void Commit()
+        {
+            DbContext.SaveChanges();
 
         }
 
