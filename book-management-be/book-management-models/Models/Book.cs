@@ -14,6 +14,7 @@ namespace book_management_models
         public int Quantity { get; set; }
         public string SKU { get; set; }
         public string ThumbnailUrl { get; set; }
+        public string Size { get; set; }
         public Guid AuthorId { get; set; }
         public Author Author { get; set; }
         public Guid PublisherId { get; set; }

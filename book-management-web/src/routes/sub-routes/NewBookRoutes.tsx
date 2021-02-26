@@ -2,12 +2,12 @@
 import { Switch, Route } from "react-router-dom";
 import React from "react";
 import { PATHS } from "../../constants/paths";
-import NewBookPage from "../../pages/Home/pages/NewBookPage";
+import NewBookPage from "../../pages/Book/pages/NewBookPage";
 
 const NewBookRoutes = () => {
   return (
     <Switch>
-      <Route exact path={PATHS.NEWBOOK}>
+      <Route path={PATHS.BOOK_NEW}>
         <NewBookPage></NewBookPage>
       </Route>
     </Switch>

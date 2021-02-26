@@ -4,13 +4,10 @@ import { ToastContainer } from "react-toastify";
 //@ts-ignore
 import React, { useMemo } from "react";
 import Tabs from "../pages/Home/components/Tabs";
-import Banner from "../pages/Home/components/Banner";
-import Header from "../components/Header";
 import MainPageRoutes from "./sub-routes/MainPageRoutes";
 import CategoryPageRoutes from "./sub-routes/CategoryPageRoutes";
-import NewBookRoutes from "./sub-routes/NewBookRoutes";
 import { PATHS } from "../constants/paths";
-import DetailBookRoutes from "./sub-routes/DetailBookRoutes";
+import BookRoutes from "./BookRoutes";
 
 const HomeRoutes = () => {
   const paths = useMemo(
@@ -32,9 +29,8 @@ const HomeRoutes = () => {
               <div className="body h-40 mt-8">
                 <Tabs></Tabs>
                 <CategoryPageRoutes></CategoryPageRoutes>
-                <NewBookRoutes></NewBookRoutes>
+                <BookRoutes></BookRoutes>
                 <MainPageRoutes></MainPageRoutes>
-                <DetailBookRoutes></DetailBookRoutes>
                 <ToastContainer />
               </div>
             </div>

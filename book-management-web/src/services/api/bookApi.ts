@@ -27,6 +27,12 @@ const bookApi = {
 
     return axiosPublicClient.post(url, newBook);
   },
+
+  getById: (id: string): Promise<AxiosResponse<BookModel>> => {
+    const url = API_URLS.BOOK + '/' + id;
+
+    return axiosPublicClient.get(url);
+  }
 };
 
 export default bookApi;
