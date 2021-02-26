@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 //@ts-ignore
 import { useForm } from "react-hook-form";
 import axiosPublicClient from "../../services/axios/axiosPublicClient";
-
+import { toastError, toastSuccess } from "../../services/toastService";
 const Login = () => {
   const history = useHistory();
 
@@ -19,9 +19,12 @@ const Login = () => {
 
   const onSubmit = handleSubmit(({ Username, Password, Email }: FormData) => {
     axiosPublicClient
-      .post("/Users/login", { Username, Password, Email })
+      .post("Users/login", { Username, Password, Email })
       .then((res) => {
         console.log(res);
+        if (res.status === 200) {
+          toastSuccess("Login success!");
+        }
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("user", JSON.stringify(res.data));
         history.push("/");

@@ -19,8 +19,15 @@ namespace book_management_helpers
             CreateMap<UpdateModel, User>().ReverseMap();
             CreateMap<Author, AuthorForListDTO>();
             CreateMap<Publisher, PublisherForListDTO>();
+
             CreateMap<CategoryModel, Category>().ReverseMap();
             CreateMap<CategoryViewModel, Category>().ReverseMap();
+            
+            CreateMap<PublisherModel, Publisher>().ReverseMap();
+            CreateMap<PublisherViewModel, Publisher>().ReverseMap();
+
+            CreateMap<AuthorModel, Author>().ReverseMap();
+            CreateMap<AuthorViewModel, Author>().ReverseMap();
         }
     }
 }

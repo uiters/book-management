@@ -22,3 +22,5 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+tr:nth-child(even) {background-color: #f2f2f2;}

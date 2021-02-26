@@ -7,5 +7,7 @@ export const PATHS = {
     LITERATURE: '/sach-van-hoc',
     LIFESKILL: '/sach-ki-nang',
     NEWBOOK:'/new-book',
+    CATEGORY: '/category',
+    NEWCATEGORY:'/new-category',
     DETAILS:'/details'
 }
