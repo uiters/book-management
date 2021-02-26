@@ -8,5 +8,6 @@ export const PATHS = {
     LIFESKILL: '/sach-ki-nang',
     NEWBOOK:'/new-book',
     CATEGORY: '/category',
-    NEWCATEGORY:'/new-category'
+    NEWCATEGORY:'/new-category',
+    DETAILS:'/details'
 }

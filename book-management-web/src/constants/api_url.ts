@@ -1,4 +1,4 @@
-export const URLS = {
+export const API_URLS = {
     BOOK: '/book',
     LOGIN: '/login',
     CATEGORY: '/category',

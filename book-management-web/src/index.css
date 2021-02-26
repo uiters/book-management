@@ -4,6 +4,10 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
 
+html {
+  background-color: #f4f4f4;
+}
+
 body {
   margin: 0;
   padding: 0;
