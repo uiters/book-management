@@ -1,12 +1,13 @@
 //@ts-ignore
 import { useForm } from "react-hook-form";
+//@ts-ignore
+import { ErrorMessage } from "@hookform/error-message";
 import bookApi from "../../../services/api/bookApi";
-import { ToastContainer, toast } from "react-toastify";
 import NewBookFormData from "../../../types/form/NewBookFormData";
-import { toastError, toastSuccess } from "../../../services/toastService";
+import { toastSuccess, toastError } from "../../../services/toastService";
 
 const NewBookPage = () => {
-  const { register, handleSubmit } = useForm<NewBookFormData>({
+  const { register, handleSubmit, errors } = useForm<NewBookFormData>({
     mode: "onChange",
   });
 
@@ -25,6 +26,7 @@ const NewBookPage = () => {
         toastError("Create new book failed");
       });
   };
+
   return (
     <div className="flex flex-col border border-gray-500 w-1/3 text-center items-center bg-white mx-auto my-8">
       <form
@@ -37,7 +39,7 @@ const NewBookPage = () => {
           </label>
           <span>
             <input
-              ref={register({ required: true })}
+              ref={register({ required: "Tile is required" })}
               type="text"
               placeholder="Insert Title here"
               name="title"
@@ -56,6 +58,7 @@ const NewBookPage = () => {
               ref={register}
               name="description"
             />
+            {errors.description && <p>Description is required</p>}
           </span>
         </div>
         <div className="form-group flex gap-2">
@@ -67,7 +70,7 @@ const NewBookPage = () => {
               type="text"
               placeholder="Insert Price here"
               defaultValue="1000000"
-              ref={register}
+              ref={register({ required: true })}
               name="price"
             />
           </span>
@@ -81,7 +84,7 @@ const NewBookPage = () => {
               type="text"
               placeholder="Insert Pages here"
               defaultValue="300"
-              ref={register}
+              ref={register({ required: true })}
               name="pages"
             />
           </span>
@@ -95,7 +98,7 @@ const NewBookPage = () => {
               type="text"
               placeholder="Insert SKU here"
               defaultValue="SKUXXXXXXXX"
-              ref={register}
+              ref={register({ required: true })}
               name="sku"
             />
           </span>
@@ -109,7 +112,7 @@ const NewBookPage = () => {
               type="text"
               placeholder="Insert SKU here"
               defaultValue=""
-              ref={register}
+              ref={register({ required: true })}
               name="authorName"
             />
           </span>
@@ -123,7 +126,7 @@ const NewBookPage = () => {
               type="text"
               placeholder="Insert SKU here"
               defaultValue=""
-              ref={register}
+              ref={register({ required: true })}
               name="publisherName"
             />
           </span>

@@ -6,6 +6,7 @@ namespace book_management_models
     {
         public string Name { get; set; }
         public string Details { get; set; }
+        public string Slug { get; set; }
         public ICollection<Book> Books { get; set; }
     }
 }

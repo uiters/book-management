@@ -1,7 +1,6 @@
 //@ts-ignore
 import React, { useState, useEffect, useCallback } from "react";
 import Book from "../components/Book";
-import b6 from "../../../assets/b6.jpg";
 import bookApi from "../../../services/api/bookApi";
 import BookModel from "../../../types/models/BookModel";
 import Banner from "../components/Banner";
@@ -34,6 +33,7 @@ const CategoryPage = (category: Category) => {
   datas.push(
     <div className="w-1/4 h-3/4" key={1}>
       <Book
+        id=""
         imageSrc="https://salt.tikicdn.com/cache/w444/ts/product/eb/62/6b/0e56b45bddc01b57277484865818ab9b.jpg"
         author="Cảnh Thiên"
         title="Đừng lựa chọn an nhàn khi còn trẻ"
@@ -45,6 +45,7 @@ const CategoryPage = (category: Category) => {
     datas.push(
       <div className="w-1/5 h-3/4" key={book.id}>
         <Book
+          id={book.id}
           imageSrc={book.thumbnailUrl}
           author="Cảnh Thiên"
           title={book.title}

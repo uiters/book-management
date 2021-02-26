@@ -1,15 +1,14 @@
 //@ts-ignore
 import { Switch, Route } from "react-router-dom";
-import React from "react";
 import { PATHS } from "../../constants/paths";
-import DetailBookPage from "../../pages/Home/pages/DetailBookPage";
+import DetailBookPage from "../../pages/Book/detail/DetailBookPage";
 
 const DetailBookRoutes = () => {
-    return (
-        <Switch>
-            <Route exact path={PATHS.DETAILS}><DetailBookPage ></DetailBookPage></Route>
-        </Switch>
-    );
-}
+  return (
+    <Switch>
+      <Route exact path={PATHS.BOOK_DETAIL} component={DetailBookPage}></Route>
+    </Switch>
+  );
+};
 
 export default DetailBookRoutes;
