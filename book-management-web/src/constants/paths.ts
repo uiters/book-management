@@ -10,4 +10,7 @@ export const PATHS = {
   DETAILS: "/details/:bookId",
   BOOK_DETAIL: "/book/:bookId",
   BOOK: "/book",
+  CATEGORY: '/category',
+  NEWCATEGORY:'/new-category',
 };
+

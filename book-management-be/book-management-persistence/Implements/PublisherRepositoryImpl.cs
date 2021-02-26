@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using book_management_models;
 using book_management_persistence.Contexts;
 using book_management_persistence.Repositories;
@@ -15,6 +16,18 @@ namespace book_management_persistence.Implements
         {
             var publisher = DbSet.FirstOrDefault(p => p.Name.Equals(publisherName));
 
+            return publisher;
+        }
+
+        public bool CheckExistPublisherByName(string name)
+        {
+            var publisher = this.Context.Publishers.Any(x => x.Name == name);
+            return publisher;
+        }
+
+        public IEnumerable<Publisher> GetAllPublisherByName(string szName)
+        {
+            var publisher = this.Context.Publishers.Where(x => x.Name.Contains(szName)).ToList();
             return publisher;
         }
     }
