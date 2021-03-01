@@ -7,6 +7,7 @@
     "@ckeditor/ckeditor5-react": "^3.0.1",
     "@craco/craco": "^6.1.1",
     "@hookform/error-message": "0.0.5",
+    "@hookform/resolvers": "^1.3.4",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -19,6 +20,7 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-hook-form": "^6.15.3",
+    "react-images-uploading": "^3.1.2",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.2",
     "react-slick": "^0.28.0",
@@ -26,7 +28,8 @@
     "slick-carousel": "^1.8.1",
     "typescript": "^4.1.2",
     "web-vitals": "^1.0.1",
-    "yarn": "^1.22.10"
+    "yarn": "^1.22.10",
+    "yup": "^0.32.9"
   },
   "scripts": {
     "start": "craco start",
@@ -56,6 +59,7 @@
   "devDependencies": {
     "@tailwindcss/postcss7-compat": "^2.0.3",
     "autoprefixer": "^9.8.6",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "postcss": "^7.0.35",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.3"
   }

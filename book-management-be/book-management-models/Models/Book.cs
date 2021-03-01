@@ -22,5 +22,6 @@ namespace book_management_models
         public ICollection<Review> Reviews { get; set; }
         public ICollection<Tag> Tags { get; set; }
         public ICollection<Category> Categories { get; set; }
+        public ICollection<Photo> Photos { get; set; }
     }
 }
