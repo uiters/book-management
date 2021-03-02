@@ -12,5 +12,6 @@ namespace book_management_persistence.Repositories
         CategoryRepositoryImpl CategoryRepository();
         AuthorRepositoryImpl AuthorRepository();
         PublisherRepositoryImpl PublisherRepository();
+        PhotoRepositoryImpl PhotoRepository();
     }
 }

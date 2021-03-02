@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using book_management_persistence.Contexts;
 
 namespace book_management_api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210301041744_Add photo for book")]
+    partial class Addphotoforbook
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -438,7 +440,7 @@ namespace book_management_api.Migrations
             modelBuilder.Entity("book_management_models.Photo", b =>
                 {
                     b.HasOne("book_management_models.Book", null)
-                        .WithMany("Photos")
+                        .WithMany("Type")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -470,9 +472,9 @@ namespace book_management_api.Migrations
 
             modelBuilder.Entity("book_management_models.Book", b =>
                 {
-                    b.Navigation("Photos");
-
                     b.Navigation("Reviews");
+
+                    b.Navigation("Type");
                 });
 
             modelBuilder.Entity("book_management_models.Cart", b =>

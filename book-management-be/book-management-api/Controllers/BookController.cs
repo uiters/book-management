@@ -63,34 +63,45 @@ namespace book_management_api.Controllers
         }
 
         [HttpPost("")]
-        public async Task<ActionResult> AddNewBook([FromBody] BookForCreateDTO newBook)
+        public async Task<ActionResult> AddNewBook([FromForm] BookForCreateDTO newBook)
         {
-            var book = _mapper.Map<Book>(newBook);
+            // var book = _mapper.Map<Book>(newBook);
             var result = await _bookService.AddNewBook(newBook);
 
-            if (result)
+            if (result != null)
             {
-                return Ok("Create book successful!");
+                return Ok(result);
             }
 
             return BadRequest("Create new book failed.");
         }
 
         [HttpPut("{bookId}")]
-        public IActionResult UpdateBook([FromBody] BookForUpdateDto updateBook)
+        public async Task<IActionResult> UpdateBook([FromBody] BookForUpdateDto updateBook)
         {
             var book = _mapper.Map<Book>(updateBook);
-            var result = _bookService.UpdateBook(book);
+            var result = await _bookService.UpdateBook(book);
 
-            return Ok("Update successful!");
+
+            if (result == true)
+            {
+                return Ok("Update successfull book with id : " + book.Id);
+            }
+            
+            return BadRequest("Update successful!");
         }
 
         [HttpDelete("{bookId}")]
-        public IActionResult DeleteBook(Guid bookId)
+        public async Task<IActionResult> DeleteBook(Guid bookId)
         {
-            var result = _bookService.DeleteBook(bookId);
+            var result = await _bookService.DeleteBook(bookId);
 
-            return Ok("Delete successful book with id : " + bookId);
+            if (result)
+            {
+                return Ok("Delete successful book with id : " + bookId);
+            }
+
+            return BadRequest("Delete failed book with id : " + bookId);
         }
     }
 }

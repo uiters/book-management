@@ -1,4 +1,6 @@
 import AuthorModel from "./AuthorModel";
+import CategoryModel from "./CategoryModel";
+import Photo from "./Photo";
 import PublisherModel from "./PublisherModel";
 
 type BookModel = {
@@ -12,6 +14,8 @@ type BookModel = {
   sku: string;
   author: AuthorModel;
   publisher: PublisherModel;
+  categories: CategoryModel[];
+  photos: Photo[];
 };
 
 export default BookModel;

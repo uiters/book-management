@@ -1,17 +1,16 @@
-import { URLS } from "./../../constants/url";
 import { AxiosResponse } from "axios";
-import BookModel from "../../types/models/BookModel";
 import axiosPublicClient from "../axios/axiosPublicClient";
 import NewCategoryFormData from "../../types/form/NewCategoryFormData";
+import { API_URLS } from "../../constants/api_url";
 
 const categoryApi = {
   getAllCategorys: () => {
-    const url = URLS.CATEGORY + "/getall";
+    const url = API_URLS.CATEGORY + "/getall";
     return axiosPublicClient.get(url);
   },
 
   addNewCategory: (newCategory: NewCategoryFormData) => {
-    const url = URLS.CATEGORY + "/";
+    const url = API_URLS.CATEGORY + "/";
 
     return axiosPublicClient.post(url, newCategory);
   },
