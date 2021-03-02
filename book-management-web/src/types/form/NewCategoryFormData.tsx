@@ -1,4 +1,5 @@
 type NewCategoryFormData = {
+    id: string,
     name: string,
     details: string
 }

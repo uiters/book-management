@@ -6,64 +6,64 @@ import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 //@ts-ignore
 import { useParams } from "react-router-dom";
-import categoryApi from "../../../services/api/categoryApi";
+import authorApi from "../../../services/api/authorApi";
 import { toastSuccess, toastError } from "../../../services/toastService";
-import NewCategoryFormData from "../../../types/form/NewCategoryFormData";
-import CategoryModel from "../../../types/models/CategoryModel";
+import NewAuthorFormData from "../../../types/form/NewAuthorFormData";
+import AuthorModelPage from "../../../types/models/AuthorModelPage";
 
 type idCategory = {
     id: string;
 };
 
-const UpdateCategory = () => {
+const UpdateAuthorPage = () => {
 
     const history = useHistory();
-    const [category, setCategory] = useState<CategoryModel>();
-    const { categoryId } = useParams();
+    const [author, setAuthor] = useState<AuthorModelPage>();
+    const { authorId } = useParams();
     const [isLoading, setLoading] = useState<Boolean>(false);
 
-    const getCategory = () => {
-        categoryApi
-            .getById(categoryId)
+    const getAuthor = () => {
+        authorApi
+            .getById(authorId)
             .then((response) => {
-                console.log(categoryId);
+                console.log(authorId);
                 console.log(response.data);
-                setCategory(response.data);
+                setAuthor(response.data);
                 setLoading(true);
-                toastSuccess("Load Category Success!");
+                toastSuccess("Load Author Success!");
             })
             .catch((error) => {
                 console.log(error);
-                toastError("Load Category failed!");
+                toastError("Load Author failed!");
             });
     };
 
     useEffect(() => {
-        getCategory();
+      getAuthor();
     }, []);
 
-    const onSubmit = (formData: NewCategoryFormData) => {
+    const onSubmit = (formData: NewAuthorFormData) => {
         console.log(formData);
-        categoryApi
-            .updateCategory(categoryId, formData)
+        authorApi
+            .updateAuthor(authorId, formData)
             .then((res) => {
                 console.log(res);
                 if (res.status === 200) {
-                    toastSuccess("Update  category success!");
-                    history.push("/category");
+                    toastSuccess("Update  author success!");
+                    history.push("/author");
                 }
             })
             .catch((errors) => {
-                toastError("Update  category failed");
+                toastError("Update author failed");
             });
     };
 
-    const { register, handleSubmit } = useForm<NewCategoryFormData>({
+    const { register, handleSubmit } = useForm<NewAuthorFormData>({
         mode: "onChange",
-        defaultValues: {
-            "Name": category?.name,
-            "Details": category?.details
-        }
+        // defaultValues: {
+        //     "Name": author?.name,
+        //     "Description": category?.details
+        // }
     });
 
     if (isLoading === false) {
@@ -74,7 +74,7 @@ const UpdateCategory = () => {
         <div className="min-h-screen bg-gray-50 flex flex-col justify-center">
             <div className="max-w-md w-full mx-auto">
                 <div className="text-3xl font-bold text-gray-900 mt-2 text-center">
-                    Update Category Form
+                    Update Author Form
         </div>
             </div>
             <div className="max-w-md w-full mx-auto mt-4 bg-white p-8 border border-gray-300">
@@ -87,7 +87,7 @@ const UpdateCategory = () => {
                             ref={register()}
                             // style={{borderColor: errors.name ? "red":""}}
                             // ref={register()}
-                            defaultValue={category.name}
+                            defaultValue={author.name}
                             name="Name"
                             type="text"
                             className="w-full p-2 border border-gray-300 rounded mt-1"
@@ -97,12 +97,12 @@ const UpdateCategory = () => {
 
                     <div>
                         <label htmlFor="" className="text-sm font-bold text-gray-600 block">
-                            Details
+                            Description
             </label>
                         <input
                             ref={register({ required: true })}
-                            defaultValue={category.details}
-                            name="Details"
+                            defaultValue={author.description}
+                            name="Description"
                             type="text"
                             className="w-full p-2 border border-gray-300 rounded mt-1"
                         />
@@ -118,4 +118,4 @@ const UpdateCategory = () => {
     );
 }
 
-export default UpdateCategory;
+export default UpdateAuthorPage;

@@ -50,8 +50,10 @@ namespace book_management_services.Implements
             if (author == null)
                 throw new AppException("Author not found");
 
+            author.Name = authorParam.Name;
+            author.Description = authorParam.Description;
+
             _authorRepository.Update(author);
-            _authorRepository.SaveChange();
         }
 
         public void Delete(Guid id)
