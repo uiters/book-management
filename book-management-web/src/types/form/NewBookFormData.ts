@@ -3,9 +3,10 @@ type NewBookFormData = {
     pages: number,
     description: string,
     sku: string,
-    author: string,
-    publisher: string,
+    authorName: string,
+    publisherName: string,
     price: number,
+    photos: File[]
 }
 
 export default NewBookFormData

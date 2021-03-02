@@ -2,7 +2,7 @@
 import { Switch, Route } from "react-router-dom";
 import React from "react";
 import { PATHS } from "../../constants/paths";
-import NewBookPage from "../../pages/Book/pages/NewBookPage";
+import NewBookPage from "../../pages/Book/pages/new-book/NewBookPage";
 
 const NewBookRoutes = () => {
   return (

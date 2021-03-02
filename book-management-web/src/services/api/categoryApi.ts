@@ -1,9 +1,9 @@
 import { AxiosResponse } from "axios";
-import BookModel from "../../types/models/BookModel";
 import axiosPublicClient from "../axios/axiosPublicClient";
 import NewCategoryFormData from "../../types/form/NewCategoryFormData";
 import { API_URLS } from "../../constants/api_url";
 import CategoryModel from "../../types/models/CategoryModel";
+
 
 const categoryApi = {
   getAllCategorys: () => {
@@ -13,6 +13,7 @@ const categoryApi = {
 
   addNewCategory: (newCategory: NewCategoryFormData) => {
     const url = API_URLS.CATEGORY + "/add";
+
 
     return axiosPublicClient.post(url, newCategory);
   },

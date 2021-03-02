@@ -6,9 +6,10 @@ export const PATHS = {
   ECONOMIC: "/sach-kinh-te",
   LITERATURE: "/sach-van-hoc",
   LIFESKILL: "/sach-ki-nang",
+
   BOOK_NEW: "/book/new-book",
-  DETAILS: "/details/:bookId",
   BOOK_DETAIL: "/book/:bookId",
+  BOOK_UPDATE: "/book/update/:bookId",
   BOOK: "/book",
 
   CATEGORY: '/category',

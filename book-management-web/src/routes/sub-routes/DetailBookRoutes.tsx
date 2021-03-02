@@ -1,7 +1,7 @@
 //@ts-ignore
 import { Switch, Route } from "react-router-dom";
 import { PATHS } from "../../constants/paths";
-import DetailBookPage from "../../pages/Book/detail/DetailBookPage";
+import DetailBookPage from "../../pages/Book/pages/detail/DetailBookPage";
 
 const DetailBookRoutes = () => {
   return (

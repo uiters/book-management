@@ -4,8 +4,8 @@ const Tabs = () => {
       <a href="/" className="font-bold text-lg text-blue-900">
         Home
       </a>
-      <a href="/bestseller" className="font-bold text-lg text-gray-500">
-        Bestseller
+      <a href="/book" className="font-bold text-lg text-gray-500">
+        Book
       </a>
       <a href="/Category" className="font-bold text-lg text-gray-500">
         Category

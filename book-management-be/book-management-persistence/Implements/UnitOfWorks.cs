@@ -12,6 +12,7 @@ namespace book_management_persistence.Implements
         public CategoryRepositoryImpl CategoryRepositoryImpl { get; set; }
         public AuthorRepositoryImpl AuthorRepositoryImpl { get; set; }
         public PublisherRepositoryImpl PublisherRepositoryImpl { get; set; }
+        public PhotoRepositoryImpl PhotoRepositoryImpl { get; set; }
         private bool _disposed = false;
 
         public UnitOfWorks(AppDbContext context)
@@ -72,6 +73,17 @@ namespace book_management_persistence.Implements
             }
 
             return this.PublisherRepositoryImpl;
+        }
+
+        public PhotoRepositoryImpl PhotoRepository()
+        {
+            if (this.PhotoRepositoryImpl == null)
+            {
+                this.PhotoRepositoryImpl = new PhotoRepositoryImpl(DbContext);
+                return this.PhotoRepositoryImpl;
+            }
+
+            return this.PhotoRepositoryImpl;
         }
 
         protected virtual void Dispose(bool disposing)
