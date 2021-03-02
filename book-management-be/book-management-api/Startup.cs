@@ -54,23 +54,25 @@ namespace book_management_api
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "book_management_api", Version = "v1"});
             });
 
+
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnections"),
                         b => b.MigrationsAssembly("book-management-api"))
                     .LogTo(Console.WriteLine, LogLevel.Information));
+
 
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
 
             // configure jwt authentication
-            var appSettings = appSettingsSection.Get<AppSettings>();
-            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            var appSettings = appSettingsSection.Get<AppSettings> ();
+            var key = Encoding.ASCII.GetBytes (appSettings.Secret);
             services.AddAuthentication(x =>
-                {
-                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
                 .AddJwtBearer(x =>
                 {
                     x.Events = new JwtBearerEvents
@@ -89,7 +91,6 @@ namespace book_management_api
                             return Task.CompletedTask;
                         }
                     };
-
                     x.RequireHttpsMetadata = false;
                     x.SaveToken = true;
                     x.TokenValidationParameters = new TokenValidationParameters

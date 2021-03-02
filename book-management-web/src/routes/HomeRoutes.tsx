@@ -13,7 +13,7 @@ const HomeRoutes = () => {
   const paths = useMemo(
     () =>
       Object.values(PATHS).filter(
-        (p) => p !== PATHS.LOGIN && p !== PATHS.REGISTER
+        (p) => p !== PATHS.LOGIN && p !== PATHS.REGISTER && p !== PATHS.CATEGORY && p!== PATHS.NEWCATEGORY
       ),
     []
   );

@@ -10,60 +10,58 @@ import categoryApi from "../../../services/api/categoryApi";
 import { toastSuccess, toastError } from "../../../services/toastService";
 import NewCategoryFormData from "../../../types/form/NewCategoryFormData";
 import CategoryModel from "../../../types/models/CategoryModel";
+import PublisherModelPage from "../../../types/models/PublisherModelPage";
+import publisherApi from "../../../services/api/publisherApi";
 
-type idCategory = {
-    id: string;
-};
-
-const UpdateCategory = () => {
+const UpdatePublisher = () => {
 
     const history = useHistory();
-    const [category, setCategory] = useState<CategoryModel>();
-    const { categoryId } = useParams();
+    const [publisher, setPublisher] = useState<PublisherModelPage>();
+    const { publisherId } = useParams();
     const [isLoading, setLoading] = useState<Boolean>(false);
 
-    const getCategory = () => {
-        categoryApi
-            .getById(categoryId)
+    const getPublisher = () => {
+        publisherApi
+            .getById(publisherId)
             .then((response) => {
-                console.log(categoryId);
+                console.log(publisherId);
                 console.log(response.data);
-                setCategory(response.data);
+                setPublisher(response.data);
                 setLoading(true);
-                toastSuccess("Load Category Success!");
+                toastSuccess("Load Publisher Success!");
             })
             .catch((error) => {
                 console.log(error);
-                toastError("Load Category failed!");
+                toastError("Load Publisher failed!");
             });
     };
 
     useEffect(() => {
-        getCategory();
+      getPublisher();
     }, []);
 
     const onSubmit = (formData: NewCategoryFormData) => {
         console.log(formData);
-        categoryApi
-            .updateCategory(categoryId, formData)
+        publisherApi
+            .updatePublisher(publisherId, formData)
             .then((res) => {
                 console.log(res);
                 if (res.status === 200) {
-                    toastSuccess("Update  category success!");
-                    history.push("/category");
+                    toastSuccess("Update Publisher success!");
+                    history.push("/publisher");
                 }
             })
             .catch((errors) => {
-                toastError("Update  category failed");
+                toastError("Update Publisher failed");
             });
     };
 
     const { register, handleSubmit } = useForm<NewCategoryFormData>({
         mode: "onChange",
-        defaultValues: {
-            "Name": category?.name,
-            "Details": category?.details
-        }
+        // defaultValues: {
+        //     "Name": category?.name,
+        //     "Details": category?.details
+        // }
     });
 
     if (isLoading === false) {
@@ -74,7 +72,7 @@ const UpdateCategory = () => {
         <div className="min-h-screen bg-gray-50 flex flex-col justify-center">
             <div className="max-w-md w-full mx-auto">
                 <div className="text-3xl font-bold text-gray-900 mt-2 text-center">
-                    Update Category Form
+                    Update Publisher Form
         </div>
             </div>
             <div className="max-w-md w-full mx-auto mt-4 bg-white p-8 border border-gray-300">
@@ -87,7 +85,7 @@ const UpdateCategory = () => {
                             ref={register()}
                             // style={{borderColor: errors.name ? "red":""}}
                             // ref={register()}
-                            defaultValue={category.name}
+                            defaultValue={publisher.name}
                             name="Name"
                             type="text"
                             className="w-full p-2 border border-gray-300 rounded mt-1"
@@ -95,18 +93,7 @@ const UpdateCategory = () => {
                         {/* {errors.name && "Username is invalid"} */}
                     </div>
 
-                    <div>
-                        <label htmlFor="" className="text-sm font-bold text-gray-600 block">
-                            Details
-            </label>
-                        <input
-                            ref={register({ required: true })}
-                            defaultValue={category.details}
-                            name="Details"
-                            type="text"
-                            className="w-full p-2 border border-gray-300 rounded mt-1"
-                        />
-                    </div>
+                    
                     <div>
                         <button type="submit" className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 rounded-md text-white text-sm">
                             Submit
@@ -118,4 +105,4 @@ const UpdateCategory = () => {
     );
 }
 
-export default UpdateCategory;
+export default UpdatePublisher;

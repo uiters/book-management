@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace book_management_api.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("/api/author/")]
     public class AuthorController : ControllerBase

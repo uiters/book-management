@@ -6,12 +6,16 @@ import LoginRoutes from "./LoginRoutes";
 import RegisterRoutes from "./RegisterRoutes";
 import CategoryRoutes from "./CategoryRoutes";
 import Header from "../components/Header";
+import AuthorRoutes from "./AuthorRoutes";
+import PublisherRoutes from './PublisherRoutes';
 
 const Routes = () => {
   return (
     <BrowserRouter>
       <Header></Header>
-      <CategoryRoutes />
+      <PublisherRoutes/>
+      <AuthorRoutes/>
+      <CategoryRoutes/>
       <LoginRoutes />
       <RegisterRoutes />
       <HomeRoutes />

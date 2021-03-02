@@ -2,28 +2,28 @@
 import { useForm } from "react-hook-form";
 //@ts-ignore
 import { useHistory } from "react-router-dom";
-import categoryApi from "../../../services/api/categoryApi";
 import { ToastContainer, toast } from "react-toastify";
-import NewCategoryFormData from "../../../types/form/NewCategoryFormData";
 import { toastError, toastSuccess } from "../../../services/toastService";
+import NewAuthorFormData from "../../../types/form/NewAuthorFormData";
+import authorApi from "../../../services/api/authorApi";
 
-const NewCategory = () => {
+const NewAuthorPage = () => {
   const history = useHistory();
 
-  const { register, handleSubmit } = useForm<NewCategoryFormData>({
+  const { register, handleSubmit } = useForm<NewAuthorFormData>({
     mode: "onChange",
   });
 
-  const onSubmit = (formData: NewCategoryFormData) => {
+  const onSubmit = (formData: NewAuthorFormData) => {
     console.log(formData);
 
-    categoryApi
-      .addNewCategory(formData)
+    authorApi
+      .addNewAuthor(formData)
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
           toastSuccess("Create new category success!");
-          history.push("/category");
+          history.push("/author");
         }
       })
       .catch((errors) => {
@@ -34,8 +34,11 @@ const NewCategory = () => {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center">
       <div className="max-w-md w-full mx-auto">
+        {/* <div className="text-center font-medium text-xl">
+                    something
+                </div> */}
         <div className="text-3xl font-bold text-gray-900 mt-2 text-center">
-          Create Category Form
+          Create Author Form
         </div>
       </div>
       <div className="max-w-md w-full mx-auto mt-4 bg-white p-8 border border-gray-300">
@@ -57,11 +60,11 @@ const NewCategory = () => {
 
           <div>
             <label htmlFor="" className="text-sm font-bold text-gray-600 block">
-              Details
+              Description
             </label>
             <input
               ref={register({required: true})}
-              name="Details"
+              name="Description"
               type="text"
               className="w-full p-2 border border-gray-300 rounded mt-1"
             />
@@ -77,4 +80,4 @@ const NewCategory = () => {
   );
 };
 
-export default NewCategory;
+export default NewAuthorPage;

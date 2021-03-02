@@ -12,7 +12,16 @@ export const PATHS = {
   BOOK_UPDATE: "/book/update/:bookId",
   BOOK: "/book",
 
+  CATEGORY: '/category',
+  NEWCATEGORY:'/category/new-category',
+  CATEGORY_UDPATE: '/category/update/:categoryId',
 
-  CATEGORY: "/category",
-  NEWCATEGORY: "/new-category",
+  AUTHOR: '/author',
+  NEWAUTHOR:'/author/new-author',
+  AUTHOR_UDPATE: '/author/update/:authorId',
+
+  PUBLISHER: '/publisher',
+  NEWPUBLISHER:'/publisher/new-publisher',
+  PUBLISHER_UDPATE: '/publisher/update/:publisherId',
 };
+

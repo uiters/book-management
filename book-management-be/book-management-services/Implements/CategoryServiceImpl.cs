@@ -47,6 +47,9 @@ namespace book_management_services.Implements
             if (category == null)
                 throw new AppException("Category not found");
 
+            category.Name = categoryParam.Name;
+            category.Details = categoryParam.Details;
+
             _categoryRepository.Update(category);
         }
 

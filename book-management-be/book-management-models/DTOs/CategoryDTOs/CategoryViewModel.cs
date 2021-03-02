@@ -11,5 +11,6 @@ namespace book_management_models.DTOs.CategoryDTOs
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Details { get; set; }
+        public string Slug { get; set; }
     }
 }

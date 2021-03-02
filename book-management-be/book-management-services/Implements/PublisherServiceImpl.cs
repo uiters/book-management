@@ -50,6 +50,8 @@ namespace book_management_services.Implements
             if (publisher == null)
                 throw new AppException("Publisher not found");
 
+            publisher.Name = publisherParam.Name;
+
             _publisherRepository.Update(publisher);
         }
 
