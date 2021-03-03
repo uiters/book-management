@@ -18,4 +18,4 @@ const PublisherRoutes = () => {
   );
 };
 
-export default React.memo(PublisherRoutes);
+export default PublisherRoutes;

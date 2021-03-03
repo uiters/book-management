@@ -39,6 +39,7 @@ const DetailBookPage = () => {
       name: "",
     },
     author: {
+      id: "",
       name: "",
     },
     categories: [],

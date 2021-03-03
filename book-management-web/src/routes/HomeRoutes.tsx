@@ -8,12 +8,15 @@ import MainPageRoutes from "./sub-routes/MainPageRoutes";
 import CategoryPageRoutes from "./sub-routes/CategoryPageRoutes";
 import { PATHS } from "../constants/paths";
 import BookRoutes from "./BookRoutes";
+import PublisherRoutes from "./PublisherRoutes";
+import AuthorRoutes from "./AuthorRoutes";
+import CategoryRoutes from "./CategoryRoutes";
 
 const HomeRoutes = () => {
   const paths = useMemo(
     () =>
       Object.values(PATHS).filter(
-        (p) => p !== PATHS.LOGIN && p !== PATHS.REGISTER && p !== PATHS.CATEGORY && p!== PATHS.NEWCATEGORY
+        (p) => p !== PATHS.LOGIN && p !== PATHS.REGISTER
       ),
     []
   );
@@ -31,6 +34,9 @@ const HomeRoutes = () => {
                 <CategoryPageRoutes></CategoryPageRoutes>
                 <BookRoutes></BookRoutes>
                 <MainPageRoutes></MainPageRoutes>
+                <PublisherRoutes></PublisherRoutes>
+                <AuthorRoutes></AuthorRoutes>
+                <CategoryRoutes />
                 <ToastContainer />
               </div>
             </div>

@@ -17,7 +17,7 @@ const NewBookPage = () => {
   const [isLeave, setIsLeave] = useState<Boolean>(false);
   const { register, handleSubmit, errors, reset } = useForm<NewBookFormData>({
     mode: "onChange",
-    revalidateModel: "onChange",
+    reValidateModel: "onChange",
   });
   const history = useHistory();
 
