@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using book_management_models;
 using book_management_persistence.Contexts;
@@ -110,6 +111,29 @@ namespace book_management_persistence.Implements
         public virtual T GetById(object id)
         {
             return DbSet.Find(id);
+        }
+
+        public virtual IEnumerable<T> GetMultiPaging(/*out int total,*/string searchTitle, int index = 0, int size = 20, string[] includes = null)
+        {
+            int skipCount = index * size;
+            IQueryable<T> _resetSet;
+
+            //HANDLE INCLUDES FOR ASSOCIATED OBJECTS IF APPLICABLE
+            if (includes != null && includes.Count() > 0)
+            {
+                var query = Context.Set<T>().Include(includes.First());
+                foreach (var include in includes.Skip(1))
+                    query = query.Include(include);
+                _resetSet = query.AsQueryable();
+            }
+            else
+            {
+                _resetSet = Context.Set<T>().AsQueryable();
+            }
+
+            _resetSet = skipCount == 0 ? _resetSet.Take(size) : _resetSet.Skip(skipCount).Take(size);
+            //total = _resetSet.Count();
+            return _resetSet.AsQueryable();
         }
     }
 }

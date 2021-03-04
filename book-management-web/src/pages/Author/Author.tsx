@@ -9,6 +9,9 @@ import AuthorModelPage from "../../types/models/AuthorModelPage";
 import Swal from 'sweetalert2';
 //@ts-ignore
 import { useHistory } from "react-router-dom";
+import updateSrc from '../../assets/update-icon.png';
+import deleteSrc from '../../assets/delete-icon.png';
+import AuthorModel from "../../types/models/AuthorModel";
 
 const Author = () => {
 
@@ -51,23 +54,15 @@ const Author = () => {
     datas.push(
       <tr key={author.id}>
         {/* <td className="border border-blue-600">{category.id}</td> */}
-        <td className="border border-blue-600">{author.name}</td>
-        <td className="border border-blue-600">{author.description}</td>
+        <td className="border border-blue-600 w-3/12 text-left" >{author.name}</td>
+        <td className="border border-blue-600 w-8/12 text-left">{author.description}</td>
         <td className="border border-blue-600">
-          <Link to={"/author/update/" + author.id} className="badge badge-warning ">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-              <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
-              <path fillRule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clipRule="evenodd" />
-            </svg>
-            Update
+          <Link to={"/author/update/" + author.id} className="badge badge-warning float-left ml-3">
+            <img src={updateSrc} className="" />
           </Link>
-        </td>
-        <td className="border border-blue-600">
-          <button onClick={() => { onDelete(author.id) }}>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
-            </svg>
-            Delete
+        
+          <button className="float-right mr-3" onClick={() => { onDelete(author.id) }}>
+            <img src={deleteSrc} alt="" />
           </button>
         </td>
       </tr>
@@ -91,7 +86,9 @@ const Author = () => {
             console.log(res);
             if (res.status === 200) {
               toastSuccess("Delete  author success!");
-              window.location.reload();
+              // window.location.reload();
+              const removedList = listAuthors.filter((author: AuthorModelPage) => author.id !== id);
+              setListAuthors(removedList);
             }
           })
           .catch((errors) => {
@@ -103,24 +100,27 @@ const Author = () => {
 
   return (
 
-    <div className="mt-16 ml-10">
+    <div className="related-items  items-start border mt-8 p-4 gap-y-5 bg-white">
       <br />
-      <Link to={'/author/new-author'} className="py-2 px-4 bg-blue-600 hover:bg-blue-700 rounded-md text-white text-sm mt-8" >Add New</Link>
+      <h1 className="mb-10 font-bold text-xl">AUTHOR PAGE</h1>
 
-      <table className='border-collapse border border-blue-800 mt-8'>
-        <thead>
-          <tr>
-            {/* <th className="border border-blue-600">ID</th> */}
-            <th className="border border-blue-600">Name</th>
-            <th className="border border-blue-600">Description</th>
-            <th className="border border-blue-600"></th>
-            <th className="border border-blue-600"></th>
-          </tr>
-        </thead>
-        <tbody>
-          {datas}
-        </tbody>
-      </table>
+      <Link to={'/author/new-author'} className="py-2 px-4 bg-blue-400 hover:bg-blue-500 rounded-md text-white text-sm mt-8" >Add New</Link>
+      <div className="flex flex-col">
+        <table className='border-collapse border border-blue-800 mt-8 justify-center'>
+          <thead className='bg-blue-400'>
+            <tr>
+              {/* <th className="border border-blue-600">ID</th> */}
+              <th className="border border-blue-600">Name</th>
+              <th className="border border-blue-600">Description</th>
+              <th className="border border-blue-600"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {datas}
+          </tbody>
+        </table>
+      </div>
+      
     </div>
   );
 }

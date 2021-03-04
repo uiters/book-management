@@ -16,8 +16,9 @@ namespace book_management_helpers
 
             var bookData =
                 System.IO.File.ReadAllText(
-                    "D:/source/DE_assignment/book-management-be/book-management-helpers/MockData/EconomicBookData.json");
-                    //"D:/Project VS/.net core/samples/DE_assignment-main/DE_assignment/book-management-be/book-management-helpers/MockData/BookData.json");
+                    //"D:/source/DE_assignment/book-management-be/book-management-helpers/MockData/LiteratureBookData.json");
+                    "D:/Project VS/.net core/samples/DE_assignment/DE_assignment/book-management-be/book-management-helpers/MockData/SkillBookData.json");
+
             var books = JsonConvert.DeserializeObject<List<Book>>(bookData);
 
             foreach (var book in books)
@@ -26,7 +27,7 @@ namespace book_management_helpers
                 Author randomAuthor = context.Authors.OrderBy(a => Guid.NewGuid()).First();
                 Publisher randomPublisher = context.Publishers.OrderBy((p => Guid.NewGuid())).First();
 
-                Category category = context.Categories.FirstOrDefault(c => c.Name.Equals("Sách Kinh Tế"));
+                Category category = context.Categories.FirstOrDefault(c => c.Name.Equals("Sách Kĩ Năng"));
 
                 book.AuthorId = randomAuthor.Id;
                 book.PublisherId = randomPublisher.Id;
@@ -45,7 +46,7 @@ namespace book_management_helpers
 
             var authorData = System.IO.File.ReadAllText(
                 //"D:/source/DE_assignment/book-management-be/book-management-helpers/MockData/AuthorData.json");
-                "D:/Project VS/.net core/samples/DE_assignment-main/DE_assignment/book-management-be/book-management-helpers/MockData/AuthorData.json");
+                "D:/Project VS/.net core/samples/DE_assignment/DE_assignment/book-management-be/book-management-helpers/MockData/AuthorData.json");
 
             var authors = JsonConvert.DeserializeObject<List<Author>>(authorData);
 
@@ -64,7 +65,7 @@ namespace book_management_helpers
 
             var categoryData = System.IO.File.ReadAllText(
                 //"D:/source/DE_assignment/book-management-be/book-management-helpers/MockData/CategoryData.json");
-                "D:/Project VS/.net core/samples/DE_assignment-main/DE_assignment/book-management-be/book-management-helpers/MockData/CategoryData.json");
+                "D:/Project VS/.net core/samples/DE_assignment/DE_assignment/book-management-be/book-management-helpers/MockData/CategoryData.json");
             var categories = JsonConvert.DeserializeObject<List<Category>>(categoryData);
 
             foreach (var category in categories)
@@ -82,7 +83,7 @@ namespace book_management_helpers
 
             var publisherData = System.IO.File.ReadAllText(
             //"D:/source/DE_assignment/book-management-be/book-management-helpers/MockData/PublisherData.json");
-            "D:/Project VS/.net core/samples/DE_assignment-main/DE_assignment/book-management-be/book-management-helpers/MockData/PublisherData.json");
+            "D:/Project VS/.net core/samples/DE_assignment/DE_assignment/book-management-be/book-management-helpers/MockData/PublisherData.json");
             var publishers = JsonConvert.DeserializeObject<List<Publisher>>(publisherData);
 
             foreach (var publisher in publishers)

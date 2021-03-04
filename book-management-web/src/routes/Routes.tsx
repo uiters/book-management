@@ -7,12 +7,11 @@ import RegisterRoutes from "./RegisterRoutes";
 import CategoryRoutes from "./CategoryRoutes";
 import Header from "../components/Header";
 import AuthorRoutes from "./AuthorRoutes";
-import PublisherRoutes from "./PublisherRoutes";
-import CartRoutes from "./CartRoutes";
 
 const Routes = () => {
   return (
     <BrowserRouter>
+      <Header></Header>
       <LoginRoutes />
       <RegisterRoutes />
       <HomeRoutes />

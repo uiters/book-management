@@ -22,7 +22,7 @@ const NewBookPage = () => {
   const [description, setDescription] = useState<string>("");
   const { register, handleSubmit, errors, reset } = useForm<NewBookFormData>({
     mode: "onChange",
-    revalidateModel: "onChange",
+    reValidateModel: "onChange",
   });
   const history = useHistory();
 

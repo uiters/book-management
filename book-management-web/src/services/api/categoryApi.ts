@@ -1,9 +1,11 @@
 import { AxiosResponse } from "axios";
+import BookModel from "../../types/models/BookModel";
+import queryString from 'query-string';
 import axiosPublicClient from "../axios/axiosPublicClient";
 import NewCategoryFormData from "../../types/form/NewCategoryFormData";
 import { API_URLS } from "../../constants/api_url";
 import CategoryModel from "../../types/models/CategoryModel";
-
+import PaginationModel from "../../types/models/PaginationModel";
 
 const categoryApi = {
   getAllCategorys: () => {
@@ -11,9 +13,15 @@ const categoryApi = {
     return axiosPublicClient.get(url);
   },
 
+  getCategory: (param: PaginationModel) => {
+    const url = API_URLS.CATEGORY + "/getbyfilter/"; 
+
+
+    return axiosPublicClient.get(url);
+  },
+
   addNewCategory: (newCategory: NewCategoryFormData) => {
     const url = API_URLS.CATEGORY + "/add";
-
 
     return axiosPublicClient.post(url, newCategory);
   },
@@ -46,9 +54,17 @@ const categoryApi = {
     };
 
     return axiosPublicClient.delete(url, config);
-
-
   }
 };
 
 export default categoryApi;
+
+
+
+    // const config = {
+    //   params: {
+    //     searchTitle: param.title,
+    //     page: param.page,
+    //     pageSize: param.size
+    //   },
+    // };

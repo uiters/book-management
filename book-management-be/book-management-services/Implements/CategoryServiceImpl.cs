@@ -87,5 +87,10 @@ namespace book_management_services.Implements
         {
             return _categoryRepository.GetCategoryByName(szName);
         }
+
+        public IEnumerable<Category> GetAllPaging(string searchTitle, int page, int pageSize/*, out int totalRow*/)
+        {
+            return _categoryRepository.GetMultiPaging(/*out totalRow,*/searchTitle, page, pageSize);
+        }
     }
 }

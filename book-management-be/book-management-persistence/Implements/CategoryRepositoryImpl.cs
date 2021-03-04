@@ -24,5 +24,7 @@ namespace book_management_persistence.Implements
             var category = this.Context.Categories.Where(x => x.Name.Contains(szName)).ToList();
             return category;
         }
+
+
     }
 }
