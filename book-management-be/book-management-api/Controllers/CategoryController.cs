@@ -72,6 +72,18 @@ namespace book_management_api.Controllers
             return Ok(model);
         }
 
+        [HttpGet("getbyfilter")]
+        public IActionResult GetByFilter(string searchTitle, int page, int pageSize)
+        {
+            var categorys = _categoryService.GetAllPaging(searchTitle, page, pageSize);
+            var model = _mapper.Map<List<CategoryViewModel>>(categorys);
+            if (model.Count == 0)
+            {
+                throw new MyEmptyResultException(HttpStatusCode.NotAcceptable, "Can't find Category in database!");
+            }
+            return Ok(model);
+        }
+
         [HttpGet("getbyid/{id}")]
         public IActionResult GetById(Guid id)
         {

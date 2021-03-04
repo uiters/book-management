@@ -1,7 +1,7 @@
 type PaginationModel = {
-    searchTitle: string,
-    page: number,
-    pagination: number
+    data : any, 
+    itemsPerPage: number, 
+    startFrom: number
 }
 
 export default PaginationModel;
