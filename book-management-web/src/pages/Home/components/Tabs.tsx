@@ -10,9 +10,6 @@ const Tabs = () => {
       <a href="/Category" className="font-bold text-lg text-gray-500">
         Category
       </a>
-      <a href="/Store" className="font-bold text-lg text-gray-500">
-        Find a store
-      </a>
       <a href="/Author" className="font-bold text-lg text-gray-500">
         Author
       </a>

@@ -35,15 +35,15 @@ const ListBook = (info: ListInfo) => {
     bookApi
       .getByCategory(info.category)
       .then((response) => {
-        console.log(response.data);
         if (isMounted) {
           setListBook(response.data);
         }
-        console.log(listBook);
       })
       .catch((errors) => {
         console.log(errors);
       });
+
+    console.log(listBook);
 
     return () => {
       isMounted = false;
@@ -79,8 +79,7 @@ const ListBook = (info: ListInfo) => {
             </a>
           </div>
         </div>
-
-        <div className="slider z-20 w-full bg-gray-200">
+        <div className="slider z-20 w-full">
           <Slider {...sliderOptions}>{listUI}</Slider>
         </div>
       </div>

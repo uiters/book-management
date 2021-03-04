@@ -45,5 +45,11 @@ namespace book_management_persistence.Implements
                 
             return books;
         }
+
+        public bool IsBookExisted(string title)
+        {
+            var result = DbSet.Any(b => b.Title.Equals(title));
+            return result;
+        }
     }
 }
