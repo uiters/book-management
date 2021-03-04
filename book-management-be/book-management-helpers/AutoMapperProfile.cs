@@ -2,6 +2,7 @@
 using book_management_models;
 using book_management_models.DTOs.AuthorDTOs;
 using book_management_models.DTOs.BookDTOs;
+using book_management_models.DTOs.CartItemDTOs;
 using book_management_models.DTOs.CategoryDTOs;
 using book_management_models.DTOs.PublisherDTOs;
 using book_management_models.DTOs.UserDTOs;
@@ -14,6 +15,8 @@ namespace book_management_helpers
         {
             CreateMap<Book, BookForListDTO>().ReverseMap();
             CreateMap<Book, BookForCreateDTO>().ReverseMap();
+            CreateMap<Book, BookForCartDTO>().ReverseMap();
+            
             CreateMap<User, UserModel>().ReverseMap();
             CreateMap<RegisterModel, User>().ReverseMap();
             CreateMap<UpdateModel, User>().ReverseMap();
@@ -28,6 +31,9 @@ namespace book_management_helpers
 
             CreateMap<AuthorModel, Author>().ReverseMap();
             CreateMap<AuthorViewModel, Author>().ReverseMap();
+
+            CreateMap<CartItemForCreateDTO, CartItem>();
+            CreateMap<CartItem, CartItemForListDTO>();
         }
     }
 }

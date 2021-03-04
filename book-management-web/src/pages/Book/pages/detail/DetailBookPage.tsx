@@ -15,7 +15,10 @@ import AskSection from "./components/AskSection";
 import GeneralInfo from "./components/GeneralInfo";
 import { PATHS } from "../../../../constants/paths";
 import Photo from "../../../../types/models/Photo";
-import ImageSlides from "./components/ImageSlides";
+import CartItemModel from "../../../../types/models/CartItemModel";
+import cartApi from "../../../../services/api/cartApi";
+import User from "../../../../types/models/UserModel";
+import NumberFormat from "react-number-format";
 
 const sliderOptions = {
   dots: false,
@@ -23,15 +26,17 @@ const sliderOptions = {
   speed: 1000,
   slidesToShow: 5,
   slidesToScroll: 5,
-  className: "ountline-none",
+  className: "outline-none",
   prevArrow: <PrevArrow></PrevArrow>,
   nextArrow: <NextArrow></NextArrow>,
 };
 
 const DetailBookPage = () => {
-  const [quantity, setQuantity] = useState<number>(0);
+  const [quantity, setQuantity] = useState<number>(1);
   let imageUrls: string[] = [];
   const { bookId } = useParams();
+  const user: User = JSON.parse(localStorage.getItem("user") || "{}");
+
   const [isMounted, setIsMounted] = useState(false);
   const [book, setBook] = useState<BookModel>({
     id: "",
@@ -68,6 +73,28 @@ const DetailBookPage = () => {
       });
   };
 
+  const onAddToCartClick = () => {
+    const cartItem: CartItemModel = {
+      bookId: bookId,
+      userId: user.id,
+      quantity: quantity,
+      id: "",
+    };
+
+    console.log(cartItem);
+
+    cartApi
+      .addCartItem(cartItem)
+      .then((response) => {
+        toastSuccess("Add new item to cart success!");
+        console.log(response.data);
+      })
+      .catch((error) => {
+        toastError("Add new item to cart failed!");
+        console.log(error);
+      });
+  };
+
   useEffect(() => {
     getBook();
     return () => {
@@ -89,8 +116,13 @@ const DetailBookPage = () => {
           <h1 className="text-3xl mb-2">{book.title}</h1>
           <BeautyStars value={book.avgRating}></BeautyStars>
           <div className="price bg-gray-200 p-2 w-full flex flex-col items-start border-t">
-            <h3 className="font-bold text-2xl">
-              {book.price} <u>đ</u>
+            <h3 className="font-bold text-2xl hover:underline">
+              <NumberFormat
+                value={book.price}
+                displayType={"text"}
+                thousandSeparator={true}
+                suffix={"đ"}
+              ></NumberFormat>
             </h3>
             <p className="font-bold text-red-700">Rẻ hơn hoàn tiền</p>
           </div>
@@ -99,7 +131,7 @@ const DetailBookPage = () => {
             <button
               className="focus:outline-none px-3"
               onClick={() => setQuantity(quantity - 1)}
-              disabled={quantity == 0 ? true : false}
+              disabled={quantity == 1 ? true : false}
             >
               -
             </button>
@@ -118,7 +150,10 @@ const DetailBookPage = () => {
             </button>
           </div>
 
-          <button className="bg-red-500 hover:bg-red-600 px-12 py-2 rounded-md text-white font-bold w-1/2">
+          <button
+            className="bg-red-500 hover:bg-red-600 px-12 py-2 rounded-md text-white font-bold w-1/2"
+            onClick={onAddToCartClick}
+          >
             Chọn mua
           </button>
         </div>

@@ -14,10 +14,12 @@ namespace book_management_services.Implements
     public class UserServiceImpl : IUserService
     {
         private AppDbContext _context;
+        private ICartService _cartService;
 
-        public UserServiceImpl(AppDbContext context)
+        public UserServiceImpl(AppDbContext context, ICartService cartService)
         {
             _context = context;
+            this._cartService = cartService;
         }
 
         public User Authenticate(string username, string password, string email)
@@ -67,7 +69,8 @@ namespace book_management_services.Implements
             }
             else if (ValidateUser.ValidatePassword(user.Password) == false)
             {
-                throw new AppException("Password have length in range 8-15 character and have at least 1 uppercase, 1 lowercase, 1 digit");
+                throw new AppException(
+                    "Password have length in range 8-15 character and have at least 1 uppercase, 1 lowercase, 1 digit");
             }
 
             if (_context.Users.Any(x => x.Username == user.Username))
@@ -94,6 +97,8 @@ namespace book_management_services.Implements
 
             _context.Users.Add(user);
             _context.SaveChanges();
+
+            _cartService.AddCart(new Cart() {UserId = user.Id});
 
             return user;
         }
@@ -125,7 +130,8 @@ namespace book_management_services.Implements
                 byte[] passwordHash, passwordSalt;
 
                 if (ValidateUser.ValidatePassword(user.Password) == false)
-                    throw new AppException("Password have length in range 8-15 character and have at least 1 uppercase, 1 lowercase, 1 digit");
+                    throw new AppException(
+                        "Password have length in range 8-15 character and have at least 1 uppercase, 1 lowercase, 1 digit");
 
                 CreatePasswordHash(password, out passwordHash, out passwordSalt);
 
@@ -152,7 +158,8 @@ namespace book_management_services.Implements
         private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             if (password == null) throw new ArgumentNullException("password");
-            if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
+            if (string.IsNullOrWhiteSpace(password))
+                throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
 
             using (var hmac = new System.Security.Cryptography.HMACSHA512())
             {
@@ -164,9 +171,12 @@ namespace book_management_services.Implements
         private static bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)
         {
             if (password == null) throw new ArgumentNullException("password");
-            if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
-            if (storedHash.Length != 64) throw new ArgumentException("Invalid length of password hash (64 bytes expected).", "passwordHash");
-            if (storedSalt.Length != 128) throw new ArgumentException("Invalid length of password salt (128 bytes expected).", "passwordHash");
+            if (string.IsNullOrWhiteSpace(password))
+                throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
+            if (storedHash.Length != 64)
+                throw new ArgumentException("Invalid length of password hash (64 bytes expected).", "passwordHash");
+            if (storedSalt.Length != 128)
+                throw new ArgumentException("Invalid length of password salt (128 bytes expected).", "passwordHash");
 
             using (var hmac = new System.Security.Cryptography.HMACSHA512(storedSalt))
             {

@@ -1,10 +1,22 @@
 //@ts-ignore
 import { Link } from "react-router-dom";
+import { PATHS } from "../constants/paths";
+import User from "../types/models/UserModel";
 
 const Header = () => {
+  const user: User = JSON.parse(localStorage.getItem("user") || "{}");
+  const token = localStorage.getItem("token");
+
+  const logOut = () => {
+    console.log("log out trigger");
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.reload();
+  };
+
   return (
-    <div className="header w-full items-center text-center bg-indigo-300 fixed top-0 mb-6 z-50">
-      <div className="container flex gap-x-7 w-10/12 items-center mx-auto py-2">
+    <div className="header w-full items-center text-center bg-indigo-300 fixed top-0 mb-6 z-20">
+      <div className="container flex gap-x-7 w-11/12 items-center mx-auto py-2">
         <div className="name w-32">
           <Link to={"/"} className="font-bold text-2xl">
             Booksy
@@ -32,30 +44,51 @@ const Header = () => {
           </svg>
         </div>
         <div className="buttons flex gap-x-4 items-center justify-center">
-          <svg
-            className="w-8 h-8"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-            />
-          </svg>
-          <button className="rounded-full w-8 h-8 bg-blue-900">
-            <a href="/login">T</a>
-          </button>
-          <p className="font-bold">EN</p>
-          <Link to={"/login"} className="font-bold">
-            Login
-          </Link>
-          <Link to={"/register"} className="font-bold">
-            Register
-          </Link>
+          {token !== null && (
+            <div className="flex space-x-3 items-center">
+              <div className="cartIcon">
+                {/* <span
+                  className="rounded-full px-2 align-top bg-gray-400 -ml-2 text-md"
+                  id="lblCartCount"
+                >
+                  {" "}
+                  5{" "}
+                </span> */}
+                <a href={PATHS.CART}>
+                  <img
+                    className="w-6 h-6"
+                    src="https://www.flaticon.com/svg/vstatic/svg/590/590509.svg?token=exp=1614738035~hmac=22ad4b86bf6aed327d508b71060c5d90"
+                    alt=""
+                  />
+                </a>
+              </div>
+
+              <p className="font-bold">{"" || user?.name}</p>
+              <div className="dropdown group relative inline-block hover:block">
+                <button className="rounded-full w-8 h-8 bg-blue-900">
+                  <a>{"" || user.name?.charAt(0).toUpperCase()}</a>
+                </button>
+                <div className="dropdown-content group-hover:block hidden group-hover:bg-gray-400 group-hover:text-red-500 absolute z-50"></div>
+              </div>
+              <button
+                className=" font-bold focus:outline-none"
+                onClick={logOut}
+              >
+                Log Out
+              </button>
+            </div>
+          )}
+
+          {(token === null || token === "") && (
+            <div className="space-x-2">
+              <Link to={"/login"} className="font-bold">
+                Login
+              </Link>
+              <Link to={"/register"} className="font-bold">
+                Register
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </div>

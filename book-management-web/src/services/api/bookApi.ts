@@ -12,8 +12,6 @@ const bookApi = {
 
   getByCategory: (category: string): Promise<AxiosResponse<BookModel[]>> => {
     const url = API_URLS.BOOK + "/category";
-    
-
     const config = {
       params: {
         categoryName: category,

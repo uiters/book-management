@@ -7,8 +7,6 @@ import RegisterRoutes from "./RegisterRoutes";
 import CategoryRoutes from "./CategoryRoutes";
 import Header from "../components/Header";
 import AuthorRoutes from "./AuthorRoutes";
-import PublisherRoutes from './PublisherRoutes';
-import Tabs from "../pages/Home/components/Tabs";
 
 const Routes = () => {
   return (

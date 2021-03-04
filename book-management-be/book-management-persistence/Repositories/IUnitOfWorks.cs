@@ -13,5 +13,7 @@ namespace book_management_persistence.Repositories
         AuthorRepositoryImpl AuthorRepository();
         PublisherRepositoryImpl PublisherRepository();
         PhotoRepositoryImpl PhotoRepository();
+        CartRepositoryImpl CartRepository();
+        CartItemRepositoryImpl CartItemRepository();
     }
 }

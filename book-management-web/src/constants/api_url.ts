@@ -3,5 +3,6 @@ export const API_URLS = {
     LOGIN: '/login',
     CATEGORY: '/category',
     AUTHOR: '/author',
-    PUBLISHER: '/publisher'
+    PUBLISHER: '/publisher',
+    CART:'/cart-item'
 }

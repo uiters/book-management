@@ -7,14 +7,27 @@ import NewBookPage from "../pages/Book/pages/new-book/NewBookPage";
 import DetailBookPage from "../pages/Book/pages/detail/DetailBookPage";
 import BookPage from "../pages/Book/BookPage";
 import UpdateBookPage from "../pages/Book/pages/update-book/UpdateBookPage";
+import AuthenticatedGuard from "./AuthenticatedGuard";
 
 const BookRoutes = () => {
   return (
     <Switch>
-      <Route exact path={PATHS.BOOK_NEW} component={NewBookPage}></Route>
+      <AuthenticatedGuard
+        exact
+        path={PATHS.BOOK_NEW}
+        component={NewBookPage}
+      ></AuthenticatedGuard>
       <Route exact path={PATHS.BOOK_DETAIL} component={DetailBookPage}></Route>
-      <Route exact path={PATHS.BOOK_UPDATE} component={UpdateBookPage}></Route>
-      <Route exact path={PATHS.BOOK} component={BookPage}></Route>
+      <AuthenticatedGuard
+        exact
+        path={PATHS.BOOK_UPDATE}
+        component={UpdateBookPage}
+      ></AuthenticatedGuard>
+      <AuthenticatedGuard
+        exact
+        path={PATHS.BOOK}
+        component={BookPage}
+      ></AuthenticatedGuard>
     </Switch>
   );
 };

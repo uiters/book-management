@@ -66,13 +66,13 @@ namespace book_management_api
             services.Configure<AppSettings>(appSettingsSection);
 
             // configure jwt authentication
-            var appSettings = appSettingsSection.Get<AppSettings> ();
-            var key = Encoding.ASCII.GetBytes (appSettings.Secret);
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
             services.AddAuthentication(x =>
-            {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
+                {
+                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
                 .AddJwtBearer(x =>
                 {
                     x.Events = new JwtBearerEvents
@@ -109,8 +109,8 @@ namespace book_management_api
                     .AllowAnyMethod()
                     .AllowAnyHeader());
             });
-            
-            
+
+
             //Cloudiary config
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
 
@@ -121,6 +121,8 @@ namespace book_management_api
             services.AddScoped<IPublisherRepository, PublisherRepositoryImpl>();
             services.AddScoped<IAuthorRepository, AuthorRepositoryImpl>();
             services.AddScoped<IPhotoRepository, PhotoRepositoryImpl>();
+            services.AddScoped<ICartRepository, CartRepositoryImpl>();
+            services.AddScoped<ICartItemRepository, CartItemRepositoryImpl>();
 
             //Servies register
             services.AddScoped<IBookService, BookServiceImpl>();
@@ -129,6 +131,8 @@ namespace book_management_api
             services.AddScoped<IPublisherService, PublisherServiceImpl>();
             services.AddScoped<IAuthorService, AuthorServiceImpl>();
             services.AddScoped<IPhotoService, PhotoServiceImpl>();
+            services.AddScoped<ICartService, CartServiceImpl>();
+            services.AddScoped<ICartItemService, CartItemServiceImpl>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

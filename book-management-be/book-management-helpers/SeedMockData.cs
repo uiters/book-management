@@ -18,6 +18,7 @@ namespace book_management_helpers
                 System.IO.File.ReadAllText(
                     //"D:/source/DE_assignment/book-management-be/book-management-helpers/MockData/LiteratureBookData.json");
                     "D:/Project VS/.net core/samples/DE_assignment/DE_assignment/book-management-be/book-management-helpers/MockData/SkillBookData.json");
+
             var books = JsonConvert.DeserializeObject<List<Book>>(bookData);
 
             foreach (var book in books)

@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axiosPublicClient from "../../services/axios/axiosPublicClient";
 import { toastError, toastSuccess } from "../../services/toastService";
+import { PATHS } from "../../constants/paths";
 const Login = () => {
   const history = useHistory();
 
@@ -27,7 +28,7 @@ const Login = () => {
         }
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("user", JSON.stringify(res.data));
-        history.push("/");
+        history.push(PATHS.MAIN);
       })
       .catch((err) => {
         console.log(err);
