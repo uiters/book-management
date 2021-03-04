@@ -57,7 +57,7 @@ const Header = () => {
                 <a href={PATHS.CART}>
                   <img
                     className="w-6 h-6"
-                    src="https://www.flaticon.com/svg/vstatic/svg/590/590509.svg?token=exp=1614738035~hmac=22ad4b86bf6aed327d508b71060c5d90"
+                    src="https://www.flaticon.com/svg/vstatic/svg/34/34627.svg?token=exp=1614853084~hmac=c8128fec62802507430a784c5c96fb7f"
                     alt=""
                   />
                 </a>
