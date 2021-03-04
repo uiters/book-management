@@ -23,5 +23,7 @@ export const PATHS = {
   PUBLISHER: '/publisher',
   NEWPUBLISHER:'/publisher/new-publisher',
   PUBLISHER_UDPATE: '/publisher/update/:publisherId',
+
+  CART: "/cart",
 };
 

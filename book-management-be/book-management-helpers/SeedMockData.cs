@@ -16,7 +16,7 @@ namespace book_management_helpers
 
             var bookData =
                 System.IO.File.ReadAllText(
-                    "D:/source/DE_assignment/book-management-be/book-management-helpers/MockData/LiteratureBookData.json");
+                    "D:/source/DE_assignment/book-management-be/book-management-helpers/MockData/EconomicBookData.json");
                     //"D:/Project VS/.net core/samples/DE_assignment-main/DE_assignment/book-management-be/book-management-helpers/MockData/BookData.json");
             var books = JsonConvert.DeserializeObject<List<Book>>(bookData);
 
@@ -26,7 +26,7 @@ namespace book_management_helpers
                 Author randomAuthor = context.Authors.OrderBy(a => Guid.NewGuid()).First();
                 Publisher randomPublisher = context.Publishers.OrderBy((p => Guid.NewGuid())).First();
 
-                Category category = context.Categories.FirstOrDefault(c => c.Name.Equals("Sách Văn Học"));
+                Category category = context.Categories.FirstOrDefault(c => c.Name.Equals("Sách Kinh Tế"));
 
                 book.AuthorId = randomAuthor.Id;
                 book.PublisherId = randomPublisher.Id;

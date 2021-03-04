@@ -13,6 +13,8 @@ namespace book_management_persistence.Implements
         public AuthorRepositoryImpl AuthorRepositoryImpl { get; set; }
         public PublisherRepositoryImpl PublisherRepositoryImpl { get; set; }
         public PhotoRepositoryImpl PhotoRepositoryImpl { get; set; }
+        public CartRepositoryImpl CartRepositoryImpl { get; set; }
+        public CartItemRepositoryImpl CartItemRepositoryImpl { get; set; }
         private bool _disposed = false;
 
         public UnitOfWorks(AppDbContext context)
@@ -84,6 +86,28 @@ namespace book_management_persistence.Implements
             }
 
             return this.PhotoRepositoryImpl;
+        }
+
+        public CartRepositoryImpl CartRepository()
+        {
+            if (this.CartRepositoryImpl == null)
+            {
+                this.CartRepositoryImpl = new CartRepositoryImpl(DbContext);
+                return this.CartRepositoryImpl;
+            }
+
+            return this.CartRepositoryImpl;
+        }
+
+        public CartItemRepositoryImpl CartItemRepository()
+        {
+            if (this.CartItemRepositoryImpl == null)
+            {
+                this.CartItemRepositoryImpl = new CartItemRepositoryImpl(DbContext);
+                return this.CartItemRepositoryImpl;
+            }
+
+            return this.CartItemRepositoryImpl;
         }
 
         protected virtual void Dispose(bool disposing)

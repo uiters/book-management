@@ -54,6 +54,12 @@ namespace book_management_services.Implements
 
         public async Task<Guid> AddNewBook(BookForCreateDTO newBook)
         {
+            //validate book
+            if (_bookRepository.IsBookExisted(newBook.Title))
+            {
+                return new Guid("Book is existed");    
+            }
+
             var author = _authorRepository.GetAuthorByName(newBook.AuthorName);
             var publisher = _publisherRepository.GetPublisherByName(newBook.PublisherName);
 

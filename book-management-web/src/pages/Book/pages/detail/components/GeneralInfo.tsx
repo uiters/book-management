@@ -30,7 +30,7 @@ const GeneralInfo = (info: Info) => {
             </tr>
             <tr>
               <th className="py-4 pl-6 bg-gray-300 text-md">Số trang</th>
-              <td className="bg-gray-100 pl-6">{info.bookInfo.page}</td>
+              <td className="bg-gray-100 pl-6">{info.bookInfo.pages}</td>
             </tr>
             <tr>
               <th className="py-4 pl-6 bg-gray-300 text-md">SKU</th>

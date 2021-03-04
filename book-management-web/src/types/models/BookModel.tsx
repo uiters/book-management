@@ -9,7 +9,7 @@ type BookModel = {
   price: number;
   description: string;
   avgRating: number;
-  page: number;
+  pages: number;
   thumbnailUrl: string;
   sku: string;
   author: AuthorModel;

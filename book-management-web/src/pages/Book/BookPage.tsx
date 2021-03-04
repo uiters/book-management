@@ -1,8 +1,9 @@
 //@ts-ignore
 import React, { useState, useEffect } from "react";
+import Swal from "sweetalert2";
 import { PATHS } from "../../constants/paths";
 import bookApi from "../../services/api/bookApi";
-import { toastSuccess } from "../../services/toastService";
+import { toastError, toastSuccess } from "../../services/toastService";
 import BookModel from "../../types/models/BookModel";
 import Book from "../Home/components/Book";
 
@@ -16,19 +17,33 @@ const BookPage = () => {
   };
 
   const deleteBook = (id: string) => {
-    bookApi
-      .delelteBook(id)
-      .then((response) => {
-        toastSuccess("Delete successful book with id: " + id);
-        const removedList = books.filter((book: BookModel) => book.id !== id);
-        setBooks(removedList);
-        console.log(books);
-        
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    Swal.fire({
+      title: "Are you sure to delete this book?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        bookApi
+          .delelteBook(id)
+          .then((response) => {
+            toastSuccess("Delete successful book with id: " + id);
+            const removedList = books.filter(
+              (book: BookModel) => book.id !== id
+            );
+            setBooks(removedList);
+            console.log(books);
+
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    });
   };
 
   useEffect(() => {
