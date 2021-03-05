@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using book_management_models;
 using book_management_persistence.Contexts;
 using book_management_persistence.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace book_management_persistence.Implements
 {
@@ -28,6 +30,13 @@ namespace book_management_persistence.Implements
         public IEnumerable<Publisher> GetAllPublisherByName(string szName)
         {
             var publisher = this.Context.Publishers.Where(x => x.Name.Contains(szName)).ToList();
+            return publisher;
+        }
+
+        public Publisher findPublisher(Guid id)
+        {
+            var publisher = Context.Publishers.Where(c => c.Id.Equals(id)).Include(x => x.PublishedBooks).FirstOrDefault();
+
             return publisher;
         }
     }

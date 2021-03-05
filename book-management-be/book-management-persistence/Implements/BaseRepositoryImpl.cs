@@ -134,7 +134,7 @@ namespace book_management_persistence.Implements
             _resetSet = skipCount == 0 ? _resetSet.Take(size) : _resetSet.Skip(skipCount).Take(size);
             
             //total = _resetSet.Count();
-            return _resetSet.AsQueryable();
+            return _resetSet.AsQueryable().OrderByDescending(x => x.CreatedAt);
         }
     }
 }

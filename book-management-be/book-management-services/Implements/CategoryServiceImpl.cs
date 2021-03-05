@@ -55,7 +55,12 @@ namespace book_management_services.Implements
 
         public void Delete(Guid id)
         {
-            var category = _categoryRepository.GetById(id);
+            var category = _categoryRepository.findCategory(id);
+
+            if(category.Books.Count > 0)
+            {
+                throw new AppException("Can't delete this category");
+            }
 
             if (category == null)
                 throw new AppException("Category not found");

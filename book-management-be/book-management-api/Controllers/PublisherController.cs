@@ -28,24 +28,25 @@ namespace book_management_api.Controllers
             this._mapper = mapper;
         }
 
-        [HttpPost("add")]
-        public IActionResult Create([FromBody] PublisherModel model)
-        {
-            var publisher = _mapper.Map<Publisher>(model);
+        //[HttpPost("add")]
+        //public IActionResult Create([FromBody] PublisherModel model)
+        //{
+        //    var publisher = _mapper.Map<Publisher>(model);
 
-            try
-            {
-                // create user
-                _publisherService.Add(publisher);
-                _publisherService.SaveChanges();
-                return Ok("Create Publisher Success");
-            }
-            catch (AppException ex)
-            {
-                // return error message if there was an exception
-                return BadRequest(new { message = ex.Message });
-            }
-        }
+        //    try
+        //    {
+        //        // create user
+        //        _publisherService.Add(publisher);
+        //        _publisherService.SaveChanges();
+        //        return Ok("Create Publisher Success");
+        //    }
+        //    catch (AppException ex)
+        //    {
+        //        // return error message if there was an exception
+        //        //return BadRequest(new { message = ex.Message });
+        //        return Ok(ex.)
+        //    }
+        //}
 
         [HttpGet("getall")]
         public IActionResult GetAll()

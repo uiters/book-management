@@ -1,6 +1,8 @@
 ﻿using book_management_models;
 using book_management_persistence.Contexts;
 using book_management_persistence.Repositories;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -25,6 +27,11 @@ namespace book_management_persistence.Implements
             return category;
         }
 
+        public Category findCategory(Guid id)
+        {
+            var category = Context.Categories.Where(c => c.Id.Equals(id)).Include(c => c.Books).FirstOrDefault();
 
+            return category;
+        }
     }
 }
