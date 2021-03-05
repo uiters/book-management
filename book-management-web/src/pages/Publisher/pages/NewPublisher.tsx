@@ -31,6 +31,7 @@ const NewPublisher = () => {
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
+          console.log(res.data);
           
           toastSuccess(res.data);
 
@@ -44,7 +45,7 @@ const NewPublisher = () => {
         }
       })
       .catch((errors) => {
-        toastError("Create new publisher failed");
+        toastError(errors.response.data.message);
       });
   };
 

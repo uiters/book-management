@@ -50,12 +50,12 @@ const UpdateCategory = () => {
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
-          toastSuccess("Update  category success!");
+          toastSuccess(res.data);
           history.push("/category");
         }
       })
       .catch((errors) => {
-        toastError("Update  category failed");
+        toastError(errors.response.data.message);
       });
   };
 
