@@ -50,12 +50,12 @@ const UpdateAuthorPage = () => {
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
-          toastSuccess("Update  author success!");
+          toastSuccess(res.data);
           history.push("/author");
         }
       })
       .catch((errors) => {
-        toastError("Update author failed");
+        toastError(errors.response.data.message);
       });
   };
 
