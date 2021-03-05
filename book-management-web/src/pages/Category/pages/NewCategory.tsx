@@ -28,7 +28,7 @@ const NewCategory = () => {
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
-          toastSuccess("Create new category success!");
+          toastSuccess(res.data);
 
           if (isLeave) {
             // history.push(PATHS.BOOK + "/" + res.data);
@@ -40,7 +40,7 @@ const NewCategory = () => {
         }
       })
       .catch((errors) => {
-        toastError("Create new category failed");
+        toastError(errors.response.data.message);
       });
   };
 

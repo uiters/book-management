@@ -57,10 +57,15 @@ namespace book_management_services.Implements
 
         public void Delete(Guid id)
         {
-            var publisher = _publisherRepository.GetById(id);
+            var publisher = _publisherRepository.findPublisher(id);
 
             if (publisher == null)
                 throw new AppException("Publisher not found");
+
+            if (publisher.PublishedBooks.Count > 0)
+            {
+                throw new AppException("Can't Delete this Publisher");
+            }
 
             _publisherRepository.Remove(publisher);
         }

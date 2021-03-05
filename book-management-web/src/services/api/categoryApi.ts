@@ -13,11 +13,17 @@ const categoryApi = {
     return axiosPublicClient.get(url);
   },
 
-  getCategory: (param: PaginationModel) => {
+  getPagedCategory: (page: number, countPerPage: number) => {
     const url = API_URLS.CATEGORY + "/getbyfilter/"; 
 
+    const config = {
+      params: {
+        page: page,
+        countPerPage: countPerPage
+      },
+    };
 
-    return axiosPublicClient.get(url);
+    return axiosPublicClient.get(url, config);
   },
 
   addNewCategory: (newCategory: NewCategoryFormData) => {

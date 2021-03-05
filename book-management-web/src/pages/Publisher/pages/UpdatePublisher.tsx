@@ -48,12 +48,12 @@ const UpdatePublisher = () => {
             .then((res) => {
                 console.log(res);
                 if (res.status === 200) {
-                    toastSuccess("Update Publisher success!");
+                    toastSuccess(res.data);
                     history.push("/publisher");
                 }
             })
             .catch((errors) => {
-                toastError("Update Publisher failed");
+                toastError(errors.response.data.message);
             });
     };
 

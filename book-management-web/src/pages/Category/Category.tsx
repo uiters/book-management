@@ -14,7 +14,7 @@ import deleteSrc from '../../assets/delete-icon.png';
 import { Pagination } from "@material-ui/lab";
 import usePagination from '../../components/usePagination'
 import PaginationModel from "../../types/models/PaginationModel";
-import PaginationPage from '../../components/PaginationPage';
+import PaginationSearchCategoryPage from "../../components/PaginationSearchCategoryPage";
 
 
 const Category = () => {
@@ -23,15 +23,12 @@ const Category = () => {
   // const datas = new Array;
   // const datas = [];
   // const [listCategorys, setListCategorys] = useState<CategoryModel[]>([]);
-  const [page, setPage] = useState(1);
+  // const [page, setPage] = useState(1);
   const [data, setData] = useState<CategoryModel[]>([]);
-  
-  
-  // let pagingParams: PaginationModel = {
-  //   data : [],
-  //   startFrom: 1,
-  //   itemsPerPage: 25,
-  // };
+
+  const [users, setUsers] = useState({});
+  const [page, setPage] = useState(1);
+  const countPerPage = 3;
 
   const fetchData = useCallback(() => {
     categoryApi
@@ -105,7 +102,11 @@ const Category = () => {
         <h1 className="mb-10 font-bold text-xl">CATEGORY PAGE</h1>
         <Link to={'/category/new-category'} className="py-2 px-4 bg-blue-400 hover:bg-blue-600 rounded-md text-white text-sm mt-8" >Add New</Link>
 
-        <PaginationPage  data={data} itemsPerPage={5} startFrom={25}/>
+        <PaginationSearchCategoryPage  data={data} itemsPerPage={5} startFrom={15} searchByData={[
+            { label: 'Search by name', value: 'name' },
+            { label: 'Search by details', value: 'details' },
+            
+          ]} />
       </div>
     </Fragment>
   );

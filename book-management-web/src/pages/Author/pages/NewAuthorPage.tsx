@@ -28,7 +28,7 @@ const NewAuthorPage = () => {
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
-          toastSuccess("Create new author success!");
+          toastSuccess(res.data);
 
           if (isLeave) {
             history.push("/author");
@@ -40,7 +40,7 @@ const NewAuthorPage = () => {
         }
       })
       .catch((errors) => {
-        toastError("Create new author failed");
+        toastError(errors.response.data.message);
       });
   };
 
