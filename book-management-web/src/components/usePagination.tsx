@@ -6,16 +6,19 @@ const usePagination = (initialState: PaginationModel) => {
   const { itemsPerPage, data, startFrom } = initialState;
 
   const [searching, setSearching] = useState(false);
-  const [filteredData, setFilteredData] = useState(data);
+  const [filteredData, setFilteredData] = useState(initialState.data);
+
+  console.log(initialState.data);
 
   const perPage = itemsPerPage ? itemsPerPage : 10;
   const pages = Math.ceil(data.length / perPage);
   const pagination = [];
   const [currentPage, setCurrentPage] = useState(startFrom <= pages ? startFrom : 1);
-  const [slicedData, setSlicedData] = useState([...data].slice((currentPage - 1) * perPage, currentPage * perPage));
+  const [slicedData, setSlicedData] = useState(initialState.data);
 
   useEffect(() => {
-    setSlicedData([...filteredData].slice((currentPage - 1) * perPage, currentPage * perPage));
+    // setSlicedData([...filteredData].slice((currentPage - 1) * perPage, currentPage * perPage));
+    setSlicedData(initialState.data)
     if(searching) {
       setCurrentPage(1);
       setSearching(false);

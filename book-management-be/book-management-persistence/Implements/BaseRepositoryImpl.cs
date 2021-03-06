@@ -113,8 +113,10 @@ namespace book_management_persistence.Implements
             return DbSet.Find(id);
         }
 
-        public virtual IEnumerable<T> GetMultiPaging(/*out int total,string searchTitle,*/ int index = 0, int size = 20, string[] includes = null)
+        public virtual IEnumerable<T> GetMultiPaging(out int total,/* string searchTitle = null,*/ int index = 0, int size = 20, string[] includes = null)
         {
+            index = index - 1;
+
             int skipCount = index * size;
             IQueryable<T> _resetSet;
 
@@ -130,11 +132,12 @@ namespace book_management_persistence.Implements
             {
                 _resetSet = Context.Set<T>().AsQueryable();
             }
-
-            _resetSet = skipCount == 0 ? _resetSet.Take(size) : _resetSet.Skip(skipCount).Take(size);
+            var a = _resetSet.ToList();
             
-            //total = _resetSet.Count();
-            return _resetSet.AsQueryable().OrderByDescending(x => x.CreatedAt);
+            total = _resetSet.Count();
+            _resetSet = skipCount == 0 ? _resetSet.Take(size) : _resetSet.Skip(skipCount).Take(size);
+
+            return _resetSet.AsQueryable();
         }
     }
 }

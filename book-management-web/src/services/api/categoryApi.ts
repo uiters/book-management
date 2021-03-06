@@ -13,11 +13,12 @@ const categoryApi = {
     return axiosPublicClient.get(url);
   },
 
-  getPagedCategory: (page: number, countPerPage: number) => {
+  getPagedCategory: (searchTitle: string, page: number, countPerPage: number) => {
     const url = API_URLS.CATEGORY + "/getbyfilter/"; 
 
     const config = {
       params: {
+        searchTitle: searchTitle,
         page: page,
         countPerPage: countPerPage
       },
@@ -60,7 +61,8 @@ const categoryApi = {
     };
 
     return axiosPublicClient.delete(url, config);
-  }
+  },
+
 };
 
 export default categoryApi;

@@ -7,6 +7,7 @@ using AutoMapper;
 using book_management_helpers.Configurations;
 using book_management_helpers.CustomException;
 using book_management_models;
+using book_management_models.DTOs;
 using book_management_models.DTOs.CategoryDTOs;
 using book_management_services.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -73,15 +74,29 @@ namespace book_management_api.Controllers
         }
 
         [HttpGet("getbyfilter")]
-        public IActionResult GetByFilter(/*string searchTitle,*/ int page, int countPerPage)
+        public IActionResult GetByFilter(string searchTitle, int page, int countPerPage)
         {
-            var categorys = _categoryService.GetAllPaging(/*searchTitle,*/ page, countPerPage);
+            int totalRow = 0;
+            var categorys = _categoryService.GetAllPaging( out totalRow, searchTitle, page, countPerPage);
+            
             var model = _mapper.Map<List<CategoryViewModel>>(categorys);
-            if (model.Count == 0)
+            //if (model.Count == 0)
+            //{
+            //    throw new MyEmptyResultException(HttpStatusCode.NotAcceptable, "Can't find Category in database!");
+            //}
+            var a = totalRow;
+            int totalPage = (int)Math.Ceiling((double)totalRow / countPerPage);
+            var paginationSet = new PaginationSet<CategoryViewModel>()
             {
-                throw new MyEmptyResultException(HttpStatusCode.NotAcceptable, "Can't find Category in database!");
-            }
-            return Ok(model);
+                Items = model,
+                MaxPage = 5,
+                Page = page,
+                TotalCount = totalRow,
+                TotalPage = totalPage
+            };
+
+            
+            return Ok(paginationSet);
         }
 
         [HttpGet("getbyid/{id}")]

@@ -10,5 +10,7 @@ namespace book_management_persistence.Repositories
         public IEnumerable<Category> GetCategoryByName(string szName);
 
         public Category findCategory(Guid id);
+
+        public IEnumerable<Category> GetAllCategoryPaging(out int totalRow, string searchTitle, int page, int pageSize, string[] include = null);
     }
 }

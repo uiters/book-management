@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using book_management_models;
+using book_management_models.DTOs;
 
 namespace book_management_persistence.Repositories
 {
@@ -24,7 +25,7 @@ namespace book_management_persistence.Repositories
         void Remove(T entity);
         T GetById(object id);
 
-        IEnumerable<T> GetMultiPaging(/*string searchTitle,out int total,*/ int index = 0, int size = 50, string[] includes = null);
+        IEnumerable<T> GetMultiPaging(out int total, /*string searchTitle,*/ int index = 0, int size = 50, string[] includes = null);
 
     }
 }

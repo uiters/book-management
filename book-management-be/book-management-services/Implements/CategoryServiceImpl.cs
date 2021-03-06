@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using book_management_helpers.Configurations;
 using book_management_models;
 using book_management_persistence.Implements;
@@ -93,9 +94,12 @@ namespace book_management_services.Implements
             return _categoryRepository.GetCategoryByName(szName);
         }
 
-        public IEnumerable<Category> GetAllPaging(/*string searchTitle,*/ int page, int pageSize/*, out int totalRow*/)
+        public IEnumerable<Category> GetAllPaging(out int totalRow, string searchTitle, int page, int pageSize)
         {
-            return _categoryRepository.GetMultiPaging(/*out totalRow,searchTitle,*/ page, pageSize);
+
+            //return _categoryRepository.GetMultiPaging(out totalRow, page, pageSize).Where(x => x.Name.Contains(searchTitle));
+            return _categoryRepository.GetAllCategoryPaging(out totalRow, searchTitle, page, pageSize);
+
         }
     }
 }
