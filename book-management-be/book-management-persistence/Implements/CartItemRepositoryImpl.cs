@@ -18,7 +18,7 @@ namespace book_management_persistence.Implements
         public async Task<bool> AddToCart(CartItem item)
         {
             //item is exist in cart => add quantity
-            var curItem = await DbSet.FirstOrDefaultAsync(c => c.BookId.Equals(item.BookId) && c.CartId.Equals(item.CartId));
+            var curItem = DbSet.FirstOrDefault(c => c.BookId.Equals(item.BookId) && c.CartId.Equals(item.CartId));
             if (curItem != null)
             {
                 curItem.Quantity += item.Quantity;
@@ -37,6 +37,22 @@ namespace book_management_persistence.Implements
             var result = await DbSet.Where(ci => ci.CartId.Equals(cart.Id)).Include(ci => ci.Book).ToListAsync();
 
             return result;
+        }
+
+        public CartItem FindByBookId(Guid bookId)
+        {
+            var cartItem = DbSet.Where(ci => ci.BookId.Equals(bookId)).FirstOrDefault();
+
+            return cartItem;
+        }
+
+        public bool ClearAllCartItem(Guid userId)
+        {
+            var cart = Context.Carts.FirstOrDefault(c => c.UserId.Equals(userId));
+            var cartItems = DbSet.Where(ci => ci.CartId.Equals(cart.Id)).ToList();
+
+            DbSet.RemoveRange(cartItems);
+            return Context.SaveChanges() > 0;
         }
     }
 }

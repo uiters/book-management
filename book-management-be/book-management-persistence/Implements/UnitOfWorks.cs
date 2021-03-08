@@ -15,6 +15,8 @@ namespace book_management_persistence.Implements
         public PhotoRepositoryImpl PhotoRepositoryImpl { get; set; }
         public CartRepositoryImpl CartRepositoryImpl { get; set; }
         public CartItemRepositoryImpl CartItemRepositoryImpl { get; set; }
+        public OrderItemRepositoryImpl OrderItemRepositoryImpl { get; set; }
+        public OrderRepositoryImpl OrderRepositoryImpl { get; set; }
         private bool _disposed = false;
 
         public UnitOfWorks(AppDbContext context)
@@ -108,6 +110,28 @@ namespace book_management_persistence.Implements
             }
 
             return this.CartItemRepositoryImpl;
+        }
+
+        public OrderRepositoryImpl OrderRepository()
+        {
+            if (this.OrderRepositoryImpl == null)
+            {
+                this.OrderRepositoryImpl = new OrderRepositoryImpl(DbContext);
+                return this.OrderRepositoryImpl;
+            }
+
+            return this.OrderRepositoryImpl;
+        }
+
+        OrderItemRepositoryImpl IUnitOfWorks.OrderItemRepositoryImpl()
+        {
+            if (this.OrderItemRepositoryImpl == null)
+            {
+                this.OrderItemRepositoryImpl = new OrderItemRepositoryImpl(DbContext);
+                return this.OrderItemRepositoryImpl;
+            }
+
+            return this.OrderItemRepositoryImpl;
         }
 
         protected virtual void Dispose(bool disposing)

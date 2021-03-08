@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace book_management_persistence.Implements
 {
@@ -27,6 +29,13 @@ namespace book_management_persistence.Implements
             return category;
         }
 
+        public async Task<IEnumerable<Category>> GetCategoryForMain()
+        {
+            var categories = await DbSet.Take(10).Where(c => c.Books.Count() > 0).ToListAsync();
+
+            return categories;
+        }
+        
         public Category findCategory(Guid id)
         {
             var category = Context.Categories.Where(c => c.Id.Equals(id)).Include(c => c.Books).FirstOrDefault();

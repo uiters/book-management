@@ -19,6 +19,8 @@ import CartItemModel from "../../../../types/models/CartItemModel";
 import cartApi from "../../../../services/api/cartApi";
 import User from "../../../../types/models/UserModel";
 import NumberFormat from "react-number-format";
+import DetailBookModel from "../../../../types/models/DetailBookModel";
+import RelatedBooks from "./components/RelatedBooks";
 
 const sliderOptions = {
   dots: false,
@@ -38,6 +40,20 @@ const DetailBookPage = () => {
   const user: User = JSON.parse(localStorage.getItem("user") || "{}");
 
   const [isMounted, setIsMounted] = useState(false);
+  const [detailData, setDetailData] = useState<DetailBookModel>({
+    book: {
+      id: "",
+      publisher: {
+        name: "",
+      },
+      author: {
+        id: "",
+        name: "",
+      },
+      categories: [],
+    },
+    relatedBooks: [],
+  });
   const [book, setBook] = useState<BookModel>({
     id: "",
     publisher: {
@@ -52,19 +68,11 @@ const DetailBookPage = () => {
 
   const getBook = () => {
     bookApi
-      .getById(bookId)
+      .getDetailBookData(bookId)
       .then((response) => {
         console.log(response.data);
 
-        setBook(response.data);
-
-        imageUrls = response.data.photos.map((photo: Photo) => photo.url);
-        if (
-          response.data.thumbnailUrl !== null ||
-          response.data.thumbnailUrl !== undefined
-        ) {
-          imageUrls.unshift(response.data.thumbnailUrl);
-        }
+        setDetailData(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -80,8 +88,6 @@ const DetailBookPage = () => {
       quantity: quantity,
       id: "",
     };
-
-    console.log(cartItem);
 
     cartApi
       .addCartItem(cartItem)
@@ -107,24 +113,27 @@ const DetailBookPage = () => {
       <div className="info flex w-full border bg-white">
         <div className="image w-1/3 h-1/2 p-4">
           <img
-            src={book.thumbnailUrl}
+            src={detailData.book.thumbnailUrl}
             alt="Book Thumbnail"
             className="w-full h-full"
           />
         </div>
         <div className="info border-l p-4 flex-grow space-y-6 flex flex-col items-start rounded ">
-          <h1 className="text-3xl mb-2">{book.title}</h1>
-          <BeautyStars value={book.avgRating}></BeautyStars>
-          <div className="price bg-gray-200 p-2 w-full flex flex-col items-start border-t">
-            <h3 className="font-bold text-2xl hover:underline">
+          <h1 className="text-3xl mb-2">{detailData.book.title}</h1>
+          {/* <BeautyStars value={book.avgRating}></BeautyStars> */}
+          <div className="price rounded-md p-2 w-full flex flex-col items-start border-t bg-gradient-to-r from-pink-600 to-yellow-500">
+            <h3 className="font-bold text-white text-2xl hover:underline">
               <NumberFormat
-                value={book.price}
+                value={detailData.book.price}
                 displayType={"text"}
                 thousandSeparator={true}
-                suffix={"đ"}
+                suffix={" đ"}
               ></NumberFormat>
             </h3>
-            <p className="font-bold text-red-700">Rẻ hơn hoàn tiền</p>
+            <p className="font-bold text-white">
+              Còn lại: {detailData.book.quantity}
+            </p>
+            <p className="font-bold text-white">Rẻ hơn hoàn tiền</p>
           </div>
           <p className="text-lg">Số lượng</p>
           <div className="form-input border">
@@ -144,7 +153,10 @@ const DetailBookPage = () => {
             ></input>
             <button
               className="focus:outline-none px-3"
-              onClick={() => setQuantity(quantity + 1)}
+              onClick={() => {
+                if (quantity === detailData.book.quantity) return;
+                setQuantity(quantity + 1);
+              }}
             >
               +
             </button>
@@ -157,14 +169,14 @@ const DetailBookPage = () => {
             Chọn mua
           </button>
         </div>
-        <div className="w-1/4"></div>
       </div>
-      <GeneralInfo bookInfo={book}></GeneralInfo>
-      <ListBook
+      <GeneralInfo bookInfo={detailData.book}></GeneralInfo>
+      <RelatedBooks
         title="Các sản phẩm liên quan"
-        category={"Sách văn học"}
-        link={PATHS.LITERATURE}
-      ></ListBook>
+        category={detailData.book.categories[0]?.name}
+        link={detailData.book.categories[0]?.slug}
+        books={detailData.relatedBooks}
+      ></RelatedBooks>
       <DescriptionEditor></DescriptionEditor>
       <CommentSection></CommentSection>
       <AskSection></AskSection>

@@ -35,12 +35,10 @@ const BookPage = () => {
               (book: BookModel) => book.id !== id
             );
             setBooks(removedList);
-            console.log(books);
-
-            console.log(response.data);
           })
           .catch((error) => {
             console.log(error);
+            toastError("Selected book is in cart!");
           });
       }
     });
@@ -52,19 +50,19 @@ const BookPage = () => {
 
   const listBooks = books.map((book: BookModel) => {
     return (
-      <div className="w-1/4 bg-white p-3" key={book.id}>
+      <div className="w-1/5 bg-white mt-3 ml-2" key={book.id}>
         <Book
           id={book.id}
           imageSrc={book.thumbnailUrl}
           title={book.title}
           author={book.author.name}
         ></Book>
-        <div className="space-x-3">
-          <button className="rounded-xl bg-blue-400 p-3">
-            <a href={"/book/update/" + book.id}>Update</a>
+        <div className="space-x-3 mb-3">
+          <button className="rounded-xl bg-blue-400 p-3 focus:outline-none">
+            <a href={"/book/update/" + book.id} className="p-3">Update</a>
           </button>
           <button
-            className="rounded-xl bg-red-400 p-3"
+            className="rounded-xl bg-red-400 p-3 focus:outline-none"
             onClick={() => deleteBook(book.id)}
           >
             Delete
@@ -76,9 +74,9 @@ const BookPage = () => {
 
   return (
     <div className="h-full w-full">
-      <div className="container">
+      <div className="container flex flex-col items-center">
         <button className="rounded bg-red-400 p-3">
-          <a href={PATHS.BOOK_NEW}>New Book</a>
+          <a href={PATHS.BOOK_NEW} className="p-4">New Book</a>
         </button>
         <div className="flex flex-wrap space-y-3">{listBooks}</div>
       </div>

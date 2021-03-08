@@ -14,6 +14,26 @@ namespace book_management_persistence.Implements
         {
         }
 
+        public Cart GetCartByUserId(Guid userId)
+        {
+            var cart = DbSet.Where(c => c.UserId.Equals(userId)).Include(c => c.CartItems).FirstOrDefault();
+
+            if (cart != null)
+            {
+                var totalPrice = 0;
+                foreach (var cartItem in cart.CartItems)
+                {
+                    var book = Context.Books.FirstOrDefault(b => b.Id.Equals(cartItem.BookId));
+                    totalPrice += cartItem.Quantity * book.Price;
+                }
+
+                cart.TotalPrice = totalPrice;
+                return cart;
+            }
+            
+            return null;
+        }
+
         public async Task<bool> AddCart(Cart cart)
         {
             var result = await this.InsertAsync(cart);
@@ -26,6 +46,20 @@ namespace book_management_persistence.Implements
             var cart = await this.DbSet.FirstOrDefaultAsync(c => c.UserId.Equals(userId));
             
             return cart;
+        }
+
+        public bool IsCartItemExist(Guid userId)
+        {
+            var cart = DbSet.Include(c => c.CartItems).FirstOrDefault(c => c.UserId.Equals(userId));
+
+            var test = cart.CartItems.Any();
+
+            if (cart.CartItems.Any())
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

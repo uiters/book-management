@@ -12,6 +12,7 @@ type BookModel = {
   pages: number;
   thumbnailUrl: string;
   sku: string;
+  quantity: number;
   author: AuthorModel;
   publisher: PublisherModel;
   categories: CategoryModel[];

@@ -19,9 +19,6 @@ const Register = () => {
   });
 
   const onSubmit = handleSubmit(({ Name, Username, Password, Email } : FormData) => {
-    //     const url = "/all";
-    // return axiosPublicClient.get(url);
-
     axiosPublicClient
       .post("Users/register", { Name, Username, Password, Email })
       .then((res) => {

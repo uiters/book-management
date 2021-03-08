@@ -12,7 +12,8 @@ namespace book_management_services.Services
         IEnumerable<Book> GetBooksByCategory(string categoryName);
         Book GetBookById(Guid id);
         Task<Guid> AddNewBook(BookForCreateDTO newBook);
-        Task<bool> UpdateBook(Book bookForUpdate);
+        Task<bool> UpdateBook(BookForUpdateDto bookForUpdate, Guid bookId);
         Task<bool> DeleteBook(Guid bookId);
+        BookForDetailDTO GetDetailBookData(Guid bookId);
     }
 }
