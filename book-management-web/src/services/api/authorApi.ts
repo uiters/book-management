@@ -7,47 +7,62 @@ import AuthorModel from "../../types/models/AuthorModel";
 import AuthorModelPage from "../../types/models/AuthorModelPage";
 
 const authorApi = {
-    getAllAuthors: () => {
-      const url = API_URLS.AUTHOR + "/getall";
-      return axiosPublicClient.get(url);
-    },
-  
-    getById: (id: string): Promise<AxiosResponse<AuthorModelPage>> => {
-        const url = API_URLS.AUTHOR + '/getbyid/' + id;
-    
-        return axiosPublicClient.get(url);
+  getAllAuthors: () => {
+    const url = API_URLS.AUTHOR + "/getall";
+    return axiosPublicClient.get(url);
+  },
+
+  getById: (id: string): Promise<AxiosResponse<AuthorModelPage>> => {
+    const url = API_URLS.AUTHOR + '/getbyid/' + id;
+
+    return axiosPublicClient.get(url);
+  },
+
+  getPagedAuthor: (searchKey: number, searchTitle: string, page: number, countPerPage: number) => {
+    const url = API_URLS.AUTHOR + "/getbyfilter/";
+
+    const config = {
+      params: {
+        searchKey: searchKey,
+        searchTitle: searchTitle,
+        page: page,
+        countPerPage: countPerPage
       },
+    };
 
-      updateAuthor: (id: string, newAuthor: NewAuthorFormData) => {
-        const url = API_URLS.AUTHOR + "/update/" + id;
-    
-        const config = {
-          params: {
-            id: id,
-          },
-        };
-    
-        return axiosPublicClient.put(url, newAuthor, config);
+    return axiosPublicClient.get(url, config);
+  },
+
+  updateAuthor: (id: string, newAuthor: NewAuthorFormData) => {
+    const url = API_URLS.AUTHOR + "/update/" + id;
+
+    const config = {
+      params: {
+        id: id,
       },
+    };
 
-    addNewAuthor: (newAuthor: NewAuthorFormData) => {
-      const url = API_URLS.AUTHOR + "/add";
-  
-      return axiosPublicClient.post(url, newAuthor);
-    },
-  
-    deleteAuthor: (id: string) : Promise<AxiosResponse<AuthorModelPage[]>> => {
-      const url = API_URLS.AUTHOR + "/delete/" + id;
-  
-      const config = {
-        params: {
-          id: id,
-        },
-      };
-  
-      return axiosPublicClient.delete(url, config);
-    }
+    return axiosPublicClient.put(url, newAuthor, config);
+  },
 
-  };
-  
-  export default authorApi;
+  addNewAuthor: (newAuthor: NewAuthorFormData) => {
+    const url = API_URLS.AUTHOR + "/add";
+
+    return axiosPublicClient.post(url, newAuthor);
+  },
+
+  deleteAuthor: (id: string): Promise<AxiosResponse<AuthorModelPage[]>> => {
+    const url = API_URLS.AUTHOR + "/delete/" + id;
+
+    const config = {
+      params: {
+        id: id,
+      },
+    };
+
+    return axiosPublicClient.delete(url, config);
+  }
+
+};
+
+export default authorApi;

@@ -12,5 +12,8 @@ namespace book_management_persistence.Repositories
         public IEnumerable<Publisher> GetAllPublisherByName(string szName);
 
         public Publisher findPublisher(Guid id);
+
+        public IEnumerable<Publisher> GetAllPublisherPaging(out int totalRow, int searchKey, string searchTitle, int page, int pageSize, string[] include = null);
+
     }
 }

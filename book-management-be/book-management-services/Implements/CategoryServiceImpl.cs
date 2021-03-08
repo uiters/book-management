@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using book_management_helpers.Configurations;
 using book_management_models;
@@ -99,9 +100,12 @@ namespace book_management_services.Implements
             return _categoryRepository.GetCategoryByName(szName);
         }
 
-        public IEnumerable<Category> GetAllPaging(/*string searchTitle,*/ int page, int pageSize/*, out int totalRow*/)
+        public IEnumerable<Category> GetAllPaging(out int totalRow, int searchKey, string searchTitle, int page, int pageSize)
         {
-            return _categoryRepository.GetMultiPaging(/*out totalRow,searchTitle,*/ page, pageSize);
+            var lst = _categoryRepository.GetAllCategoryPaging(out totalRow, searchKey, searchTitle, page, pageSize);
+            
+            return lst;
+
         }
     }
 }

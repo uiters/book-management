@@ -94,5 +94,13 @@ namespace book_management_services.Implements
         {
             return _publisherRepository.GetAllPublisherByName(szName);
         }
+
+        public IEnumerable<Publisher> GetAllPaging(out int totalRow, int searchKey, string searchTitle, int page, int pageSize)
+        {
+            var lst = _publisherRepository.GetAllPublisherPaging(out totalRow, searchKey, searchTitle, page, pageSize);
+
+            return lst;
+
+        }
     }
 }

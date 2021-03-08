@@ -19,5 +19,7 @@ namespace book_management_services.Services
         void SaveChanges();
 
         IEnumerable<Author> GetAllAuthorByName(string szName);
+
+        IEnumerable<Author> GetAllPaging(out int totalRow, int searchKey, string searchTitle, int page, int pageSize);
     }
 }

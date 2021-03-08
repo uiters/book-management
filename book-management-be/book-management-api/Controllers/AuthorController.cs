@@ -2,6 +2,7 @@
 using book_management_helpers.Configurations;
 using book_management_helpers.CustomException;
 using book_management_models;
+using book_management_models.DTOs;
 using book_management_models.DTOs.AuthorDTOs;
 using book_management_services.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -57,6 +58,35 @@ namespace book_management_api.Controllers
                 throw new MyEmptyResultException(HttpStatusCode.NotAcceptable, "Can't find Author in database!");
             }
             return Ok(model);
+        }
+
+        [HttpGet("getbyfilter")]
+        public IActionResult GetByFilter(int searchKey, string searchTitle, int page, int countPerPage)
+        {
+            try
+            {
+                int totalRow = 0;
+                var categorys = _authorService.GetAllPaging(out totalRow, searchKey, searchTitle, page, countPerPage);
+
+                var model = _mapper.Map<List<AuthorViewModel>>(categorys);
+
+                var a = totalRow;
+                int totalPage = (int)Math.Ceiling((double)totalRow / countPerPage);
+                var paginationSet = new PaginationSet<AuthorViewModel>()
+                {
+                    Items = model,
+                    MaxPage = 5,
+                    Page = page,
+                    TotalCount = totalRow,
+                    TotalPage = totalPage
+                };
+                return Ok(paginationSet);
+
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [HttpGet("getbyid/{id}")]

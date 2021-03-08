@@ -17,7 +17,7 @@ const PaginationSearchCategoryPage = (datas: PaginationModel) => {
     const [searchFor, setSearchFor] = useState('');
 
     const { slicedData, pagination, prevPage, nextPage, changePage, setFilteredData, setSearching } = usePagination(datas);
-    console.log(datas)
+    // console.log(datas)
 
     const submitHandler = (e: any) => {
         e.preventDefault();
