@@ -2,20 +2,22 @@
 import React, { useState, useEffect } from "react";
 //@ts-ignore
 import { useForm } from "react-hook-form";
-import { ImageListType } from "react-images-uploading";
 //@ts-ignore
 import { useParams } from "react-router-dom";
+//@ts-ignore
+import { useHistory } from "react-router-dom";
 import { PATHS } from "../../../../constants/paths";
 import bookApi from "../../../../services/api/bookApi";
 import NewBookFormData from "../../../../types/form/NewBookFormData";
+import UpdateBookFormData from "../../../../types/form/UpdateBookFormData";
 import BookModel from "../../../../types/models/BookModel";
-import ImageUploader from "../new-book/components/ImageUploader";
 
 const UpdateBookPage = () => {
   const [book, setBook] = useState<BookModel>({
     id: "",
     title: "",
   });
+  const history = useHistory();
 
   const { register, handleSubmit, errors, reset } = useForm<NewBookFormData>({
     mode: "onChange",
@@ -41,23 +43,16 @@ const UpdateBookPage = () => {
     getBookData();
   }, [book.id]);
 
-  const onSubmit = (formData: NewBookFormData) => {
-    console.log(formData);
-
+  const onSubmit = (formData: UpdateBookFormData) => {
     bookApi
-      .addNewBook(formData)
+      .updateBook(formData, bookId)
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
         if (res.status === 200) {
+          history.push("/book/" + bookId);
         }
       })
       .catch((error) => {});
-  };
-
-  const onImageChanged = (images: ImageListType) => {
-    console.log(images);
-    const photoFiles = images.map((image) => image.file);
-    console.log("abc");
   };
 
   return (
@@ -75,7 +70,7 @@ const UpdateBookPage = () => {
           </label>
           <div className="input border w-full p-2">
             <input
-              ref={register({ required: true, maxLength: "20" })}
+              ref={register({ required: true, maxLength: "200" })}
               type="text"
               placeholder="Insert title here!"
               defaultValue={book.title}
@@ -85,7 +80,7 @@ const UpdateBookPage = () => {
           </div>
           <span className="text-left items-start flex text-red-400">
             {errors.title?.type === "required" && "Title is required!"}
-            {errors.title?.type === "maxLength" && "Title is max 20 chars!"}
+            {errors.title?.type === "maxLength" && "Title is max 200 chars!"}
           </span>
         </div>
         <div className="form-group flex flex-col items-start gap-2">
@@ -110,7 +105,6 @@ const UpdateBookPage = () => {
           <label htmlFor="description" className="font-bold text-gray-500">
             Images
           </label>
-          <ImageUploader newBookCallBack={onImageChanged}></ImageUploader>
         </div>
         <div className="form-group flex flex-col items-start gap-2">
           <label htmlFor="price" className="font-bold text-gray-500">
@@ -161,51 +155,14 @@ const UpdateBookPage = () => {
               className="w-full focus:outline-none"
               type="text"
               placeholder="Insert SKU here"
-              defaultValue={book.sku}
+              value={"SKU" + book.sku}
+              defaultValue={"SKU" + book.sku}
               ref={register({ required: true })}
               name="sku"
             />
           </div>
           <span className="text-left items-start flex text-red-400">
             {errors.sku?.type == "required" && "Sku is required!"}
-          </span>
-        </div>
-        <div className="form-group flex flex-col items-start gap-2">
-          <label htmlFor="authorName" className="font-bold text-gray-500">
-            Author' Name:
-          </label>
-          <div className="input border w-full p-2">
-            <input
-              className="w-full focus:outline-none"
-              type="text"
-              placeholder="Insert Author's Name here"
-              defaultValue={book.authorName}
-              ref={register({ required: true })}
-              name="authorName"
-            />
-          </div>
-          <span className="text-left items-start flex text-red-400">
-            {errors.authorName?.type == "required" &&
-              "Author's Name is required!"}
-          </span>
-        </div>
-        <div className="form-group flex flex-col items-start gap-2">
-          <label htmlFor="publisherName" className="font-bold text-gray-500">
-            Publisher's Name:
-          </label>
-          <div className="input border p-2 w-full">
-            <input
-              className="w-full focus:outline-none"
-              type="text"
-              placeholder="Insert Publisher's Name here"
-              defaultValue={book.publisherName}
-              ref={register({ required: true })}
-              name="publisherName"
-            />
-          </div>
-          <span className="text-left items-start flex text-red-400">
-            {errors.publisherName?.type == "required" &&
-              "Publisher is required!"}
           </span>
         </div>
         <div className="submit_buttons mx-auto w-full space-x-5 border p-4">

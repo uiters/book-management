@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Reflection.Metadata.Ecma335;
+using System.Threading.Tasks;
 using AutoMapper;
 using book_management_helpers.Configurations;
 using book_management_helpers.CustomException;
@@ -143,6 +144,14 @@ namespace book_management_api.Controllers
                 // return error message if there was an exception
                 return BadRequest(new { message = ex.Message });
             }
+        }
+
+        [HttpGet("main")]
+        public async Task<IActionResult> GetCategoryForMain()
+        {
+            var result = await _categoryService.GetCategoryForMain();
+
+            return Ok(result);
         }
     }
 }

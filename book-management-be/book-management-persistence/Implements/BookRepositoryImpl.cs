@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using book_management_models;
 using book_management_persistence.Contexts;
 using book_management_persistence.Repositories;
@@ -51,5 +52,25 @@ namespace book_management_persistence.Implements
             var result = DbSet.Any(b => b.Title.Equals(title));
             return result;
         }
+
+        public async Task<bool> UpdateBook(Book book, Guid id)
+        {
+            var curBook = DbSet.FirstOrDefault(b => b.Id.Equals(id));
+
+            if (curBook == null)
+            {
+                return false;
+            }
+
+            curBook.Description = book.Description;
+            curBook.Pages = book.Pages;
+            curBook.Price = book.Price;
+            curBook.Title = book.Title;
+            curBook.Description = book.Description;
+
+            return await Context.SaveChangesAsync() > 0;
+        }
+        
+        
     }
 }

@@ -47,35 +47,32 @@ const Header = () => {
           {token !== null && (
             <div className="flex space-x-3 items-center">
               <div className="cartIcon">
-                {/* <span
-                  className="rounded-full px-2 align-top bg-gray-400 -ml-2 text-md"
-                  id="lblCartCount"
-                >
-                  {" "}
-                  5{" "}
-                </span> */}
                 <a href={PATHS.CART}>
                   <img
-                    className="w-6 h-6"
-                    src="https://www.flaticon.com/svg/vstatic/svg/590/590509.svg?token=exp=1614738035~hmac=22ad4b86bf6aed327d508b71060c5d90"
+                    className="w-8 h-8"
+                    src="https://www.flaticon.com/svg/vstatic/svg/4296/4296808.svg?token=exp=1615028498~hmac=656468bed475f0a1a7a7a1f62c5d2c56"
                     alt=""
                   />
                 </a>
               </div>
 
-              <p className="font-bold">{"" || user?.name}</p>
-              <div className="dropdown group relative inline-block hover:block">
-                <button className="rounded-full w-8 h-8 bg-blue-900">
-                  <a>{"" || user.name?.charAt(0).toUpperCase()}</a>
-                </button>
-                <div className="dropdown-content group-hover:block hidden group-hover:bg-gray-400 group-hover:text-red-500 absolute z-50"></div>
+              <div className="dropdown group relative inline-block focus:block">
+                <div className="flex gap-x-2 items-center">
+                  <button className="rounded-full w-8 h-8 bg-blue-900 focus: outline-none">
+                    <a>{"" || user.name?.charAt(0).toUpperCase()}</a>
+                  </button>
+                  <p className="font-bold">{"" || user?.name}</p>
+                </div>
+
+                <div className="group-hover:block hidden group-hover:text-blue-500 right-0 shadow-sm group-hover:bg-white absolute z-50">
+                  <button className="focus:outline-none no-underline block border-b-2 w-full px-4 py-2">
+                    <a href={PATHS.ORDER}>Order List</a>
+                  </button>
+                  <button className="focus:outline-none no-underline block border-b-2 w-full px-4 py-2" onClick={logOut}>
+                    Log Out
+                  </button>
+                </div>
               </div>
-              <button
-                className=" font-bold focus:outline-none"
-                onClick={logOut}
-              >
-                Log Out
-              </button>
             </div>
           )}
 

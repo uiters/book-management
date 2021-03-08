@@ -7,12 +7,13 @@ import Tabs from "../pages/Home/components/Tabs";
 import MainPageRoutes from "./sub-routes/MainPageRoutes";
 import CategoryPageRoutes from "./sub-routes/CategoryPageRoutes";
 import { PATHS } from "../constants/paths";
-import BookRoutes from "./BookRoutes";
 import Header from "../components/Header";
-import CategoryRoutes from "./CategoryRoutes";
-import CartRoutes from "./CartRoutes";
-import PublisherRoutes from "./PublisherRoutes";
-import AuthorRoutes from "./AuthorRoutes";
+import BookRoutes from "./sub-routes/BookRoutes";
+import PublisherRoutes from "./sub-routes/PublisherRoutes";
+import AuthorRoutes from "./sub-routes/AuthorRoutes";
+import CartRoutes from "./sub-routes/CartRoutes";
+import CategoryRoutes from "./sub-routes/CategoryRoutes";
+import OrderRoutes from "./sub-routes/OrderRoutes";
 
 const HomeRoutes = () => {
   const paths = useMemo(
@@ -29,9 +30,9 @@ const HomeRoutes = () => {
         exact
         path={paths}
         render={() => (
-          <main className="App flex justify-center w-full h-screen mt-10">
+          <main className="App flex justify-center w-full h-screen mt-10 min-h-screen pb-24">
             <Header></Header>
-            <div className="main-page w-10/12 flex-row gap-y-5 justify-center rounded-xl text-center">
+            <div className="main-page min-h-full w-10/12 flex-row gap-y-5 justify-center rounded-xl text-center">
               <div className="body h-40 mt-8">
                 <Tabs></Tabs>
                 <BookRoutes></BookRoutes>
@@ -40,6 +41,7 @@ const HomeRoutes = () => {
                 <CartRoutes />
                 <CategoryRoutes />
                 <CategoryPageRoutes />
+                <OrderRoutes/>
                 <MainPageRoutes />
                 <ToastContainer />
               </div>

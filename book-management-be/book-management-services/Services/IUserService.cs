@@ -9,7 +9,7 @@ namespace book_management_services.Services
 {
     public interface IUserService
     {
-        User Authenticate(string username, string password, string email);
+        Task<User> Authenticate(string username, string password, string email);
         IEnumerable<User> GetAll();
         User GetById(Guid id);
         User Create(User user, string password);

@@ -10,7 +10,6 @@ type Category = {
 };
 
 const CategoryPage = (category: Category) => {
-  const datas = [];
   const [listBooks, setListBooks] = useState<BookModel[]>([]);
 
   const fetchData = useCallback(() => {
@@ -30,20 +29,10 @@ const CategoryPage = (category: Category) => {
     fetchData();
   }, [listBooks.count]);
 
-  datas.push(
-    <div className="w-1/5 h-3/4" key={1}>
-      <Book
-        id=""
-        imageSrc="https://salt.tikicdn.com/cache/w444/ts/product/eb/62/6b/0e56b45bddc01b57277484865818ab9b.jpg"
-        author="Cảnh Thiên"
-        title="Đừng lựa chọn an nhàn khi còn trẻ"
-      ></Book>
-    </div>
-  );
 
-  listBooks.forEach((book: BookModel) => {
-    datas.push(
-      <div className="w-1/5 h-3/4" key={book.id}>
+  const listBooksUI = listBooks.map((book: BookModel) => {
+    return (
+      <div className="w-1/5 h-3/4 mt-5 ml-3" key={book.id}>
         <Book
           id={book.id}
           imageSrc={book.thumbnailUrl}
@@ -52,7 +41,7 @@ const CategoryPage = (category: Category) => {
         ></Book>
       </div>
     );
-  });
+  })
 
   return (
     <div>
@@ -61,7 +50,7 @@ const CategoryPage = (category: Category) => {
         <p className="font-bold text-xl">{category.title}</p>
       </div>
       <div className="list_book_container flex-wrap flex self-stretch mt-4 space-y-5 space-x-3">
-        {datas}
+        {listBooksUI}
       </div>
     </div>
   );

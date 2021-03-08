@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Security;
 
 namespace book_management_models
 {
@@ -14,6 +15,8 @@ namespace book_management_models
         public string Email { get; set; }
         public ICollection<Review> Reviews { get; set; }
         public Cart Cart { get; set; }
+        public string Role { get; set; }
+        public ICollection<Order> Orders { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
     }

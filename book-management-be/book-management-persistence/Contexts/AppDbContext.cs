@@ -19,6 +19,7 @@ namespace book_management_persistence.Contexts
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public DbSet<Photo> Images { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -34,6 +35,7 @@ namespace book_management_persistence.Contexts
             builder.Entity<Tag>().ToTable("Tags");
             builder.Entity<User>().ToTable("Users");
             builder.Entity<Photo>().ToTable("Images");
+            builder.Entity<Order>().ToTable("Orders");
 
             builder.Entity<User>()
                 .HasOne(u => u.Cart)

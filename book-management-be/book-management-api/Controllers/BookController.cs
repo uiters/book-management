@@ -38,12 +38,12 @@ namespace book_management_api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{bookId}")]
+        [HttpGet("{bookId}/1")]
         public IActionResult GetBookById(Guid bookId)
         {
             var book = _bookService.GetBookById(bookId);
             var bookForReturn = _mapper.Map<BookForListDTO>(book);
-
+        
             return Ok(bookForReturn);
         }
 
@@ -77,18 +77,16 @@ namespace book_management_api.Controllers
         }
 
         [HttpPut("{bookId}")]
-        public async Task<IActionResult> UpdateBook([FromBody] BookForUpdateDto updateBook)
+        public async Task<IActionResult> UpdateBook([FromBody] BookForUpdateDto updateBook, Guid bookId)
         {
-            var book = _mapper.Map<Book>(updateBook);
-            var result = await _bookService.UpdateBook(book);
-
+            var result = await _bookService.UpdateBook(updateBook, bookId);
 
             if (result == true)
             {
-                return Ok("Update successfull book with id : " + book.Id);
+                return Ok("Update successfull book!");
             }
             
-            return BadRequest("Update successful!");
+            return BadRequest("Update failed!");
         }
 
         [HttpDelete("{bookId}")]
@@ -102,6 +100,19 @@ namespace book_management_api.Controllers
             }
 
             return BadRequest("Delete failed book with id : " + bookId);
+        }
+
+        [HttpGet("{bookId}")]
+        public IActionResult GetDetailBookData(Guid bookId)
+        {
+            var result = _bookService.GetDetailBookData(bookId);
+
+            if (result != null)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest("Get detail book data failed");
         }
     }
 }

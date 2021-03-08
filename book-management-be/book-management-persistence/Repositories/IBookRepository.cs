@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using book_management_models;
 
 namespace book_management_persistence.Repositories
@@ -10,5 +11,6 @@ namespace book_management_persistence.Repositories
         Book GetBookById(Guid id);
         IEnumerable<Book> GetAllBook();
         bool IsBookExisted(string title);
+        Task<bool> UpdateBook(Book book, Guid id);
     }
 }

@@ -3,6 +3,9 @@ import { AxiosResponse } from "axios";
 import BookModel from "../../types/models/BookModel";
 import axiosPublicClient from "../axios/axiosPublicClient";
 import NewBookFormData from "../../types/form/NewBookFormData";
+import { idText } from "typescript";
+import UpdateBookFormData from "../../types/form/UpdateBookFormData";
+import DetailBookModel from "../../types/models/DetailBookModel";
 
 const bookApi = {
   getAllBooks: () => {
@@ -41,9 +44,21 @@ const bookApi = {
   },
 
   getById: (id: string): Promise<AxiosResponse<BookModel>> => {
+    const url = API_URLS.BOOK + '/' + id + '/1';
+
+    return axiosPublicClient.get(url);
+  },
+
+  getDetailBookData: (id: string): Promise<AxiosResponse<DetailBookModel>> => {
     const url = API_URLS.BOOK + '/' + id;
 
     return axiosPublicClient.get(url);
+  },
+
+  updateBook: (updateBook: UpdateBookFormData, id: string) => {
+    const url = API_URLS.BOOK + '/' + id;
+
+    return axiosPublicClient.put(url, updateBook);
   },
 
   delelteBook: (id: string): Promise<AxiosResponse<BookModel>> => {

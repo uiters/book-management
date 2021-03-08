@@ -3,6 +3,8 @@ using book_management_persistence.Contexts;
 using book_management_persistence.Repositories;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace book_management_persistence.Implements
 {
@@ -25,6 +27,11 @@ namespace book_management_persistence.Implements
             return category;
         }
 
+        public async Task<IEnumerable<Category>> GetCategoryForMain()
+        {
+            var categories = await DbSet.Take(10).Where(c => c.Books.Count() > 0).ToListAsync();
 
+            return categories;
+        }
     }
 }
