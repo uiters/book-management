@@ -56,7 +56,12 @@ namespace book_management_services.Implements
 
         public void Delete(Guid id)
         {
-            var category = _categoryRepository.GetById(id);
+            var category = _categoryRepository.findCategory(id);
+
+            if(category.Books.Count > 0)
+            {
+                throw new AppException("Can't delete this category");
+            }
 
             if (category == null)
                 throw new AppException("Category not found");
@@ -94,9 +99,9 @@ namespace book_management_services.Implements
             return _categoryRepository.GetCategoryByName(szName);
         }
 
-        public IEnumerable<Category> GetAllPaging(string searchTitle, int page, int pageSize/*, out int totalRow*/)
+        public IEnumerable<Category> GetAllPaging(/*string searchTitle,*/ int page, int pageSize/*, out int totalRow*/)
         {
-            return _categoryRepository.GetMultiPaging(/*out totalRow,*/searchTitle, page, pageSize);
+            return _categoryRepository.GetMultiPaging(/*out totalRow,searchTitle,*/ page, pageSize);
         }
     }
 }

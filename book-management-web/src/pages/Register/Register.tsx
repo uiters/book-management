@@ -13,8 +13,9 @@ const Register = () => {
     Email: string;
   }
 
-  const { register, handleSubmit } = useForm<FormData>({
+  const { register, handleSubmit,errors } = useForm<FormData>({
     mode: "onChange",
+    reValidateModel: "onChange",
   });
 
   const onSubmit = handleSubmit(({ Name, Username, Password, Email } : FormData) => {
@@ -29,6 +30,7 @@ const Register = () => {
       })
       .catch((err) => {
         console.log(err);
+        toastError(err.response.data.message);
       });
   });
 
@@ -54,17 +56,16 @@ const Register = () => {
             </label>
             <input
               ref={register({
-                // required: true,
-                minLength: 6,
-                maxLength: 20,
+                required: true,
               })}
-              // style={{borderColor: errors.name ? "red":""}}
-              // ref={register()}
+              style={{borderColor: errors.name ? "red":""}}
               name="Name"
               type="text"
               className="w-full p-2 border border-gray-300 rounded mt-1"
             />
-            {/* {errors.name && "Name is invalid"} */}
+            <span className="text-left items-start flex text-red-400">
+              {errors.Name?.type == "required" && "Name is required!"}           
+            </span>
           </div>
 
           <div>
@@ -73,17 +74,16 @@ const Register = () => {
             </label>
             <input
               ref={register({
-                // required: true,
-                minLength: 6,
-                maxLength: 20,
+                required: true,
               })}
-              // style={{borderColor: errors.name ? "red":""}}
-              // ref={register()}
+              style={{borderColor: errors.name ? "red":""}}
               name="Username"
               type="text"
               className="w-full p-2 border border-gray-300 rounded mt-1"
             />
-            {/* {errors.name && "Username is invalid"} */}
+            <span className="text-left items-start flex text-red-400">
+              {errors.Username?.type == "required" && "Username is required!"}           
+            </span>
           </div>
 
           <div>
@@ -91,11 +91,19 @@ const Register = () => {
               Password
             </label>
             <input
-              ref={register()}
+              ref={register({
+                required: true,
+                pattern: /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/i
+              })}
+              style={{borderColor: errors.name ? "red":""}}
               name="Password"
               type="password"
               className="w-full p-2 border border-gray-300 rounded mt-1"
             />
+            <span className="text-left items-start flex text-red-400">
+              {errors.Password?.type == "required" && "Password is required!"}
+              {errors.Password?.type == "pattern" && "Password is include 1 Uppercase, 1 Lowercase, 1 number and min 8 character!"}
+            </span>
           </div>
 
           <div>
@@ -103,11 +111,18 @@ const Register = () => {
               Email
             </label>
             <input
-              ref={register()}
+              ref={register({
+                required: true,
+                pattern: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/i
+              })}
               name="Email"
               type="email"
               className="w-full p-2 border border-gray-300 rounded mt-1"
             />
+            <span className="text-left items-start flex text-red-400">
+              {errors.Email?.type == "required" && "Email is required!"}
+              {errors.Email?.type == "pattern" && "Email is invalid!"}
+            </span>
           </div>
 
           <div>

@@ -1,6 +1,8 @@
 ﻿using book_management_models;
 using book_management_persistence.Contexts;
 using book_management_persistence.Repositories;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -32,6 +34,13 @@ namespace book_management_persistence.Implements
             var categories = await DbSet.Take(10).Where(c => c.Books.Count() > 0).ToListAsync();
 
             return categories;
+        }
+        
+        public Category findCategory(Guid id)
+        {
+            var category = Context.Categories.Where(c => c.Id.Equals(id)).Include(c => c.Books).FirstOrDefault();
+
+            return category;
         }
     }
 }

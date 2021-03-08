@@ -1,14 +1,27 @@
 //@ts-ignore
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PaginationModel from '../types/models/PaginationModel';
 
 const usePagination = (initialState: PaginationModel) => {
   const { itemsPerPage, data, startFrom } = initialState;
+
+  const [searching, setSearching] = useState(false);
+  const [filteredData, setFilteredData] = useState(data);
+
   const perPage = itemsPerPage ? itemsPerPage : 10;
   const pages = Math.ceil(data.length / perPage);
   const pagination = [];
   const [currentPage, setCurrentPage] = useState(startFrom <= pages ? startFrom : 1);
   const [slicedData, setSlicedData] = useState([...data].slice((currentPage - 1) * perPage, currentPage * perPage));
+
+  useEffect(() => {
+    setSlicedData([...filteredData].slice((currentPage - 1) * perPage, currentPage * perPage));
+    if(searching) {
+      setCurrentPage(1);
+      setSearching(false);
+    }
+    // eslint-disable-next-line
+  }, [filteredData, currentPage]);
 
   let ellipsisLeft = false;
   let ellipsisRight = false;
@@ -40,7 +53,7 @@ const usePagination = (initialState: PaginationModel) => {
     e.preventDefault();
     if(page !== currentPage) {
       setCurrentPage(page);
-      setSlicedData([...data].slice((page - 1) * perPage, page * perPage));
+      setSlicedData([...filteredData].slice((page - 1) * perPage, page * perPage));
     }
   }
 
@@ -48,7 +61,7 @@ const usePagination = (initialState: PaginationModel) => {
     e.preventDefault();
     setCurrentPage((prevVal: number) => prevVal - 1 === 0 ? prevVal : prevVal - 1);
     if(currentPage !== 1) {
-      setSlicedData([...data].slice((currentPage - 2) * perPage, (currentPage - 1) * perPage));
+      setSlicedData([...filteredData].slice((currentPage - 2) * perPage, (currentPage - 1) * perPage));
     }
   }
   
@@ -56,7 +69,7 @@ const usePagination = (initialState: PaginationModel) => {
     e.preventDefault();
     setCurrentPage((prevVal: number) => prevVal === pages ? prevVal : prevVal + 1);
     if(currentPage !== pages) {
-      setSlicedData([...data].slice(currentPage * perPage, (currentPage + 1) * perPage));
+      setSlicedData([...filteredData].slice(currentPage * perPage, (currentPage + 1) * perPage));
     }
   }
 
@@ -65,7 +78,9 @@ const usePagination = (initialState: PaginationModel) => {
     pagination,
     prevPage: goToPrevPage,
     nextPage: goToNextPage,
-    changePage
+    changePage,
+    setFilteredData,
+    setSearching
   };
 }
 

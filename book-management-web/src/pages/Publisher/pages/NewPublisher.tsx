@@ -31,7 +31,9 @@ const NewPublisher = () => {
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
-          toastSuccess("Create new publisher success!");
+          console.log(res.data);
+          
+          toastSuccess(res.data);
 
           if (isLeave) {
             // history.push(PATHS.BOOK + "/" + res.data);
@@ -43,7 +45,7 @@ const NewPublisher = () => {
         }
       })
       .catch((errors) => {
-        toastError("Create new publisher failed");
+        toastError(errors.response.data.message);
       });
   };
 

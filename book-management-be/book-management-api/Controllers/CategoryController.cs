@@ -74,9 +74,9 @@ namespace book_management_api.Controllers
         }
 
         [HttpGet("getbyfilter")]
-        public IActionResult GetByFilter(string searchTitle, int page, int pageSize)
+        public IActionResult GetByFilter(/*string searchTitle,*/ int page, int countPerPage)
         {
-            var categorys = _categoryService.GetAllPaging(searchTitle, page, pageSize);
+            var categorys = _categoryService.GetAllPaging(/*searchTitle,*/ page, countPerPage);
             var model = _mapper.Map<List<CategoryViewModel>>(categorys);
             if (model.Count == 0)
             {
