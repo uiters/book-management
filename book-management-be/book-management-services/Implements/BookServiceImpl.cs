@@ -19,6 +19,7 @@ namespace book_management_services.Implements
         private readonly PublisherRepositoryImpl _publisherRepository;
         private readonly IMapper _mapper;
         private IPhotoService _photoService;
+        private CartItemRepositoryImpl _cartItemRepo;
 
 
         public BookServiceImpl(IUnitOfWorks unitOfWork, IMapper mapper, IPhotoService photoService)
@@ -27,6 +28,7 @@ namespace book_management_services.Implements
             this._bookRepository = this._unitOfWorks.BookRepository();
             this._authorRepository = this._unitOfWorks.AuthorRepository();
             this._publisherRepository = this._unitOfWorks.PublisherRepository();
+            this._cartItemRepo = this._unitOfWorks.CartItemRepository();
             this._mapper = mapper;
             this._photoService = photoService;
         }
@@ -57,7 +59,7 @@ namespace book_management_services.Implements
             //validate book
             if (_bookRepository.IsBookExisted(newBook.Title))
             {
-                return new Guid("Book is existed");    
+                return new Guid();
             }
 
             var author = _authorRepository.GetAuthorByName(newBook.AuthorName);
@@ -71,32 +73,55 @@ namespace book_management_services.Implements
                 book.Title = newBook.Title;
                 book.AuthorId = author.Id;
                 book.PublisherId = publisher.Id;
+                book.Description = newBook.Description;
+                book.SKU = newBook.SKU;
 
-                var uploadPhotos = await _photoService.UploadPhotos(newBook.Photos);
-                book.Photos = uploadPhotos.ToList();
-                book.ThumbnailUrl = uploadPhotos.ToArray()[0].Url;
+                if (newBook.Photos.Any())
+                {
+                    var uploadPhotos = await _photoService.UploadPhotos(newBook.Photos);
+                    book.Photos = uploadPhotos.ToList();
+                    book.ThumbnailUrl = uploadPhotos.ToArray()[0].Url;
+                }
                 
                 var result = await _bookRepository.InsertAsync(book);
                 _bookRepository.SaveChange();
-                var bookId = book.Id;
-                Console.WriteLine(bookId);
-                return bookId;
-            }      
-            
+                return book.Id;
+            }
+
             return new Guid("");
         }
 
 
-        public Task<bool> UpdateBook(Book bookForUpdate)
+        public async Task<bool> UpdateBook(BookForUpdateDto bookForUpdate, Guid bookId)
         {
-            var result = _bookRepository.UpdateAsync(bookForUpdate);
+            var book = _mapper.Map<Book>(bookForUpdate);
+            var result = await _bookRepository.UpdateBook(book, bookId);
 
             return result;
         }
 
-        public Task<bool> DeleteBook(Guid bookId)
+        public async Task<bool> DeleteBook(Guid bookId)
         {
-            var result = _bookRepository.DeleteAsync(bookId);
+            var cartItem = _cartItemRepo.FindByBookId(bookId);
+            if (cartItem != null)
+            {
+                return false;
+            }
+
+            var result = await _bookRepository.DeleteAsync(bookId);
+
+            return result;
+        }
+
+        public BookForDetailDTO GetDetailBookData(Guid bookId)
+        {
+            var book = _bookRepository.GetBookById(bookId);
+            Category category = book.Categories.FirstOrDefault();
+            var relatedBooks = _bookRepository.GetBooksByCategory(category.Name);
+
+            var result = new BookForDetailDTO();
+            result.Book = _mapper.Map<BookForListDTO>(book);
+            result.RelatedBooks = _mapper.Map<List<BookForListDTO>>(relatedBooks);
 
             return result;
         }

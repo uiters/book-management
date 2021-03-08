@@ -22,7 +22,7 @@ namespace book_management_services.Implements
             this._cartService = cartService;
         }
 
-        public User Authenticate(string username, string password, string email)
+        public async Task<User> Authenticate(string username, string password, string email)
         {
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(email))
                 return null;
@@ -44,6 +44,13 @@ namespace book_management_services.Implements
             else if (ValidateUser.IsValidEmail(user.Email) == false)
             {
                 throw new AppException("Email is not in right format");
+            }
+
+            var cart = _cartService.GetCartByUserId(user.Id);
+
+            if (cart == null)
+            {
+                await _cartService.AddCart(new Cart() {UserId =  user.Id});
             }
 
             // authentication successful

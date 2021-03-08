@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import BookModel from "../../types/models/BookModel";
-import queryString from 'query-string';
+import queryString from "query-string";
 import axiosPublicClient from "../axios/axiosPublicClient";
 import NewCategoryFormData from "../../types/form/NewCategoryFormData";
 import { API_URLS } from "../../constants/api_url";
@@ -35,7 +35,7 @@ const categoryApi = {
   },
 
   getById: (id: string): Promise<AxiosResponse<CategoryModel>> => {
-    const url = API_URLS.CATEGORY + '/getbyid/' + id;
+    const url = API_URLS.CATEGORY + "/getbyid/" + id;
 
     return axiosPublicClient.get(url);
   },
@@ -52,7 +52,7 @@ const categoryApi = {
     return axiosPublicClient.put(url, newCategory, config);
   },
 
-  deleteCategory: (id: string) : Promise<AxiosResponse<CategoryModel[]>> => {
+  deleteCategory: (id: string): Promise<AxiosResponse<CategoryModel[]>> => {
     const url = API_URLS.CATEGORY + "/delete/" + id;
 
     const config = {
@@ -64,16 +64,11 @@ const categoryApi = {
     return axiosPublicClient.delete(url, config);
   },
 
+  getCategoryForMain: (): Promise<AxiosResponse<CategoryModel[]>> => {
+    const url = API_URLS.CATEGORY + "/main";
+
+    return axiosPublicClient.get(url);
+  },
 };
 
 export default categoryApi;
-
-
-
-    // const config = {
-    //   params: {
-    //     searchTitle: param.title,
-    //     page: param.page,
-    //     pageSize: param.size
-    //   },
-    // };

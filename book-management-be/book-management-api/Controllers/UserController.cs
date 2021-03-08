@@ -39,11 +39,11 @@ namespace book_management_api.Controllers
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public IActionResult Authenticate([FromBody] AuthenticateModel model)
+        public async Task<IActionResult> Authenticate([FromBody] AuthenticateModel model)
         {
             try
             {
-                var user = _userService.Authenticate(model.Username, model.Password, model.Email);
+                var user = await _userService.Authenticate(model.Username, model.Password, model.Email);
 
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
@@ -66,6 +66,8 @@ namespace book_management_api.Controllers
                     Username = user.Username,
                     Name = user.Name,
                     Email = user.Email,
+                    Address = user.Address,
+                    Phone = user.Phone,
                     Token = tokenString
                 });
             }

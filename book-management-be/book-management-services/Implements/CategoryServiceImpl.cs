@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using book_management_helpers.Configurations;
 using book_management_models;
 using book_management_persistence.Implements;
@@ -82,6 +83,11 @@ namespace book_management_services.Implements
         public Category GetById(Guid id)
         {
             return _categoryRepository.GetById(id);
+        }
+
+        public Task<IEnumerable<Category>> GetCategoryForMain()
+        {
+            return _categoryRepository.GetCategoryForMain();
         }
 
         public void SaveChanges()

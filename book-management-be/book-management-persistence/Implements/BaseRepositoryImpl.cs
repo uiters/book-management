@@ -39,13 +39,17 @@ namespace book_management_persistence.Implements
 
         public async Task<bool> UpdateAsync(T entity)
         {
+            var curEntity = DbSet.FirstOrDefault(e => e.Id.Equals(entity.Id));
+            if (curEntity == null)
+                return false;
+            
             if (entity == null)
             {
                 return false;
             }
 
             Context.Update(entity);
-            return await Context.SaveChangesAsync() > 0;
+            return Context.SaveChanges() > 0;
         }
 
         public async Task<bool> DeleteAsync(Guid id)

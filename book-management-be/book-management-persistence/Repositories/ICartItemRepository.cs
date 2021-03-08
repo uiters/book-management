@@ -9,5 +9,7 @@ namespace book_management_persistence.Repositories
     {
         Task<bool> AddToCart(CartItem item);
         Task<IEnumerable<CartItem>> GetByUserId(Guid userId);
+        CartItem FindByBookId(Guid bookId);
+        bool ClearAllCartItem(Guid userId);
     }
 }

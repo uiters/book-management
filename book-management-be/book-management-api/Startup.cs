@@ -123,6 +123,8 @@ namespace book_management_api
             services.AddScoped<IPhotoRepository, PhotoRepositoryImpl>();
             services.AddScoped<ICartRepository, CartRepositoryImpl>();
             services.AddScoped<ICartItemRepository, CartItemRepositoryImpl>();
+            services.AddScoped<IOrderRepository, OrderRepositoryImpl>();
+            services.AddScoped<IOrderItemRepository, OrderItemRepositoryImpl>();
 
             //Servies register
             services.AddScoped<IBookService, BookServiceImpl>();
@@ -133,6 +135,7 @@ namespace book_management_api
             services.AddScoped<IPhotoService, PhotoServiceImpl>();
             services.AddScoped<ICartService, CartServiceImpl>();
             services.AddScoped<ICartItemService, CartItemServiceImpl>();
+            services.AddScoped<IOrderService, OrderServiceImpl>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

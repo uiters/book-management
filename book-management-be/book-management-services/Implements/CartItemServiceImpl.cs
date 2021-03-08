@@ -17,12 +17,15 @@ namespace book_management_services.Implements
         private CartItemRepositoryImpl _cartItemRepo;
         private IMapper _mapper;
         private CartRepositoryImpl _cartRepo;
+        private BookRepositoryImpl _bookRepo;
+
 
         public CartItemServiceImpl(IUnitOfWorks unitOfWorks, IMapper mapper)
         {
             this._unitOfWorks = unitOfWorks;
             this._cartItemRepo = this._unitOfWorks.CartItemRepository();
             this._cartRepo = this._unitOfWorks.CartRepository();
+            this._bookRepo = this._unitOfWorks.BookRepository();
             this._mapper = mapper;
         }
 
@@ -33,6 +36,8 @@ namespace book_management_services.Implements
             //Find cart of user
             var cart = await _cartRepo.FindCartByUserId(item.UserId);
             cartItem.CartId = cart.Id;
+
+            var book = _bookRepo.GetBookById(item.BookId);
             
             var result = await _cartItemRepo.AddToCart(cartItem);
 

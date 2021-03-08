@@ -7,18 +7,27 @@ import cartApi from "../../../services/api/cartApi";
 import { toastSuccess } from "../../../services/toastService";
 import { PATHS } from "../../../constants/paths";
 
-const CartItem = (item: CartItemViewModel) => {
-  const [quantity, setQuantity] = useState(1);
+const CartItem = ({
+  item,
+  onQuantityChange,
+}: {
+  item: CartItemViewModel;
+  onQuantityChange: (newQuantity: number, price: number) => void;
+}) => {
+  const [quantity, setQuantity] = useState(item.quantity);
+  const [curPrice, setCurPrice] = useState(item.book.price);
   const user: User = JSON.parse(localStorage.getItem("user") || "{}");
 
   const onAddQuantity = () => {
     setQuantity(quantity + 1);
-    // setCurPrice(quantity * price + price);
+    onQuantityChange(quantity + 1, item.book.price);
+    setCurPrice(quantity * item.book.price + item.book.price);
   };
 
   const onRemoveQuantity = () => {
     setQuantity(quantity - 1);
-    // setCurPrice(quantity * price - price);
+    onQuantityChange(quantity - 1, item.book.price);
+    setCurPrice(quantity * item.book.price - item.book.price);
   };
 
   const deleteItem = () => {
@@ -38,7 +47,7 @@ const CartItem = (item: CartItemViewModel) => {
     <div>
       <div className="item w-full h-auto flex bg-white p-3 ">
         <img className="w-1/5 h-1/5" src={item.book?.thumbnailUrl} alt="" />
-        <div className="info buttons flex-grow items-start text-left mt-4">
+        <div className="info buttons flex-grow items-start text-left mt-4 pl-4">
           <a
             href={PATHS.BOOK + "/" + item.book.id}
             className="font-md text-lg hover:underline"
@@ -60,21 +69,19 @@ const CartItem = (item: CartItemViewModel) => {
               value={item.book?.price * item?.quantity}
               displayType={"text"}
               thousandSeparator={true}
-              suffix={"đ"}
+              suffix={" đ"}
             ></NumberFormat>
           </p>
           <div className="quantity h-auto border flex">
             <button
               className="focus:outline-none px-3"
               onClick={onRemoveQuantity}
-              disabled={quantity === 1}
+              disabled={true}
             >
               -
             </button>
-            <p className="p-2 border-l border-r text-center">
-              {item?.quantity}
-            </p>
-            <button className="focus:outline-none px-3" onClick={onAddQuantity}>
+            <p className="p-2 border-l border-r text-center">{quantity}</p>
+            <button className="focus:outline-none px-3" onClick={onAddQuantity} disabled={true}>
               +
             </button>
           </div>

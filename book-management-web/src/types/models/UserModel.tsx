@@ -5,6 +5,7 @@ type User = {
   email: string;
   token: string;
   address: string;
+  phone: string;
 };
 
 export default User;

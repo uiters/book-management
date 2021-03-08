@@ -5,11 +5,14 @@ module.exports = {
     extend: {
       colors: {
         'lightBlue': '#8ac4d0'
-      }
+      },
+
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      display: ['group-hover'],
+    },
   },
   plugins: [],
 }

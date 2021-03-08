@@ -28,7 +28,6 @@ const NewBookPage = () => {
 
   const onSubmit = (formData: NewBookFormData) => {
     formData.photos = photoList;
-    formData.description = CKEditor.instances.editor.getData();
     console.log(formData);
 
     bookApi
@@ -71,7 +70,7 @@ const NewBookPage = () => {
           </label>
           <div className="input border w-full p-2">
             <input
-              ref={register({ required: true, maxLength: "20" })}
+              ref={register({ required: true, maxLength: "200" })}
               type="text"
               placeholder="Insert Title here"
               name="title"
@@ -80,7 +79,7 @@ const NewBookPage = () => {
           </div>
           <span className="text-left items-start flex text-red-400">
             {errors.title?.type === "required" && "Title is required!"}
-            {errors.title?.type === "maxLength" && "Title is max 20 chars!"}
+            {errors.title?.type === "maxLength" && "Title is max 200 chars!"}
           </span>
         </div>
         <div className="form-group flex flex-col items-start gap-2">

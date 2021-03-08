@@ -12,12 +12,14 @@ namespace book_management_helpers
     {
         public static void SeedBook(AppDbContext context)
         {
-            if (context.Books.Any()) return;
+            // if (context.Books.Any()) return;
 
             var bookData =
                 System.IO.File.ReadAllText(
-                    //"D:/source/DE_assignment/book-management-be/book-management-helpers/MockData/LiteratureBookData.json");
-                    "D:/Project VS/.net core/samples/DE_assignment/DE_assignment/book-management-be/book-management-helpers/MockData/SkillBookData.json");
+                    "D:/source/DE_assignment/book-management-be/book-management-helpers/MockData/RaiseChildBookData.json");
+                    //"D:/Project VS/.net core/samples/DE_assignment/DE_assignment/book-management-be/book-management-helpers/MockData/SkillBookData.json");
+            
+            var random = new Random();
 
             var books = JsonConvert.DeserializeObject<List<Book>>(bookData);
 
@@ -26,14 +28,14 @@ namespace book_management_helpers
                 book.CreatedAt = DateTime.Now;
                 Author randomAuthor = context.Authors.OrderBy(a => Guid.NewGuid()).First();
                 Publisher randomPublisher = context.Publishers.OrderBy((p => Guid.NewGuid())).First();
-
-                Category category = context.Categories.FirstOrDefault(c => c.Name.Equals("Sách Kĩ Năng"));
+                Category category = context.Categories.FirstOrDefault(c => c.Name.Equals("Sách Nuôi Dạy Con"));
 
                 book.AuthorId = randomAuthor.Id;
                 book.PublisherId = randomPublisher.Id;
                 book.Categories = new List<Category>();
                 book.Categories.Add(category);
-
+                book.Quantity = random.Next(20, 30);
+                
                 context.Books.Add(book);
             }
 
