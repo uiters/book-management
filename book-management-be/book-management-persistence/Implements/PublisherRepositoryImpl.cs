@@ -39,5 +39,42 @@ namespace book_management_persistence.Implements
 
             return publisher;
         }
+
+        public IEnumerable<Publisher> GetAllPublisherPaging(out int totalRow, int searchKey, string searchTitle, int page, int pageSize, string[] includes = null)
+        {
+            page = page - 1;
+
+            int skipCount = page * pageSize;
+
+            IQueryable<Publisher> _resetSet;
+
+            //HANDLE INCLUDES FOR ASSOCIATED OBJECTS IF APPLICABLE
+            if (includes != null && includes.Count() > 0)
+            {
+                var query = Context.Publishers.Include(includes.First());
+                foreach (var include in includes.Skip(1))
+                    query = query.Include(include);
+                _resetSet = query.AsQueryable();
+            }
+            else
+            {
+                _resetSet = Context.Publishers.AsQueryable();
+            }
+
+            if (searchTitle != null)
+            {
+                searchTitle = searchTitle.Trim();
+                if (searchKey == 1)
+                    _resetSet = _resetSet.Where(x => x.Name.Contains(searchTitle));
+                
+            }
+
+            var a = _resetSet.ToList();
+            totalRow = _resetSet.Count();
+
+            _resetSet = skipCount == 0 ? _resetSet.Take(pageSize) : _resetSet.Skip(skipCount).Take(pageSize);
+
+            return _resetSet.AsQueryable();
+        }
     }
 }

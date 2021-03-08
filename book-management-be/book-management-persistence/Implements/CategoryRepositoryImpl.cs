@@ -34,11 +34,12 @@ namespace book_management_persistence.Implements
             return category;
         }
 
-        public IEnumerable<Category> GetAllCategoryPaging(out int totalRow, string searchTitle, int page, int pageSize, string[] includes = null)
+        public IEnumerable<Category> GetAllCategoryPaging(out int totalRow, int searchKey, string searchTitle, int page, int pageSize, string[] includes = null)
         {
             page = page - 1;
 
             int skipCount = page * pageSize;
+
             IQueryable<Category> _resetSet;
 
             //HANDLE INCLUDES FOR ASSOCIATED OBJECTS IF APPLICABLE
@@ -55,11 +56,17 @@ namespace book_management_persistence.Implements
             }
 
             if (searchTitle != null)
-                _resetSet = _resetSet.Where(x => x.Name.Contains(searchTitle));
+            {
+                searchTitle = searchTitle.Trim();
+                if(searchKey == 1)
+                    _resetSet = _resetSet.Where(x => x.Name.Contains(searchTitle));
+                else
+                    _resetSet = _resetSet.Where(x => x.Details.Contains(searchTitle));
+            }
 
             var a = _resetSet.ToList();
-
             totalRow = _resetSet.Count();
+
             _resetSet = skipCount == 0 ? _resetSet.Take(pageSize) : _resetSet.Skip(skipCount).Take(pageSize);
 
             return _resetSet.AsQueryable();

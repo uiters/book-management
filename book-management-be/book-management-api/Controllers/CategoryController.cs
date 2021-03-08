@@ -74,29 +74,32 @@ namespace book_management_api.Controllers
         }
 
         [HttpGet("getbyfilter")]
-        public IActionResult GetByFilter(string searchTitle, int page, int countPerPage)
+        public IActionResult GetByFilter(int searchKey, string searchTitle, int page, int countPerPage)
         {
-            int totalRow = 0;
-            var categorys = _categoryService.GetAllPaging( out totalRow, searchTitle, page, countPerPage);
-            
-            var model = _mapper.Map<List<CategoryViewModel>>(categorys);
-            //if (model.Count == 0)
-            //{
-            //    throw new MyEmptyResultException(HttpStatusCode.NotAcceptable, "Can't find Category in database!");
-            //}
-            var a = totalRow;
-            int totalPage = (int)Math.Ceiling((double)totalRow / countPerPage);
-            var paginationSet = new PaginationSet<CategoryViewModel>()
+            try
             {
-                Items = model,
-                MaxPage = 5,
-                Page = page,
-                TotalCount = totalRow,
-                TotalPage = totalPage
-            };
-
+                int totalRow = 0;
+                var categorys = _categoryService.GetAllPaging( out totalRow, searchKey, searchTitle, page, countPerPage);
             
-            return Ok(paginationSet);
+                var model = _mapper.Map<List<CategoryViewModel>>(categorys);
+            
+                var a = totalRow;
+                int totalPage = (int)Math.Ceiling((double)totalRow / countPerPage);
+                var paginationSet = new PaginationSet<CategoryViewModel>()
+                {
+                    Items = model,
+                    MaxPage = 5,
+                    Page = page,
+                    TotalCount = totalRow,
+                    TotalPage = totalPage
+                };
+                return Ok(paginationSet);
+
+            }
+            catch(AppException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [HttpGet("getbyid/{id}")]

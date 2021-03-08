@@ -11,6 +11,6 @@ namespace book_management_persistence.Repositories
 
         public Category findCategory(Guid id);
 
-        public IEnumerable<Category> GetAllCategoryPaging(out int totalRow, string searchTitle, int page, int pageSize, string[] include = null);
+        public IEnumerable<Category> GetAllCategoryPaging(out int totalRow, int searchKey, string searchTitle, int page, int pageSize, string[] include = null);
     }
 }

@@ -17,6 +17,6 @@ namespace book_management_services.Services
 
         IEnumerable<Category> GetCategoryByName(string szName);
 
-        IEnumerable<Category> GetAllPaging( out int totalRow, string searchTitle, int page, int pageSize);
+        IEnumerable<Category> GetAllPaging(out int totalRow, int searchKey, string searchTitle, int page, int pageSize);
     }
 }

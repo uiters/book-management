@@ -51,5 +51,59 @@ namespace book_management_persistence.Implements
             var result = DbSet.Any(b => b.Title.Equals(title));
             return result;
         }
+
+        public IEnumerable<Book> GetAllBookPaging(out int totalRow, int searchKey, string searchTitle, int page, int pageSize, string[] includes = null)
+        {
+            page = page - 1;
+
+            int skipCount = page * pageSize;
+
+            IQueryable<Book> _resetSet;
+
+            //HANDLE INCLUDES FOR ASSOCIATED OBJECTS IF APPLICABLE
+            if (includes != null && includes.Count() > 0)
+            {
+                var query = Context.Books.Include(includes.First());
+                foreach (var include in includes.Skip(1))
+                    query = query.Include(include);
+                _resetSet = query.AsQueryable();
+            }
+            else
+            {
+                _resetSet = Context.Books.AsQueryable();
+            }
+            
+            var a = _resetSet.ToList();
+
+            if (searchTitle != null)
+            {
+                searchTitle = searchTitle.Trim();
+                if (searchKey == 1)
+                {
+                    _resetSet = _resetSet.Where(x => x.Title.Contains(searchTitle));
+                }
+                else if (searchKey == 2)
+                {
+                    _resetSet = _resetSet.Where(x => x.Categories.Any(y => y.Name.Contains(searchTitle)));
+                }
+                else if (searchKey == 3)
+                {
+                    _resetSet = _resetSet.Where(x => x.Author.Name.Contains(searchTitle));
+                }
+                else
+                {
+                    _resetSet = _resetSet.Where(x => x.Publisher.Name.Contains(searchTitle));
+                }
+
+            }
+
+            a = _resetSet.ToList();
+
+            totalRow = _resetSet.Count();
+
+            _resetSet = skipCount == 0 ? _resetSet.Take(pageSize) : _resetSet.Skip(skipCount).Take(pageSize);
+
+            return _resetSet.AsQueryable();
+        }
     }
 }

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
+using book_management_helpers.Configurations;
 using book_management_helpers.CustomException;
 using book_management_models;
+using book_management_models.DTOs;
 using book_management_models.DTOs.BookDTOs;
 using book_management_services.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -102,6 +104,35 @@ namespace book_management_api.Controllers
             }
 
             return BadRequest("Delete failed book with id : " + bookId);
+        }
+
+        [HttpGet("getbyfilter")]
+        public IActionResult GetByFilter(int searchKey, string searchTitle, int page, int countPerPage)
+        {
+            try
+            {
+                int totalRow = 0;
+                var categorys = _bookService.GetAllPaging(out totalRow, searchKey, searchTitle, page, countPerPage);
+
+                var model = _mapper.Map<List<BookForListDTO>>(categorys);
+
+                var a = totalRow;
+                int totalPage = (int)Math.Ceiling((double)totalRow / countPerPage);
+                var paginationSet = new PaginationSet<BookForListDTO>()
+                {
+                    Items = model,
+                    MaxPage = 5,
+                    Page = page,
+                    TotalCount = totalRow,
+                    TotalPage = totalPage
+                };
+                return Ok(paginationSet);
+
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
     }
 }

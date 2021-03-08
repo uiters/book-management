@@ -13,11 +13,12 @@ const categoryApi = {
     return axiosPublicClient.get(url);
   },
 
-  getPagedCategory: (searchTitle: string, page: number, countPerPage: number) => {
+  getPagedCategory: (searchKey: number, searchTitle: string, page: number, countPerPage: number) => {
     const url = API_URLS.CATEGORY + "/getbyfilter/"; 
 
     const config = {
       params: {
+        searchKey: searchKey,
         searchTitle: searchTitle,
         page: page,
         countPerPage: countPerPage

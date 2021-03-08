@@ -14,5 +14,7 @@ namespace book_management_services.Services
         Task<Guid> AddNewBook(BookForCreateDTO newBook);
         Task<bool> UpdateBook(Book bookForUpdate);
         Task<bool> DeleteBook(Guid bookId);
+
+        IEnumerable<Book> GetAllPaging(out int totalRow, int searchKey, string searchTitle, int page, int pageSize);
     }
 }

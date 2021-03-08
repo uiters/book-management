@@ -100,5 +100,12 @@ namespace book_management_services.Implements
 
             return result;
         }
+
+        public IEnumerable<Book> GetAllPaging(out int totalRow, int searchKey, string searchTitle, int page, int pageSize)
+        {
+            var lst = _bookRepository.GetAllBookPaging(out totalRow, searchKey, searchTitle, page, pageSize, new string[] { "Categories", "Author", "Publisher" });
+
+            return lst;
+        }
     }
 }

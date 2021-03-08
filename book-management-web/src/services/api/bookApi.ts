@@ -10,6 +10,21 @@ const bookApi = {
     return axiosPublicClient.get(url);
   },
 
+  getPagedBook: (searchKey: number, searchTitle: string, page: number, countPerPage: number) => {
+    const url = API_URLS.BOOK + "/getbyfilter/";
+
+    const config = {
+      params: {
+        searchKey: searchKey,
+        searchTitle: searchTitle,
+        page: page,
+        countPerPage: countPerPage
+      },
+    };
+
+    return axiosPublicClient.get(url, config);
+  },
+
   getByCategory: (category: string): Promise<AxiosResponse<BookModel[]>> => {
     const url = API_URLS.BOOK + "/category";
     const config = {
