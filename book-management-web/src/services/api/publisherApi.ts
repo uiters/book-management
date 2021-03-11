@@ -17,6 +17,11 @@ const publisherApi = {
         return axiosPublicClient.get(url);
       },
 
+      getForListParams: () => {
+        const url = API_URLS.PUBLISHER + "/getforlistparams";
+        return axiosPublicClient.get(url);
+      },
+      
       getPagedPublisher: (searchKey: number, searchTitle: string, page: number, countPerPage: number) => {
         const url = API_URLS.PUBLISHER + "/getbyfilter/";
     

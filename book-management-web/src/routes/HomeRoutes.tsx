@@ -14,7 +14,7 @@ import AuthorRoutes from "./sub-routes/AuthorRoutes";
 import CartRoutes from "./sub-routes/CartRoutes";
 import CategoryRoutes from "./sub-routes/CategoryRoutes";
 import OrderRoutes from "./sub-routes/OrderRoutes";
-
+import UserRoutes from "./sub-routes/UserRoutes";
 const HomeRoutes = () => {
   const paths = useMemo(
     () =>
@@ -38,6 +38,7 @@ const HomeRoutes = () => {
                 <BookRoutes></BookRoutes>
                 <PublisherRoutes />
                 <AuthorRoutes />
+                <UserRoutes />
                 <CartRoutes />
                 <CategoryRoutes />
                 <CategoryPageRoutes />

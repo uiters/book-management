@@ -69,5 +69,17 @@ namespace book_management_persistence.Implements
 
             return _resetSet.AsQueryable();
         }
+
+        public IEnumerable<Author> GetForListParams()
+        {
+            IEnumerable<Author> lst;
+
+            lst = Context.Authors.Where(x => x.Books.Any());
+
+            lst = lst.Take(5);
+
+            return lst;
+
+        }
     }
 }

@@ -16,9 +16,9 @@ namespace book_management_helpers
 
             var bookData =
                 System.IO.File.ReadAllText(
-                    "D:/source/DE_assignment/book-management-be/book-management-helpers/MockData/SkillBookData.json");
-                    //"D:/Project VS/.net core/samples/DE_assignment/DE_assignment/book-management-be/book-management-helpers/MockData/SkillBookData.json");
-            
+                    "D:/Project VS/.net core/samples/DE_assignment/DE_assignment/book-management-be/book-management-helpers/MockData/LanguageBookData.json");
+            //"D:/source/DE_assignment/book-management-be/book-management-helpers/MockData/RaiseChildBookData.json");
+
             var random = new Random();
 
             var books = JsonConvert.DeserializeObject<List<Book>>(bookData);

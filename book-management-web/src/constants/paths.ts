@@ -11,6 +11,7 @@ export const PATHS = {
   RAISECHILD: "/sach-nuoi-day-con",
 
   BOOK_NEW: "/book/new-book",
+  BOOK_SEARCH: "/book/search",
   BOOK_DETAIL: "/book/:bookId",
   BOOK_UPDATE: "/book/update/:bookId",
   BOOK: "/book",
@@ -31,6 +32,10 @@ export const PATHS = {
   CART_CHECKOUT: "/cart/checkout",
 
   ORDER: "/order",
-  ORDER_DETAIL: "/order/:orderId"
+  ORDER_DETAIL: "/order/:orderId",
+
+  USERS: "/users",
+  NEWUSERS: "/users/new-users",
+  USERS_UDPATE: '/users/update/:userId',
 };
 

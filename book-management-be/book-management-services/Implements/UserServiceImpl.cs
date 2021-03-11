@@ -2,6 +2,7 @@
 using book_management_helpers.Helpers;
 using book_management_models;
 using book_management_persistence.Contexts;
+using book_management_persistence.Repositories;
 using book_management_services.Services;
 using System;
 using System.Collections.Generic;
@@ -15,11 +16,13 @@ namespace book_management_services.Implements
     {
         private AppDbContext _context;
         private ICartService _cartService;
+        private IUserRepository _userRepository;
 
-        public UserServiceImpl(AppDbContext context, ICartService cartService)
+        public UserServiceImpl(AppDbContext context, ICartService cartService, IUserRepository userRepository)
         {
             _context = context;
             this._cartService = cartService;
+            this._userRepository = userRepository;
         }
 
         public async Task<User> Authenticate(string username, string password)
@@ -67,7 +70,7 @@ namespace book_management_services.Implements
             return _context.Users.Find(id);
         }
 
-        public User Create(User user, string password)
+        public async Task<User> CreateAsync(User user, string password)
         {
             // validation
             if (string.IsNullOrWhiteSpace(password))
@@ -103,9 +106,17 @@ namespace book_management_services.Implements
             user.PasswordSalt = passwordSalt;
 
             _context.Users.Add(user);
-            _context.SaveChanges();
+           
 
-            _cartService.AddCart(new Cart() {UserId = user.Id});
+            bool addCartResut = await _cartService.AddCart(new Cart() { UserId = user.Id });
+
+            if(!addCartResut)
+            {
+                return null;
+            }
+
+
+            _context.SaveChanges();
 
             return user;
         }
@@ -145,6 +156,10 @@ namespace book_management_services.Implements
                 user.PasswordHash = passwordHash;
                 user.PasswordSalt = passwordSalt;
             }
+
+            user.Role = userParam.Role;
+            user.Phone = userParam.Phone;
+            user.Address = userParam.Address;
 
             _context.Users.Update(user);
             _context.SaveChanges();
@@ -195,6 +210,13 @@ namespace book_management_services.Implements
             }
 
             return true;
+        }
+
+        public IEnumerable<User> GetAllPaging(out int totalRow, string searchKey, string searchTitle, int page, int pageSize)
+        {
+            var lst = _userRepository.GetAllUserPaging(out totalRow, searchKey, searchTitle, page, pageSize);
+
+            return lst;
         }
     }
 }

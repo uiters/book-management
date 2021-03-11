@@ -8,7 +8,7 @@ import NewBookPage from "../../pages/Book/pages/new-book/NewBookPage";
 import DetailBookPage from "../../pages/Book/pages/detail/DetailBookPage";
 import UpdateBookPage from "../../pages/Book/pages/update-book/UpdateBookPage";
 import BookPage from "../../pages/Book/BookPage";
-
+import SearchBookPage from "../../pages/Book/pages/search-book/SearchBookPage";
 const BookRoutes = () => {
   return (
     <Switch>
@@ -17,6 +17,7 @@ const BookRoutes = () => {
         path={PATHS.BOOK_NEW}
         component={NewBookPage}
       ></AuthenticatedGuard>
+      <Route exact path={PATHS.BOOK_SEARCH} component={SearchBookPage}></Route>
       <Route exact path={PATHS.BOOK_DETAIL} component={DetailBookPage}></Route>
       <AuthenticatedGuard
         exact

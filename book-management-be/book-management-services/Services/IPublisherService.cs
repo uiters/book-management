@@ -22,5 +22,6 @@ namespace book_management_services.Services
 
         IEnumerable<Publisher> GetAllPaging(out int totalRow, int searchKey, string searchTitle, int page, int pageSize);
 
+        IEnumerable<Publisher> GetForListParams();
     }
 }

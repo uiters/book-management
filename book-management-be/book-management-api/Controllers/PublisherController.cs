@@ -149,5 +149,17 @@ namespace book_management_api.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
+
+        [HttpGet("getforlistparams")]
+        public IActionResult GetCategoryForListParams()
+        {
+            var publishers = _publisherService.GetForListParams();
+            var model = _mapper.Map<List<PublisherViewModel>>(publishers);
+            if (model.Count == 0)
+            {
+                throw new MyEmptyResultException(HttpStatusCode.NotAcceptable, "Can't find Publisher in database!");
+            }
+            return Ok(model);
+        }
     }
 }

@@ -21,5 +21,8 @@ namespace book_management_services.Services
         IEnumerable<Author> GetAllAuthorByName(string szName);
 
         IEnumerable<Author> GetAllPaging(out int totalRow, int searchKey, string searchTitle, int page, int pageSize);
+
+        IEnumerable<Author> GetForListParams();
+
     }
 }

@@ -17,6 +17,8 @@ namespace book_management_persistence.Implements
         public CartItemRepositoryImpl CartItemRepositoryImpl { get; set; }
         public OrderItemRepositoryImpl OrderItemRepositoryImpl { get; set; }
         public OrderRepositoryImpl OrderRepositoryImpl { get; set; }
+        public UserRepositoryImpl UserRepositoryImpl { get; set; }
+
         private bool _disposed = false;
 
         public UnitOfWorks(AppDbContext context)
@@ -52,6 +54,16 @@ namespace book_management_persistence.Implements
             }
 
             return this.CategoryRepositoryImpl;
+        }
+
+        public UserRepositoryImpl UserRepository()
+        {
+            if (this.UserRepositoryImpl == null)
+            {
+                this.UserRepositoryImpl = new UserRepositoryImpl(DbContext);
+            }
+
+            return this.UserRepositoryImpl;
         }
 
         public void Commit()

@@ -167,5 +167,10 @@ namespace book_management_services.Implements
 
             return lst;
         }
+
+        public IEnumerable<Book> GetAllBookByFilter(string searchTitle)
+        {
+            return _bookRepository.GetAllByFilter(searchTitle);
+        }
     }
 }

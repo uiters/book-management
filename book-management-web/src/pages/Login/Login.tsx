@@ -21,12 +21,14 @@ const Login = () => {
 
   const onSubmit = handleSubmit(({ Username, Password, Email }: FormData) => {
     axiosPublicClient
-      .post("Users/login", { Username, Password, Email })
+      .post("users/login", { Username, Password, Email })
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
           toastSuccess("Login success!");
         }
+        debugger
+        localStorage.setItem("role", res.data.role);
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("user", JSON.stringify(res.data));
         history.push(PATHS.MAIN);

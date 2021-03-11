@@ -102,5 +102,10 @@ namespace book_management_services.Implements
             return lst;
 
         }
+
+        public IEnumerable<Publisher> GetForListParams()
+        {
+            return _publisherRepository.GetForListParams();
+        }
     }
 }

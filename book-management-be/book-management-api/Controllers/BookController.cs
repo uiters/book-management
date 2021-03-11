@@ -149,6 +149,21 @@ namespace book_management_api.Controllers
             return BadRequest("Get detail book data failed");
         }
 
+        [HttpGet("getall_for_search")]
+        public IActionResult GetAllBookForSearch(string searchTitle)
+        {
+            var result = _bookService.GetAllBookByFilter(searchTitle);
+
+            var model = _mapper.Map<List<Book>>(result);
+
+            if (result != null)
+            {
+                return Ok(model);
+            }
+
+            return BadRequest("Get book data failed");
+        }
+
         [HttpGet("new-book-form-data")]
         public IActionResult GetNewBookFormData()
         {

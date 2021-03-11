@@ -43,7 +43,7 @@ namespace book_management_persistence.Implements
             var books = DbSet.Include(b => b.Author)
                 .Include(b => b.Publisher)
                 .ToList();
-                
+
             return books;
         }
 
@@ -73,7 +73,7 @@ namespace book_management_persistence.Implements
             {
                 _resetSet = Context.Books.AsQueryable();
             }
-            
+
             var a = _resetSet.ToList();
 
             if (searchTitle != null)
@@ -122,6 +122,35 @@ namespace book_management_persistence.Implements
             curBook.Description = book.Description;
 
             return await Context.SaveChangesAsync() > 0;
+        }
+
+        public IEnumerable<Book> GetAllByFilter(string searchTitle)
+        {
+            IEnumerable<Book> lst;
+            //IEnumerable<Book> lst1;
+            //IEnumerable<Book> lst2;
+            //IEnumerable<Book> lst3;
+            //IEnumerable<Book> lst4;
+
+            lst = Context.Books.Include(x => x.Categories)
+                    .Include(y => y.Author)
+                    .Include(z => z.Publisher).ToList();
+
+            //if (searchTitle != null)
+            //{
+            //    searchTitle = searchTitle.Trim();
+
+            //    var lst1 = lst.Where(x => x.Title.Contains(searchTitle));
+            //    var lst2 = lst.Where(x => x.Categories.Any(y => y.Name.Contains(searchTitle)));
+            //    var lst3 = lst.Where(x => x.Author.Name.Contains(searchTitle));
+            //    var lst4 = lst.Where(x => x.Publisher.Name.Contains(searchTitle));
+
+            //    lst = lst1.Union(lst2).Union(lst3).Union(lst4).Distinct();
+            //}
+
+            //var a = lst.ToList();
+
+            return lst;
         }
     }
 }
