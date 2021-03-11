@@ -20,5 +20,13 @@ namespace book_management_models.DTOs.UserDTOs
 
         [Required]
         public string Email { get; set; }
+
+        [Required]
+        public string Phone { get; set; }
+
+        [Required]
+        public string Address { get; set; }
+
+        public string Role { get; set; }
     }
 }

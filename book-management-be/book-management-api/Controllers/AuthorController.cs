@@ -148,5 +148,17 @@ namespace book_management_api.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
+
+        [HttpGet("getforlistparams")]
+        public IActionResult GetCategoryForListParams()
+        {
+            var authors = _authorService.GetForListParams();
+            var model = _mapper.Map<List<AuthorViewModel>>(authors);
+            if (model.Count == 0)
+            {
+                throw new MyEmptyResultException(HttpStatusCode.NotAcceptable, "Can't find Author in database!");
+            }
+            return Ok(model);
+        }
     }
 }

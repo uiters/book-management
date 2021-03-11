@@ -6,5 +6,6 @@ export const API_URLS = {
   PUBLISHER: "/publisher",
   CART: "/cart/",
   CART_ITEM: "/cart-item/",
-  ORDER: "/order/"
+  ORDER: "/order/",
+  USERS: "/users"
 };

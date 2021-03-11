@@ -12,6 +12,11 @@ const authorApi = {
     return axiosPublicClient.get(url);
   },
 
+  getForListParams: () => {
+    const url = API_URLS.AUTHOR + "/getforlistparams";
+    return axiosPublicClient.get(url);
+  },
+
   getById: (id: string): Promise<AxiosResponse<AuthorModelPage>> => {
     const url = API_URLS.AUTHOR + '/getbyid/' + id;
 

@@ -171,5 +171,17 @@ namespace book_management_api.Controllers
 
             return Ok(result);
         }
+
+        [HttpGet("getforlistparams")]
+        public IActionResult GetCategoryForListParams()
+        {
+            var categorys = _categoryService.GetForListParams();
+            var model = _mapper.Map<List<CategoryViewModel>>(categorys);
+            if (model.Count == 0)
+            {
+                throw new MyEmptyResultException(HttpStatusCode.NotAcceptable, "Can't find Category in database!");
+            }
+            return Ok(model);
+        }
     }
 }

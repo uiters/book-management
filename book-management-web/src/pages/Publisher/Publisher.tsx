@@ -17,7 +17,7 @@ import { Pagination } from "@material-ui/lab";
 
 const Publisher = () => {
   const history = useHistory();
-
+  const role = localStorage.getItem("role");
   const [data, setData] = useState<PublisherModelPage[]>([]);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
@@ -64,7 +64,7 @@ const Publisher = () => {
               toastSuccess("Delete  publisher success!");
               const removedList = data.filter((publisher: PublisherModelPage) => publisher.id !== id);
               setData(removedList);
-              setTimeout(function() { //Start the timer
+              setTimeout(function () { //Start the timer
                 window.location.reload();
               }.bind(this), 5000)
             }
@@ -103,11 +103,11 @@ const Publisher = () => {
         <div>
           <div className="mt-7 mb-3 ml-56 mr-28 flex" style={{ justifyContent: 'between' }}>
             <div className="select mr-2 border-2 border-gray-200 float-right w-1/5">
-              <select 
-                  value={searchKey} 
-                  onChange={e => setSearchKey(e.currentTarget.value)}
-                  className = "p-2 rounded-xl w-11/12"
-                   >
+              <select
+                value={searchKey}
+                onChange={e => setSearchKey(e.currentTarget.value)}
+                className="p-2 rounded-xl w-11/12"
+              >
                 <option value="1">Search by Name</option>
               </select>
             </div>
@@ -118,7 +118,7 @@ const Publisher = () => {
                   className="input  border-2 border-gray-200 rounded-xl p-2 float-left w-full"
                   placeholder="Search Publisher..."
                   value={searchTitle}
-                  onChange={(e) => {onChangeValueInputSearch(e)}}
+                  onChange={(e) => { onChangeValueInputSearch(e) }}
                 />
               </div>
             </div>
@@ -155,16 +155,21 @@ const Publisher = () => {
                         <img src={updateSrc} className="" />
                       </Link>
 
-                      <button className="float-right mr-3" onClick={() => { onDelete(item.id) }}>
-                        <img src={deleteSrc} alt="" />
-                      </button>
+                      {role === "Admin" && (
+                        <button className="float-right mr-3" onClick={() => { onDelete(item.id) }}>
+                          <img src={deleteSrc} alt="" />
+                        </button>
+                      )}
 
                     </td>
                   </tr>
-                
+
                 ))}
               </tbody>
             </table>
+          </div>
+          <div className="w-full text-center">
+            Total Items: {totalCount}
           </div>
           <div className="flex w-full float-right">
             <nav className="flex float-right gap-x-3 w-full bg-white p-3 justify-center">
@@ -176,6 +181,7 @@ const Publisher = () => {
                 boundaryCount={2}
                 variant="outlined"
                 shape="rounded"
+                color="primary"
                 onChange={handlePageChange}
               />
             </nav>

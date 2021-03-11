@@ -8,6 +8,7 @@ export const PATHS = {
   LIFESKILL: "/sach-ki-nang",
 
   BOOK_NEW: "/book/new-book",
+  BOOK_SEARCH: "/book/search",
   BOOK_DETAIL: "/book/:bookId",
   BOOK_UPDATE: "/book/update/:bookId",
   BOOK: "/book",
@@ -27,6 +28,10 @@ export const PATHS = {
   CART: "/cart",
 
   ORDER: "/order",
-  ORDER_DETAIL: "/order/:orderId"
+  ORDER_DETAIL: "/order/:orderId",
+
+  USERS: "/users",
+  NEWUSERS: "/users/new-users",
+  USERS_UDPATE: '/users/update/:userId',
 };
 

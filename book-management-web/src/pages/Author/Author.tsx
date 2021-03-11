@@ -17,7 +17,7 @@ import { Pagination } from "@material-ui/lab";
 
 const Author = () => {
   const history = useHistory();
-
+  const role = localStorage.getItem("role");
   const [data, setData] = useState<AuthorModelPage[]>([]);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
@@ -66,7 +66,7 @@ const Author = () => {
               toastSuccess("Delete  author success!");
               const removedList = data.filter((author: AuthorModelPage) => author.id !== id);
               setData(removedList);
-              setTimeout(function() { //Start the timer
+              setTimeout(function () { //Start the timer
                 window.location.reload();
               }.bind(this), 5000)
             }
@@ -78,7 +78,7 @@ const Author = () => {
     })
   };
 
-  
+
   const handlePageChange = (event: any, value: number) => {
     console.log(value)
     setPage(value);
@@ -107,11 +107,11 @@ const Author = () => {
         <div>
           <div className="mt-7 mb-3 ml-56 mr-28 flex" style={{ justifyContent: 'between' }}>
             <div className="select mr-2 border-2 border-gray-200 float-right w-1/5">
-              <select 
-                  value={searchKey} 
-                  onChange={e => setSearchKey(e.currentTarget.value)}
-                  className = "p-2 rounded-xl w-11/12"
-                   >
+              <select
+                value={searchKey}
+                onChange={e => setSearchKey(e.currentTarget.value)}
+                className="p-2 rounded-xl w-11/12"
+              >
                 <option value="1">Search by Name</option>
                 <option value="2">Search by Description</option>
               </select>
@@ -123,7 +123,7 @@ const Author = () => {
                   className="input  border-2 border-gray-200 rounded-xl p-2 float-left w-full"
                   placeholder="Search Author..."
                   value={searchTitle}
-                  onChange={(e) => {onChangeValueInputSearch(e)}}
+                  onChange={(e) => { onChangeValueInputSearch(e) }}
                 />
               </div>
             </div>
@@ -163,16 +163,21 @@ const Author = () => {
                         <img src={updateSrc} className="" />
                       </Link>
 
-                      <button className="float-right mr-3" onClick={() => { onDelete(item.id) }}>
-                        <img src={deleteSrc} alt="" />
-                      </button>
+                      {role === "Admin" && (
+                        <button className="float-right mr-3" onClick={() => { onDelete(item.id) }}>
+                          <img src={deleteSrc} alt="" />
+                        </button>
+                      )}
 
                     </td>
                   </tr>
-                
+
                 ))}
               </tbody>
             </table>
+          </div>
+          <div className="w-full text-center">
+            Total Items: {totalCount}
           </div>
           <div className="flex w-full float-right">
             <nav className="flex float-right gap-x-3 w-full bg-white p-3 justify-center">
@@ -184,6 +189,7 @@ const Author = () => {
                 boundaryCount={2}
                 variant="outlined"
                 shape="rounded"
+                color="primary"
                 onChange={handlePageChange}
               />
             </nav>

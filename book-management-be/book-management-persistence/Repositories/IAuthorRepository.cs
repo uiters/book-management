@@ -11,5 +11,6 @@ namespace book_management_persistence.Repositories
         public IEnumerable<Author> GetAllAuthorByName(string szName);
         public IEnumerable<Author> GetAllAuthorPaging(out int totalRow, int searchKey, string searchTitle, int page, int pageSize, string[] include = null);
 
+        public IEnumerable<Author> GetForListParams();
     }
 }

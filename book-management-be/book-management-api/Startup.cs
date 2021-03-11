@@ -125,6 +125,7 @@ namespace book_management_api
             services.AddScoped<ICartItemRepository, CartItemRepositoryImpl>();
             services.AddScoped<IOrderRepository, OrderRepositoryImpl>();
             services.AddScoped<IOrderItemRepository, OrderItemRepositoryImpl>();
+            services.AddScoped<IUserRepository, UserRepositoryImpl>();
 
             //Servies register
             services.AddScoped<IBookService, BookServiceImpl>();

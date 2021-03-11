@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using book_management_helpers.Configurations;
 using book_management_models;
+using book_management_models.DTOs;
 using book_management_models.DTOs.UserDTOs;
 using book_management_services.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -19,7 +20,7 @@ namespace book_management_api.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/users")]
     public class UsersController : ControllerBase
     {
         private IUserService _userService;
@@ -68,7 +69,8 @@ namespace book_management_api.Controllers
                     Email = user.Email,
                     Address = user.Address,
                     Phone = user.Phone,
-                    Token = tokenString
+                    Token = tokenString,
+                    Role = user.Role
                 });
             }
             catch (AppException ex)
@@ -80,14 +82,14 @@ namespace book_management_api.Controllers
 
         [AllowAnonymous]
         [HttpPost("register")]
-        public IActionResult Register([FromBody] RegisterModel model)
+        public async Task<IActionResult> RegisterAsync([FromBody] RegisterModel model)
         {
             var user = _mapper.Map<User>(model);
 
             try
             {
                 // create user
-                _userService.Create(user, model.Password);
+                await _userService.CreateAsync(user, model.Password);
                 return Ok("Create User Success");
             }
             catch (AppException ex)
@@ -144,6 +146,35 @@ namespace book_management_api.Controllers
             catch (AppException ex)
             {
                 // return error message if there was an exception
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpGet("getbyfilter")]
+        public IActionResult GetByFilter(string searchKey, string searchTitle, int page, int countPerPage)
+        {
+            try
+            {
+                int totalRow = 0;
+                var categorys = _userService.GetAllPaging(out totalRow, searchKey, searchTitle, page, countPerPage);
+
+                var model = _mapper.Map<List<UserModel>>(categorys);
+
+                var a = totalRow;
+                int totalPage = (int)Math.Ceiling((double)totalRow / countPerPage);
+                var paginationSet = new PaginationSet<UserModel>()
+                {
+                    Items = model,
+                    MaxPage = 5,
+                    Page = page,
+                    TotalCount = totalRow,
+                    TotalPage = totalPage
+                };
+                return Ok(paginationSet);
+
+            }
+            catch (AppException ex)
+            {
                 return BadRequest(new { message = ex.Message });
             }
         }

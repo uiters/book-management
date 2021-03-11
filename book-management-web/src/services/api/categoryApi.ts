@@ -13,6 +13,11 @@ const categoryApi = {
     return axiosPublicClient.get(url);
   },
 
+  getForListParams: () => {
+    const url = API_URLS.CATEGORY + "/getforlistparams";
+    return axiosPublicClient.get(url);
+  },
+
   getPagedCategory: (searchKey: number, searchTitle: string, page: number, countPerPage: number) => {
     const url = API_URLS.CATEGORY + "/getbyfilter/"; 
 

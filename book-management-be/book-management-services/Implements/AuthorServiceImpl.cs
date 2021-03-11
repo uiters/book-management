@@ -98,5 +98,11 @@ namespace book_management_services.Implements
             return lst;
 
         }
+
+        public IEnumerable<Author> GetForListParams()
+        {
+            return _authorRepository.GetForListParams();
+            
+        }
     }
 }

@@ -11,6 +11,7 @@ import Book from "../Home/components/Book";
 import srcSearch from '../../assets/loupe.png';
 
 const BookPage = () => {
+  const role = localStorage.getItem("role");
   const [books, setBooks] = useState<BookModel[]>([]);
 
   const [page, setPage] = useState(1);
@@ -106,12 +107,14 @@ const BookPage = () => {
           <button className="rounded-xl bg-blue-400 p-3 focus:outline-none">
             <a href={"/book/update/" + book.id} className="p-3">Update</a>
           </button>
-          <button
-            className="rounded-xl bg-red-400 p-3 focus:outline-none"
-            onClick={() => deleteBook(book.id)}
-          >
-            Delete
-          </button>
+          {role === "Admin" && (
+            <button
+              className="rounded-xl bg-red-400 p-3 focus:outline-none"
+              onClick={() => deleteBook(book.id)}
+            >
+              Delete
+            </button>
+          )}
         </div>
       </div>
     );
