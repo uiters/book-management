@@ -31,7 +31,7 @@ const OrderPage = () => {
 
   const orderListUI = orders.map((order: OrderModel) => {
     return (
-      <tr className="py-4">
+      <tr className="py-4 border border-left-0 border-top-0 border-right-0 hover:bg-gray-200">
         <td className="text-left text-blue-400 pl-3 py-4">
           <a href={PATHS.ORDER + "/" + order.id}>{order.id}</a>
         </td>
@@ -44,7 +44,7 @@ const OrderPage = () => {
             suffix={" đ"}
           ></NumberFormat>
         </td>
-        <td className="text-left">Shipping</td>
+        <td className="text-left">{order.status}</td>
       </tr>
     );
   });
@@ -55,7 +55,7 @@ const OrderPage = () => {
       <table className="w-full pl-5 border bg-white">
         <thead className="px-3 border border-l-0 border-r-0 border-t-0 pb-5">
           <tr>
-            <th className="text-gray-500 font-medium text-left pl-3 pb-4">
+            <th className="text-gray-500 font-medium text-left pl-3 py-3">
               Order ID
             </th>
             <th className="text-gray-500 font-medium text-left">Created At</th>

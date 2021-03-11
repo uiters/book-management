@@ -30,6 +30,7 @@ namespace book_management_helpers
 
             CreateMap<CategoryModel, Category>().ReverseMap();
             CreateMap<CategoryViewModel, Category>().ReverseMap();
+            CreateMap<Category, CategoryForListDTO>();
             
             CreateMap<PublisherModel, Publisher>().ReverseMap();
             CreateMap<PublisherViewModel, Publisher>().ReverseMap();
@@ -43,6 +44,7 @@ namespace book_management_helpers
 
             CreateMap<Order, OrderDetailDTO>().ReverseMap();
             CreateMap<OrderItem, OrderItemForListDTO>().ReverseMap();
+            CreateMap<Order, OrderForListDTO>();
         }
     }
 }

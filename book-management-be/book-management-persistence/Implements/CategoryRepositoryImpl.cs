@@ -10,11 +10,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace book_management_persistence.Implements
 {
-    public class CategoryRepositoryImpl : BaseRepositoryImpl<Category>,ICategoryRepository
+    public class CategoryRepositoryImpl : BaseRepositoryImpl<Category>, ICategoryRepository
     {
         public CategoryRepositoryImpl(AppDbContext context) : base(context)
         {
-
         }
 
         public bool CheckExistCategoryByName(string name)
@@ -31,19 +30,20 @@ namespace book_management_persistence.Implements
 
         public async Task<IEnumerable<Category>> GetCategoryForMain()
         {
-            var categories = await DbSet.Take(10).Where(c => c.Books.Count() > 0).ToListAsync();
+            var categories = await DbSet.Take(10).Where(c => c.Books.Any()).ToListAsync();
 
             return categories;
         }
-        
-        public Category findCategory(Guid id)
+
+        public Category FindCategory(Guid id)
         {
             var category = Context.Categories.Where(c => c.Id.Equals(id)).Include(c => c.Books).FirstOrDefault();
 
             return category;
         }
 
-        public IEnumerable<Category> GetAllCategoryPaging(out int totalRow, int searchKey, string searchTitle, int page, int pageSize, string[] includes = null)
+        public IEnumerable<Category> GetAllCategoryPaging(out int totalRow, int searchKey, string searchTitle, int page,
+            int pageSize, string[] includes = null)
         {
             page = page - 1;
 
@@ -56,7 +56,10 @@ namespace book_management_persistence.Implements
             {
                 var query = Context.Categories.Include(includes.First());
                 foreach (var include in includes.Skip(1))
-                query = query.Include(include);
+                    query = query.Include(include);
+
+                // var query = Context.Categories.Include(x => x.Books);
+
                 _resetSet = query.AsQueryable();
             }
             else
@@ -67,10 +70,12 @@ namespace book_management_persistence.Implements
             if (searchTitle != null)
             {
                 searchTitle = searchTitle.Trim();
-                if(searchKey == 1)
-                    _resetSet = _resetSet.Where(x => x.Name.Contains(searchTitle));
-                else
-                    _resetSet = _resetSet.Where(x => x.Details.Contains(searchTitle));
+                // if(searchKey == 1)
+                //     _resetSet = _resetSet.Where(x => x.Name.Contains(searchTitle));
+                // else
+                //     _resetSet = _resetSet.Where(x => x.Details.Contains(searchTitle));
+
+                _resetSet = _resetSet.Where(x => ((x.Name.Contains(searchTitle)) || (x.Details.Contains(searchTitle))));
             }
 
             var a = _resetSet.ToList();
@@ -92,5 +97,19 @@ namespace book_management_persistence.Implements
             return lst;
 
         }
+
+        public async Task<IEnumerable<Category>> GetCategoryForSelect()
+        {
+            var categories = await DbSet.ToListAsync();
+
+            if (categories.Any())
+            {
+                return categories;
+            }
+
+            return null;
+        }
+        
+
     }
 }

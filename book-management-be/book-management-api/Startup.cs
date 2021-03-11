@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using book_management_helpers;
@@ -8,6 +9,8 @@ using book_management_persistence.Implements;
 using book_management_persistence.Repositories;
 using book_management_services.Implements;
 using book_management_services.Services;
+using MailKit;
+using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -40,6 +43,7 @@ namespace book_management_api
         {
             // services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddAutoMapper(typeof(AutoMapperProfile));
+            services.AddOptions();
 
             services.AddControllers()
                 .AddNewtonsoftJson(opt =>
@@ -53,7 +57,6 @@ namespace book_management_api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "book_management_api", Version = "v1"});
             });
-
 
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnections"),
@@ -113,6 +116,27 @@ namespace book_management_api
 
             //Cloudiary config
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
+            
+            //Mailkit config
+            services.Configure<EmailConfiguration>(Configuration.GetSection("EmailConfiguration"));
+            
+            services.AddSingleton<SmtpClient>((serviceProvider) =>
+            {
+                var config = serviceProvider.GetRequiredService<IConfiguration>();
+                var host = config.GetValue<string>("EmailConfiguration:MailServerAddress");
+                var port = config.GetValue<string>("EmailConfiguration:MailServerPort");
+                var r = new NetworkCredential(config.GetValue<string>("EmailConfiguration:UserId"), config.GetValue<string>("EmailConfiguration:UserPassword"));
+
+                var smtp = new SmtpClient()
+                {
+
+                };
+
+                smtp.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                smtp.Connect(host, Convert.ToInt32(port));
+                smtp.Authenticate(r);
+                return smtp;
+            });
 
             //Repositoríes register
             services.AddScoped<IUnitOfWorks, UnitOfWorks>();
@@ -137,6 +161,7 @@ namespace book_management_api
             services.AddScoped<ICartService, CartServiceImpl>();
             services.AddScoped<ICartItemService, CartItemServiceImpl>();
             services.AddScoped<IOrderService, OrderServiceImpl>();
+            services.AddScoped<IEmailService, EmailServiceImpl>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

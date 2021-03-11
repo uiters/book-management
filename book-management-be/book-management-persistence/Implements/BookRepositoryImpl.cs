@@ -53,7 +53,7 @@ namespace book_management_persistence.Implements
             return result;
         }
 
-        public IEnumerable<Book> GetAllBookPaging(out int totalRow, int searchKey, string searchTitle, int page, int pageSize, string[] includes = null)
+        public IEnumerable<Book> GetAllBookPaging(out int totalRow, int searchKey, string searchTitle, int page = 1, int pageSize = 10, string[] includes = null)
         {
             page = page - 1;
 

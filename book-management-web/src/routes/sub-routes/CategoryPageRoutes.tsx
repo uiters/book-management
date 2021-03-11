@@ -16,8 +16,14 @@ const CategoryPageRoutes = () => {
       <Route exact path={PATHS.LIFESKILL}>
         <CategoryPage title="Sách kĩ năng"></CategoryPage>
       </Route>
-      <Route exact path={PATHS.POPULAR}>
-        <CategoryPage title="Sách thịnh hành"></CategoryPage>
+      <Route exact path={PATHS.LANGUAGE}>
+        <CategoryPage title="Sách Học Ngoại Ngữ"></CategoryPage>
+      </Route>
+      <Route exact path={PATHS.KNOWLEDGE}>
+        <CategoryPage title="Sách Kiến Thức Tổng Hợp"></CategoryPage>
+      </Route>
+      <Route exact path={PATHS.RAISECHILD}>
+        <CategoryPage title="Sách Nuôi Dạy Con"></CategoryPage>
       </Route>
     </Switch>
   );

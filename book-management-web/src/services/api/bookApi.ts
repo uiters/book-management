@@ -6,6 +6,8 @@ import NewBookFormData from "../../types/form/NewBookFormData";
 import { idText } from "typescript";
 import UpdateBookFormData from "../../types/form/UpdateBookFormData";
 import DetailBookModel from "../../types/models/DetailBookModel";
+import axiosPrivateClient from "../axios/axiosPrivateClient";
+import NewBookInputData from "../../types/form/NewBookInputData";
 
 const bookApi = {
   getAllBooks: () => {
@@ -25,15 +27,21 @@ const bookApi = {
     return axiosPublicClient.get(url, config);
   },
 
-  getPagedBook: (searchKey: number, searchTitle: string, page: number, countPerPage: number) => {
-    const url = API_URLS.BOOK + "/getbyfilter/";
+  getPagedBook: (
+    searchKey: number,
+    searchTitle: string,
+    page: number,
+    countPerPage: number
+  ) => {
+    const url = API_URLS.BOOK + "/get_by_filter";
+
 
     const config = {
       params: {
         searchKey: searchKey,
         searchTitle: searchTitle,
         page: page,
-        countPerPage: countPerPage
+        countPerPage: countPerPage,
       },
     };
 
@@ -62,8 +70,12 @@ const bookApi = {
     formData.append("sku", newBook.sku);
     formData.append("authorName", newBook.authorName);
     formData.append("publisherName", newBook.publisherName);
+    formData.append("categoryName", newBook.categoryName);
 
-    newBook.photos.forEach(photo => {
+    console.log(formData.values);
+    
+
+    newBook.photos.forEach((photo) => {
       formData.append("photos", photo);
     });
 
@@ -71,27 +83,33 @@ const bookApi = {
   },
 
   getById: (id: string): Promise<AxiosResponse<BookModel>> => {
-    const url = API_URLS.BOOK + '/' + id + '/1';
+    const url = API_URLS.BOOK + "/" + id + "/1";
 
     return axiosPublicClient.get(url);
   },
 
   getDetailBookData: (id: string): Promise<AxiosResponse<DetailBookModel>> => {
-    const url = API_URLS.BOOK + '/' + id;
+    const url = API_URLS.BOOK + "/" + id;
 
     return axiosPublicClient.get(url);
   },
 
   updateBook: (updateBook: UpdateBookFormData, id: string) => {
-    const url = API_URLS.BOOK + '/' + id;
+    const url = API_URLS.BOOK + "/" + id;
 
     return axiosPublicClient.put(url, updateBook);
   },
 
-  delelteBook: (id: string): Promise<AxiosResponse<BookModel>> => {
-    const url = API_URLS.BOOK + '/' + id;
+  deleteBook: (id: string): Promise<AxiosResponse<BookModel>> => {
+    const url = API_URLS.BOOK + "/" + id;
 
     return axiosPublicClient.delete(url);
+  },
+
+  getNewBookFormData: (): Promise<AxiosResponse<NewBookInputData>> => {
+    const url = API_URLS.BOOK + "/new-book-form-data";
+
+    return axiosPublicClient.get(url);
   },
 };
 
