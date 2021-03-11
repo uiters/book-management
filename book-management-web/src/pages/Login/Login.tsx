@@ -96,7 +96,7 @@ const Login = () => {
             </span>
           </div>
 
-          <div>
+          {/* <div>
             <label htmlFor="" className="text-sm font-bold text-gray-600 block">
               Email
             </label>
@@ -113,7 +113,7 @@ const Login = () => {
               {errors.Email?.type == "required" && "Email is required!"}
               {errors.Email?.type == "pattern" && "Email is invalid!"}
             </span>
-          </div>
+          </div> */}
 
           
           <div>

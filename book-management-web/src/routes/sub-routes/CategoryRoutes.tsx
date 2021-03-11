@@ -5,15 +5,16 @@ import { PATHS } from "../../constants/paths";
 import Category from "../../pages/Category/Category";
 import NewCategory from "../../pages/Category/pages/NewCategory";
 import UpdateCategory from "../../pages/Category/pages/UpdateCategory";
+import AuthenticatedGuard from "../AuthenticatedGuard";
 
 
 
 const CategoryRoutes = () => {
   return (
     <Switch>   
-      <Route exact path={PATHS.CATEGORY} component={Category}></Route>
-      <Route exact path={PATHS.NEWCATEGORY} component={NewCategory}></Route> 
-      <Route exact path={PATHS.CATEGORY_UDPATE} component={UpdateCategory}></Route>  
+      <AuthenticatedGuard exact path={PATHS.CATEGORY} component={Category}></AuthenticatedGuard>
+      <AuthenticatedGuard exact path={PATHS.NEWCATEGORY} component={NewCategory}></AuthenticatedGuard> 
+      <AuthenticatedGuard exact path={PATHS.CATEGORY_UDPATE} component={UpdateCategory}></AuthenticatedGuard>  
     </Switch>
   );
 };

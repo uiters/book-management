@@ -14,9 +14,9 @@ namespace book_management_models.DTOs.UserDTOs
 
         //[Required]
         public string Password { get; set; }
-
-        //[Required]
-        public string Email { get; set; }
+        //
+        // //[Required]
+        // public string Email { get; set; }
 
     }
 }

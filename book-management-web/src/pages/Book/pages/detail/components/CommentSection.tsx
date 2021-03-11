@@ -7,7 +7,7 @@ const CommentSection = () => {
           <div className="comment mt-4 border-t pt-6">
             <div className="user-info flex gap-x-4 mb-2">
               <img
-                src="https://www.flaticon.com/svg/vstatic/svg/1077/1077114.svg?token=exp=1614223432~hmac=0ad5992b9c3fbf42a81feadd9a78cbbc"
+                src="https://www.flaticon.com/svg/vstatic/svg/3135/3135715.svg?token=exp=1615182824~hmac=eed8240c2c0dcfc9960383092b9a0103"
                 alt=""
                 className="w-12 h-12 rounded-full"
               />
@@ -27,7 +27,7 @@ const CommentSection = () => {
           <div className="comment mt-4 border-t pt-6">
             <div className="user-info flex gap-x-4 mb-2">
               <img
-                src="https://www.flaticon.com/svg/vstatic/svg/1077/1077114.svg?token=exp=1614223432~hmac=0ad5992b9c3fbf42a81feadd9a78cbbc"
+                src="https://www.flaticon.com/svg/vstatic/svg/3135/3135715.svg?token=exp=1615182824~hmac=eed8240c2c0dcfc9960383092b9a0103"
                 alt=""
                 className="w-12 h-12 rounded-full"
               />
@@ -47,7 +47,7 @@ const CommentSection = () => {
           <div className="comment mt-4 border-t pt-6">
             <div className="user-info flex gap-x-4 mb-2">
               <img
-                src="https://www.flaticon.com/svg/vstatic/svg/1077/1077114.svg?token=exp=1614223432~hmac=0ad5992b9c3fbf42a81feadd9a78cbbc"
+                src="https://www.flaticon.com/svg/vstatic/svg/3135/3135715.svg?token=exp=1615182824~hmac=eed8240c2c0dcfc9960383092b9a0103"
                 alt=""
                 className="w-12 h-12 rounded-full"
               />

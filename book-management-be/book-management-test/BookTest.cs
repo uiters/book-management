@@ -29,7 +29,7 @@ namespace book_management_test
         private Mock<IMapper> _mapperMock;
 
         public BookTest() : base(new DbContextOptionsBuilder<AppDbContext>()
-            .UseSqlServer("Data Source=DESKTOP-4HFPT5L;Initial Catalog=booksy;Integrated Security=True").Options)
+            .UseSqlServer("Data Source=DESKTOP-4HFPT5L;Initial Catalog=booksy_test;Integrated Security=True").Options)
         {
             _appContext = new AppDbContext(ContextOptions);
             _unitOfWorks = new UnitOfWorks(_appContext);
@@ -38,6 +38,8 @@ namespace book_management_test
             _mapperMock = new Mock<IMapper>();
             _bookService = new BookServiceImpl(_unitOfWorks, _mapperMock.Object, _photoService.Object);
         }
+        
+        
 
         [Fact]
         public void GetAllBook_Test()
@@ -50,7 +52,7 @@ namespace book_management_test
         [Fact]
         public void GetBookById_ShouldReturnBook()
         {
-            Guid validBookId = new Guid("E5557AAE-AA11-4CC1-8D01-08D8DEC0C6D5");
+            Guid validBookId = new Guid("91651C69-54EB-48F6-D80B-08D8E1E77E1D");
 
             var result = _bookService.GetBookById(validBookId);
 
@@ -100,9 +102,10 @@ namespace book_management_test
         [Fact]
         public async Task CreateBook_ShouldReturnNewBookId()
         {
+            var rd = new Random();
             BookForCreateDTO validData = new BookForCreateDTO()
             {
-                Title ="Test create book123",
+                Title ="Test create book 123" + rd.Next().ToString(),
                 AuthorName = "NXB Kim Dong",
                 Description = "ABC",
                 Pages = 123,

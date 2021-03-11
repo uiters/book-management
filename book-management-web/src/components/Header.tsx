@@ -2,6 +2,7 @@
 import { Link } from "react-router-dom";
 import { PATHS } from "../constants/paths";
 import User from "../types/models/UserModel";
+import cartIcon from "../assets/shopping-cart.png";
 
 const Header = () => {
   const user: User = JSON.parse(localStorage.getItem("user") || "{}");
@@ -50,7 +51,7 @@ const Header = () => {
                 <a href={PATHS.CART}>
                   <img
                     className="w-8 h-8"
-                    src="https://www.flaticon.com/svg/vstatic/svg/4296/4296808.svg?token=exp=1615028498~hmac=656468bed475f0a1a7a7a1f62c5d2c56"
+                    src={cartIcon}
                     alt=""
                   />
                 </a>

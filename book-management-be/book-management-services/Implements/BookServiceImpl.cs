@@ -4,7 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using book_management_models;
+using book_management_models.DTOs.AuthorDTOs;
 using book_management_models.DTOs.BookDTOs;
+using book_management_models.DTOs.CategoryDTOs;
+using book_management_models.DTOs.FormDataDTOs;
+using book_management_models.DTOs.PublisherDTOs;
 using book_management_persistence.Implements;
 using book_management_persistence.Repositories;
 using book_management_services.Services;
@@ -20,6 +24,7 @@ namespace book_management_services.Implements
         private readonly IMapper _mapper;
         private IPhotoService _photoService;
         private CartItemRepositoryImpl _cartItemRepo;
+        private CategoryRepositoryImpl _categoryRepo;
 
 
         public BookServiceImpl(IUnitOfWorks unitOfWork, IMapper mapper, IPhotoService photoService)
@@ -29,6 +34,7 @@ namespace book_management_services.Implements
             this._authorRepository = this._unitOfWorks.AuthorRepository();
             this._publisherRepository = this._unitOfWorks.PublisherRepository();
             this._cartItemRepo = this._unitOfWorks.CartItemRepository();
+            this._categoryRepo = this._unitOfWorks.CategoryRepository();
             this._mapper = mapper;
             this._photoService = photoService;
         }
@@ -64,8 +70,9 @@ namespace book_management_services.Implements
 
             var author = _authorRepository.GetAuthorByName(newBook.AuthorName);
             var publisher = _publisherRepository.GetPublisherByName(newBook.PublisherName);
+            var category = _categoryRepo.GetCategoryByName(newBook.CategoryName).ElementAt(0);
 
-            if (author != null && publisher != null)
+            if (author != null && publisher != null && category != null)
             {
                 var book = new Book();
                 book.Pages = newBook.Pages;
@@ -73,22 +80,28 @@ namespace book_management_services.Implements
                 book.Title = newBook.Title;
                 book.AuthorId = author.Id;
                 book.PublisherId = publisher.Id;
+                book.Categories = new List<Category>();
+                book.Categories.Add(category);
                 book.Description = newBook.Description;
                 book.SKU = newBook.SKU;
 
-                if (newBook.Photos.Any())
-                {
-                    var uploadPhotos = await _photoService.UploadPhotos(newBook.Photos);
-                    book.Photos = uploadPhotos.ToList();
-                    book.ThumbnailUrl = uploadPhotos.ToArray()[0].Url;
-                }
-                
+                var uploadPhotos = await _photoService.UploadPhotos(newBook.Photos);
+                book.Photos = uploadPhotos.ToList();
+                book.ThumbnailUrl = uploadPhotos.ToArray()[0].Url;
+
+                // if (newBook.Photos.Any())
+                // {
+                //     var uploadPhotos = await _photoService.UploadPhotos(newBook.Photos);
+                //     book.Photos = uploadPhotos.ToList();
+                //     book.ThumbnailUrl = uploadPhotos.ToArray()[0].Url;
+                // }
+
                 var result = await _bookRepository.InsertAsync(book);
                 _bookRepository.SaveChange();
                 return book.Id;
             }
 
-            return new Guid("");
+            return new Guid("string");
         }
 
 
@@ -116,7 +129,8 @@ namespace book_management_services.Implements
         public BookForDetailDTO GetDetailBookData(Guid bookId)
         {
             var book = _bookRepository.GetBookById(bookId);
-            Category category = book.Categories.FirstOrDefault();
+            Category category =
+                book.Categories.FirstOrDefault(c => c.Name.Equals(book.Categories.FirstOrDefault()?.Name));
             var relatedBooks = _bookRepository.GetBooksByCategory(category.Name);
 
             var result = new BookForDetailDTO();
@@ -126,9 +140,30 @@ namespace book_management_services.Implements
             return result;
         }
 
-        public IEnumerable<Book> GetAllPaging(out int totalRow, int searchKey, string searchTitle, int page, int pageSize)
+        public NewBookFormData GetFormData()
         {
-            var lst = _bookRepository.GetAllBookPaging(out totalRow, searchKey, searchTitle, page, pageSize, new string[] { "Categories", "Author", "Publisher" });
+            var authors = _mapper.Map<List<AuthorForListDTO>>(_authorRepository.GetList());
+            var publishers = _mapper.Map<List<PublisherForListDTO>>(_publisherRepository.GetList());
+            var categories = _mapper.Map<List<CategoryForListDTO>>(_categoryRepo.GetList());
+
+            if (authors.Any() && publishers.Any() && categories.Any())
+            {
+                return new NewBookFormData()
+                {
+                    Authors = authors,
+                    Publishers = publishers,
+                    Categories = categories
+                };
+            }
+
+            return null;
+        }
+
+        public IEnumerable<Book> GetAllPaging(out int totalRow, int searchKey, string searchTitle, int page,
+            int pageSize)
+        {
+            var lst = _bookRepository.GetAllBookPaging(out totalRow, searchKey, searchTitle, page, pageSize,
+                new string[] {"Categories", "Author", "Publisher"});
 
             return lst;
         }

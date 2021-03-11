@@ -24,7 +24,7 @@ const Publisher = () => {
   const [totalCount, setTotalCount] = useState(0);
   const [searchTitle, setSearchTitle] = useState("");
   const [searchKey, setSearchKey] = useState(1);
-  const countPerPage = 5;
+  const countPerPage = 10;
 
   const getPubisherPage = () => {
     publisherApi

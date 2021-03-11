@@ -9,10 +9,8 @@ import { PATHS } from "../../../constants/paths";
 
 const CartItem = ({
   item,
-  onQuantityChange,
 }: {
   item: CartItemViewModel;
-  onQuantityChange: (newQuantity: number, price: number) => void;
 }) => {
   const [quantity, setQuantity] = useState(item.quantity);
   const [curPrice, setCurPrice] = useState(item.book.price);
@@ -20,13 +18,11 @@ const CartItem = ({
 
   const onAddQuantity = () => {
     setQuantity(quantity + 1);
-    onQuantityChange(quantity + 1, item.book.price);
     setCurPrice(quantity * item.book.price + item.book.price);
   };
 
   const onRemoveQuantity = () => {
     setQuantity(quantity - 1);
-    onQuantityChange(quantity - 1, item.book.price);
     setCurPrice(quantity * item.book.price - item.book.price);
   };
 
@@ -45,7 +41,7 @@ const CartItem = ({
 
   return (
     <div>
-      <div className="item w-full h-auto flex bg-white p-3 ">
+      <div className="item w-full h-auto flex bg-white p-3 rounded-lg">
         <img className="w-1/5 h-1/5" src={item.book?.thumbnailUrl} alt="" />
         <div className="info buttons flex-grow items-start text-left mt-4 pl-4">
           <a
@@ -59,7 +55,7 @@ const CartItem = ({
               className="focus:outline-none hover:bg-red-500 bg-red-400 rounded-md px-3 py-2"
               onClick={deleteItem}
             >
-              Xóa
+              Delete
             </button>
           </div>
         </div>

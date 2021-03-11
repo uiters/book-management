@@ -22,9 +22,9 @@ namespace book_management_services.Implements
             this._cartService = cartService;
         }
 
-        public async Task<User> Authenticate(string username, string password, string email)
+        public async Task<User> Authenticate(string username, string password)
         {
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(email))
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
                 return null;
 
             var user = _context.Users.SingleOrDefault(x => x.Username == username);
@@ -37,14 +37,14 @@ namespace book_management_services.Implements
             if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
                 throw new AppException("Wrong Password. Please check again!");
 
-            if (email == null)
-            {
-                throw new AppException("Email is required");
-            }
-            else if (ValidateUser.IsValidEmail(user.Email) == false)
-            {
-                throw new AppException("Email is not in right format");
-            }
+            // if (email == null)
+            // {
+            //     throw new AppException("Email is required");
+            // }
+            // else if (ValidateUser.IsValidEmail(user.Email) == false)
+            // {
+            //     throw new AppException("Email is not in right format");
+            // }
 
             var cart = _cartService.GetCartByUserId(user.Id);
 

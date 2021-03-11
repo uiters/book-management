@@ -6,6 +6,9 @@ export const PATHS = {
   ECONOMIC: "/sach-kinh-te",
   LITERATURE: "/sach-van-hoc",
   LIFESKILL: "/sach-ki-nang",
+  LANGUAGE: "/sach-hoc-ngoai-ngu",
+  KNOWLEDGE: "/sach-kien-thuc-tong-hop",
+  RAISECHILD: "/sach-nuoi-day-con",
 
   BOOK_NEW: "/book/new-book",
   BOOK_DETAIL: "/book/:bookId",
@@ -25,6 +28,7 @@ export const PATHS = {
   PUBLISHER_UDPATE: '/publisher/update/:publisherId',
 
   CART: "/cart",
+  CART_CHECKOUT: "/cart/checkout",
 
   ORDER: "/order",
   ORDER_DETAIL: "/order/:orderId"

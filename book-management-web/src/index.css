@@ -24,9 +24,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-
-.tr {
-  background-color: none impor !important;
-}
-
-tr:nth-child(even) {background-color: #f2f2f2;}

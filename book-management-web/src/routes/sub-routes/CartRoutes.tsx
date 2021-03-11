@@ -5,6 +5,7 @@ import React from "react";
 import AuthenticatedGuard from "../AuthenticatedGuard";
 import { PATHS } from "../../constants/paths";
 import CartPage from "../../pages/Cart/CartPage";
+import CartCheckoutPage from "../../pages/Cart/pages/CartCheckout/CartCheckoutPage";
 
 const CartRoutes = () => {
   return (
@@ -13,6 +14,11 @@ const CartRoutes = () => {
         exact
         path={PATHS.CART}
         component={CartPage}
+      ></AuthenticatedGuard>
+      <AuthenticatedGuard
+        exact
+        path={PATHS.CART_CHECKOUT}
+        component={CartCheckoutPage}
       ></AuthenticatedGuard>
     </Switch>
   );

@@ -5,6 +5,7 @@ type NewBookFormData = {
     sku: string,
     authorName: string,
     publisherName: string,
+    categoryName: string,
     price: number,
     photos: File[]
 }
