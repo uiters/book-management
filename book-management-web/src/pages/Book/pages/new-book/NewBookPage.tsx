@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 //@ts-ignore
 import bookApi from "../../../../services/api/bookApi";
 //@ts-ignore
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 //@ts-ignore
 import { useHistory } from "react-router-dom";
 //@ts-ignore
@@ -15,19 +15,48 @@ import ImageUploader from "./components/ImageUploader";
 import { ImageListType } from "react-images-uploading";
 import { PATHS } from "../../../../constants/paths";
 import NewBookFormData from "../../../../types/form/NewBookFormData";
+import NewBookInputData from "../../../../types/form/NewBookInputData";
+import DropDownInput from "../../../../components/DropDownInput";
 
 const NewBookPage = () => {
+  const history = useHistory();
   const [photoList, setPhotoList] = useState<ImageListType>([]);
   const [isLeave, setIsLeave] = useState<Boolean>(false);
-  const [description, setDescription] = useState<string>("");
+  const [authorName, setAuthorName] = useState("");
+  const [publisherName, setPublisherName] = useState("");
+  const [categoryName, setCategoryName] = useState("");
+  const [inputData, setInputData] = useState<NewBookInputData>({
+    authors: [],
+    publishers: [],
+    categories: [],
+  });
   const { register, handleSubmit, errors, reset } = useForm<NewBookFormData>({
     mode: "onChange",
     reValidateModel: "onChange",
   });
-  const history = useHistory();
+
+  const getInputFormData = () => {
+    bookApi
+      .getNewBookFormData()
+      .then((response) => {
+        console.log(response.data);
+        setInputData(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    getInputFormData();
+  }, [JSON.stringify(inputData)]);
 
   const onSubmit = (formData: NewBookFormData) => {
     formData.photos = photoList;
+    formData.authorName = authorName;
+    formData.publisherName = publisherName;
+    formData.categoryName = categoryName;
+
     console.log(formData);
 
     bookApi
@@ -44,15 +73,27 @@ const NewBookPage = () => {
         }
       })
       .catch((error) => {
+        console.log(error);
+        
         toastError("Create new book failed");
       });
   };
 
+  const onSelectChanged = (value: string, type: string) => {
+    console.log(value);
+    console.log(type);
+    if (type === "Category") {
+      setCategoryName(value);
+    } else if (type === "Author") {
+      setAuthorName(value);
+    } else if (type === "Publisher") {
+      setPublisherName(value);
+    }
+  };
+
   const onImageChanged = (images: ImageListType) => {
-    console.log(images);
     const photoFiles = images.map((image) => image.file);
     setPhotoList(photoFiles);
-    console.log("abc");
   };
 
   return (
@@ -117,7 +158,7 @@ const NewBookPage = () => {
               placeholder="Insert Price here"
               ref={register({
                 required: true,
-                pattern: /[0-9]*$/i,
+                pattern: /^[0-9]*$/i,
               })}
               name="price"
             />
@@ -137,11 +178,12 @@ const NewBookPage = () => {
               type="text"
               placeholder="Insert Pages here"
               defaultValue="300"
-              ref={register({ required: true })}
+              ref={register({ required: true, pattern: /^[0-9]*$/i })}
               name="pages"
             />
           </div>
           <span className="text-left items-start flex text-red-400">
+            {errors.pages?.type == "pattern" && "Pages is number only!"}
             {errors.pages?.type == "required" && "Pages is required!"}
           </span>
         </div>
@@ -164,38 +206,36 @@ const NewBookPage = () => {
           </span>
         </div>
         <div className="form-group flex flex-col items-start gap-2">
-          <label htmlFor="authorName" className="font-bold text-gray-500">
-            Author' Name:
-          </label>
-          <div className="input border w-full p-2">
-            <input
-              className="w-full focus:outline-none"
-              type="text"
-              placeholder="Insert Author's Name here"
-              defaultValue=""
-              ref={register({ required: true })}
-              name="authorName"
-            />
-          </div>
+          <DropDownInput
+            data={inputData.categories}
+            name="Category's Name:"
+            selectHandler={onSelectChanged}
+            type="Category"
+          ></DropDownInput>
+          <span className="text-left items-start flex text-red-400">
+            {errors.publisherName?.type == "required" &&
+              "Publisher is required!"}
+          </span>
+        </div>
+        <div className="form-group flex flex-col items-start gap-2">
+          <DropDownInput
+            data={inputData.authors}
+            name="Author's Name:"
+            type="Author"
+            selectHandler={onSelectChanged}
+          ></DropDownInput>
           <span className="text-left items-start flex text-red-400">
             {errors.authorName?.type == "required" &&
               "Author's Name is required!"}
           </span>
         </div>
         <div className="form-group flex flex-col items-start gap-2">
-          <label htmlFor="publisherName" className="font-bold text-gray-500">
-            Publisher's Name:
-          </label>
-          <div className="input border p-2 w-full">
-            <input
-              className="w-full focus:outline-none"
-              type="text"
-              placeholder="Insert Publisher's Name here"
-              defaultValue=""
-              ref={register({ required: true })}
-              name="publisherName"
-            />
-          </div>
+          <DropDownInput
+            data={inputData.publishers}
+            name="Publisher's Name:"
+            type="Publisher"
+            selectHandler={onSelectChanged}
+          ></DropDownInput>
           <span className="text-left items-start flex text-red-400">
             {errors.publisherName?.type == "required" &&
               "Publisher is required!"}
@@ -203,7 +243,9 @@ const NewBookPage = () => {
         </div>
         <div className="submit_buttons mx-auto w-full space-x-5 border p-4">
           <button className="focus:outline-none bg-red-600 hover:bg-red-400 rounded-lg p-2 text-white font-bold w-auto">
-            <a className="p-2" href={PATHS.BOOK}>Cancel</a>
+            <a className="p-2" href={PATHS.BOOK}>
+              Cancel
+            </a>
           </button>
           <button
             type="submit"

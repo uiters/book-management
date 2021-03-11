@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using book_management_helpers.Configurations;
 using book_management_helpers.CustomException;
-using book_management_models;
 using book_management_models.DTOs;
 using book_management_models.DTOs.BookDTOs;
 using book_management_services.Services;
@@ -26,7 +25,7 @@ namespace book_management_api.Controllers
             this._mapper = mapper;
         }
 
-        [HttpGet("all")]
+        [HttpGet("")]
         public IActionResult GetListBooks()
         {
             var listBooks = _bookService.GetListBooks();
@@ -67,6 +66,11 @@ namespace book_management_api.Controllers
         [HttpPost("")]
         public async Task<ActionResult> AddNewBook([FromForm] BookForCreateDTO newBook)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Model validate failed!");
+            }
+            
             // var book = _mapper.Map<Book>(newBook);
             var result = await _bookService.AddNewBook(newBook);
 
@@ -104,13 +108,13 @@ namespace book_management_api.Controllers
             return BadRequest("Delete failed book with id : " + bookId);
         }
 
-        [HttpGet("getbyfilter")]
-        public IActionResult GetByFilter(int searchKey, string searchTitle, int page, int countPerPage)
+        [HttpGet("get_by_filter")]
+        public IActionResult GetByFilter([FromQuery] int searchKey, string searchTitle, int page, int countPerPage)
         {
             try
             {
                 int totalRow = 0;
-                var categorys = _bookService.GetAllPaging(out totalRow, searchKey, searchTitle, page, countPerPage);
+                var categorys = _bookService.GetAllPaging(out totalRow, searchKey, searchTitle);
 
                 var model = _mapper.Map<List<BookForListDTO>>(categorys);
 
@@ -143,6 +147,19 @@ namespace book_management_api.Controllers
             }
 
             return BadRequest("Get detail book data failed");
+        }
+
+        [HttpGet("new-book-form-data")]
+        public IActionResult GetNewBookFormData()
+        {
+            var result = _bookService.GetFormData();
+
+            if (result == null)
+            {
+                throw new NullResultException(HttpStatusCode.NotAcceptable, "Get new book form data failed! Please check again author / publisher / category!");
+            }
+
+            return Ok(result);
         }
     }
 }

@@ -43,7 +43,7 @@ namespace book_management_api.Controllers
         {
             try
             {
-                var user = await _userService.Authenticate(model.Username, model.Password, model.Email);
+                var user = await _userService.Authenticate(model.Username, model.Password);
 
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes(_appSettings.Secret);

@@ -1,9 +1,8 @@
 import { AxiosResponse } from "axios";
-import { userInfo } from "os";
 import { API_URLS } from "../../constants/api_url";
 import DetailOrderModel from "../../types/models/DetailOrderModel";
 import OrderModel from "../../types/models/OrderModel";
-import axiosPublicClient from "../axios/axiosPublicClient";
+import axiosPrivateClient from "../axios/axiosPrivateClient";
 
 const orderApi = {
   getAllOrder: (userId: string): Promise<AxiosResponse<OrderModel[]>> => {
@@ -14,20 +13,20 @@ const orderApi = {
       },
     };
 
-    return axiosPublicClient.get(url, config);
+    return axiosPrivateClient.get(url, config);
   },
 
-  createOrder: (userId: string): Promise<AxiosResponse<string>> => {
-    const url = API_URLS.ORDER + userId;
+  createOrder: (order: OrderModel): Promise<AxiosResponse<any>> => {
+    const url = API_URLS.ORDER;
 
-    return axiosPublicClient.post(url);
+    return axiosPrivateClient.post(url, order);
   },
 
   getOrderById: (orderId: string) : Promise<AxiosResponse<DetailOrderModel>> => {
     const url = API_URLS.ORDER + orderId;
     console.log(url);
     
-    return axiosPublicClient.get(url);
+    return axiosPrivateClient.get(url);
   }
 };
 

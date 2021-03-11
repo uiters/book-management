@@ -13,7 +13,9 @@
 
     <ItemGroup>
       <PackageReference Include="CloudinaryDotNet" Version="1.14.0" />
+      <PackageReference Include="MailKit" Version="2.10.1" />
       <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+      <PackageReference Include="MimeKit" Version="2.10.1" />
     </ItemGroup>
 
 </Project>

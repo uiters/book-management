@@ -3,11 +3,14 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using book_management_helpers.CustomException;
+using book_management_models.DTOs.OrderDTOs;
 using book_management_services.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace book_management_api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("/api/order/")]
     public class OrderController : ControllerBase
@@ -19,17 +22,22 @@ namespace book_management_api.Controllers
             this._orderService = orderService;
         }
 
-        [HttpPost("{userId}")]
-        public async Task<IActionResult> CreateOrder(Guid userId)
+        [HttpPost("")]
+        public async Task<IActionResult> CreateOrder([FromBody] OrderForCreateDTO order)
         {
-            var result = await _orderService.CreateOrder(userId);
-
-            if (!result)
+            if (!ModelState.IsValid)
             {
-                throw new CreateFailResultException(HttpStatusCode.BadRequest, "Create order failed! Please check again cart items, and try again!");
+                throw new CreateFailResultException(HttpStatusCode.NotAcceptable, "Input DTO validate failed!");
             }
 
-            return Ok("Create order successfull!");
+            var result = await _orderService.CreateOrder(order);
+
+            if (!result.Result)
+            {
+                throw new CreateFailResultException(HttpStatusCode.BadRequest, result.ResultMessage);
+            }
+
+            return Ok(result.NewOrderId);
         }
 
         [HttpGet()]
@@ -39,7 +47,8 @@ namespace book_management_api.Controllers
 
             if (result == null)
             {
-                throw new MyEmptyResultException(HttpStatusCode.BadRequest, "Can't find order! Please try again later!");
+                throw new MyEmptyResultException(HttpStatusCode.BadRequest,
+                    "Can't find order! Please try again later!");
             }
 
             return Ok(result);
@@ -52,7 +61,8 @@ namespace book_management_api.Controllers
 
             if (result == null)
             {
-                throw new NullResultException(HttpStatusCode.NotAcceptable, "Can't find order you requested! Please try again later!");
+                throw new NullResultException(HttpStatusCode.NotAcceptable,
+                    "Can't find order you requested! Please try again later!");
             }
 
             return Ok(result);

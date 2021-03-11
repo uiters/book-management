@@ -1,26 +1,25 @@
 //@ts-ignore
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 //@ts-ignore
 import { useParams } from "react-router-dom";
+//@ts-ignore
+import { useHistory } from "react-router-dom";
 import BookModel from "../../../../types/models/BookModel";
-import BeautyStars from "beauty-stars";
 import bookApi from "../../../../services/api/bookApi";
 import { toastSuccess, toastError } from "../../../../services/toastService";
 import PrevArrow from "../../components/PrevArrow";
 import NextArrow from "../../components/NextArrow";
-import ListBook from "../../components/ListBook";
 import DescriptionEditor from "./components/DescriptionEditor";
 import CommentSection from "./components/CommentSection";
 import AskSection from "./components/AskSection";
 import GeneralInfo from "./components/GeneralInfo";
-import { PATHS } from "../../../../constants/paths";
-import Photo from "../../../../types/models/Photo";
 import CartItemModel from "../../../../types/models/CartItemModel";
 import cartApi from "../../../../services/api/cartApi";
 import User from "../../../../types/models/UserModel";
 import NumberFormat from "react-number-format";
 import DetailBookModel from "../../../../types/models/DetailBookModel";
 import RelatedBooks from "./components/RelatedBooks";
+import { PATHS } from "../../../../constants/paths";
 
 const sliderOptions = {
   dots: false,
@@ -38,6 +37,7 @@ const DetailBookPage = () => {
   let imageUrls: string[] = [];
   const { bookId } = useParams();
   const user: User = JSON.parse(localStorage.getItem("user") || "{}");
+  const history = useHistory();
 
   const [isMounted, setIsMounted] = useState(false);
   const [detailData, setDetailData] = useState<DetailBookModel>({
@@ -82,6 +82,12 @@ const DetailBookPage = () => {
   };
 
   const onAddToCartClick = () => {
+    if (user.id === undefined) {
+      toastError("Please login before adding book to cart!");
+      history.push(PATHS.LOGIN);
+      return;
+    }
+    
     const cartItem: CartItemModel = {
       bookId: bookId,
       userId: user.id,

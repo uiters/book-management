@@ -57,7 +57,7 @@ namespace book_management_services.Implements
 
         public void Delete(Guid id)
         {
-            var category = _categoryRepository.findCategory(id);
+            var category = _categoryRepository.FindCategory(id);
 
             if(category.Books.Count > 0)
             {
