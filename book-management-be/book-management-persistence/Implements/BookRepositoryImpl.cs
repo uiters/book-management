@@ -124,33 +124,53 @@ namespace book_management_persistence.Implements
             return await Context.SaveChangesAsync() > 0;
         }
 
-        public IEnumerable<Book> GetAllByFilter(string searchTitle)
+        public IEnumerable<Book> GetAllBookForSearch(out int totalRow, string searchTitle, string category, string author, string publisher, int page, int pageSize)
         {
-            IEnumerable<Book> lst;
-            //IEnumerable<Book> lst1;
-            //IEnumerable<Book> lst2;
-            //IEnumerable<Book> lst3;
-            //IEnumerable<Book> lst4;
+            page = page - 1;
 
-            lst = Context.Books.Include(x => x.Categories)
-                    .Include(y => y.Author)
-                    .Include(z => z.Publisher).ToList();
+            int skipCount = page * pageSize;
 
-            //if (searchTitle != null)
-            //{
-            //    searchTitle = searchTitle.Trim();
+            IQueryable<Book> _resetSet;
 
-            //    var lst1 = lst.Where(x => x.Title.Contains(searchTitle));
-            //    var lst2 = lst.Where(x => x.Categories.Any(y => y.Name.Contains(searchTitle)));
-            //    var lst3 = lst.Where(x => x.Author.Name.Contains(searchTitle));
-            //    var lst4 = lst.Where(x => x.Publisher.Name.Contains(searchTitle));
+            IQueryable<Book> lstCategory;
+            IQueryable<Book> lstAuthor;
+            IQueryable<Book> lstPublisher;
 
-            //    lst = lst1.Union(lst2).Union(lst3).Union(lst4).Distinct();
-            //}
 
-            //var a = lst.ToList();
+            _resetSet = Context.Books
+                            .Include(x => x.Categories)
+                            .Include(y => y.Author)
+                            .Include(z => z.Publisher);
 
-            return lst;
+            if (!string.IsNullOrEmpty(searchTitle))
+            {
+                searchTitle = searchTitle.Trim();
+                _resetSet = _resetSet
+                    .Where(x => (
+                    (x.Title.Contains(searchTitle))
+                    || (x.Categories.Any(y => y.Name.Contains(searchTitle)))
+                    || (x.Author.Name.Contains(searchTitle))
+                    || (x.Publisher.Name.Contains(searchTitle))
+                    ));
+            }
+
+            
+
+
+            if(!string.IsNullOrEmpty(category) || !string.IsNullOrEmpty(author) || !string.IsNullOrEmpty(publisher))
+            {
+                    lstCategory = _resetSet.Where(x => x.Categories.Any(y => y.Name.Contains(category)));
+                    lstAuthor = _resetSet.Where(x => x.Author.Name.Contains(author));
+                    lstPublisher = _resetSet.Where(x => x.Publisher.Name.Contains(publisher));
+
+                _resetSet = lstCategory.Union(lstAuthor).Union(lstPublisher).Distinct();
+            }
+
+            totalRow = _resetSet.Count();
+
+            _resetSet = skipCount == 0 ? _resetSet.Take(pageSize) : _resetSet.Skip(skipCount).Take(pageSize);
+
+            return _resetSet.AsQueryable();
         }
     }
 }

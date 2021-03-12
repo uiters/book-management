@@ -31,19 +31,19 @@ const Header = () => {
     history.push(PATHS.MAIN)
   };
 
-  const getBookPageBySearchTitle = () => {
-      bookApi
-        .getAllFilter(searchTitle)
-        .then((response) => {
-          console.log(response)
-          setData(response.data)
-        })
-        .catch((error) => {
-          toastError(error.response.data.message)
-        })
-  }
-
   const handleChangeInput = (e : any) => {
+    if (e.key === 'Enter' || e.keyCode === 13) {
+      // Do something
+      OnSearchFunc()
+    }
+    else
+    {
+      setSearchTitle(e.target.value)
+    }
+  }
+  
+
+  const handeEnterPress = (e : any) => {
     if (e.key === 'Enter' || e.keyCode === 13) {
       // Do something
       OnSearchFunc()
@@ -55,11 +55,11 @@ const Header = () => {
   }
 
   const OnSearchFunc = () => {
-
+    history.push(PATHS.BOOK_SEARCH + "?searchTitle=" + searchTitle)
   }
 
   // useEffect(() => {
-  //   getBookPageBySearchTitle();
+  //   OnSearchFunc();
   // }, [searchTitle]);
 
    
@@ -73,7 +73,6 @@ const Header = () => {
           </Link>
         </div>
         
-        <div className="w-5/6">
           {/* <Autocomplete
             freeSolo
             id="free-solo-2-demo"
@@ -90,42 +89,20 @@ const Header = () => {
               />
             )}
           /> */}
-          <input
-            type="text"
-            placeholder="Searh Book by Title, Category, Author..."
-            defaultValue=""
-            className="w-10/12 p-2 rounded-xl outline-none"
-            onChange={handleChangeInput}
-            />
-          <button onClick={OnSearchFunc} className="bg-white">
-            <img src={searchSrc} alt="" />
-          </button>
+          <div className="flex rounded-xl w-3/5 bg-white mx-auto">
+            <input
+              type="text"
+              placeholder="Searh Book by Title, Category, Author..."
+              defaultValue=""
+              className="w-10/12 p-2 outline-none flex-grow rounded-xl pl-5"
+              onChange={handleChangeInput}
+              onKeyUp= {handeEnterPress}
+              />
+            <button onClick={OnSearchFunc} className="bg-white items-right rounded-xl pr-3 outline-none">
+              <img className="outline-none" src={searchSrc} alt="" />
+            </button>
+          </div>
 
-        </div>
-
-        {/* <div className="search_bar flex-grow max-w-xl flex bg-gray-200 rounded-lg px-6 mx-auto">
-          <input
-            type="text"
-            name=""
-            id=""
-            className="w-full outline-none bg-transparent text-lg font-bold"
-            placeholder="Search by author, title, name"
-          />
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            className="w-6 h-6 self-center"
-          >
-            <path
-              fillRule="evenodd"
-              d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-              clipRule="evenodd"
-            />
-          </svg>
-
-          
-        </div> */}
         <div className="buttons flex gap-x-4 items-center justify-center">
           {token !== null && (
             <div className="flex space-x-3 items-center">

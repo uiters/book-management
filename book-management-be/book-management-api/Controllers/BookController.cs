@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using book_management_helpers.Configurations;
 using book_management_helpers.CustomException;
+using book_management_models;
 using book_management_models.DTOs;
 using book_management_models.DTOs.BookDTOs;
 using book_management_services.Services;
@@ -149,19 +150,33 @@ namespace book_management_api.Controllers
             return BadRequest("Get detail book data failed");
         }
 
-        [HttpGet("getall_for_search")]
-        public IActionResult GetAllBookForSearch(string searchTitle)
+        [HttpGet("get_for_search")]
+        public IActionResult GetAllBookForSearch([FromQuery]string searchTitle, string category = null, string author = null, string publisher = null, int page = 1, int countPerPage = 16)
         {
-            var result = _bookService.GetAllBookByFilter(searchTitle);
-
-            var model = _mapper.Map<List<Book>>(result);
-
-            if (result != null)
+            try
             {
-                return Ok(model);
-            }
+                int totalRow = 0;
+                var categorys = _bookService.GetAllForSearch(out totalRow, searchTitle, category, author, publisher, page, countPerPage);
 
-            return BadRequest("Get book data failed");
+                var model = _mapper.Map<List<BookForListDTO>>(categorys);
+
+                var a = totalRow;
+                int totalPage = (int)Math.Ceiling((double)totalRow / countPerPage);
+                var paginationSet = new PaginationSet<BookForListDTO>()
+                {
+                    Items = model,
+                    MaxPage = 5,
+                    Page = page,
+                    TotalCount = totalRow,
+                    TotalPage = totalPage
+                };
+                return Ok(paginationSet);
+
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [HttpGet("new-book-form-data")]

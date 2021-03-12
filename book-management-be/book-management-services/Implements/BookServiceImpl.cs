@@ -168,9 +168,12 @@ namespace book_management_services.Implements
             return lst;
         }
 
-        public IEnumerable<Book> GetAllBookByFilter(string searchTitle)
+
+        public IEnumerable<Book> GetAllForSearch(out int totalRow, string searchTitle, string category, string author, string publisher, int page, int pageSize)
         {
-            return _bookRepository.GetAllByFilter(searchTitle);
+            var lst = _bookRepository.GetAllBookForSearch(out totalRow, searchTitle, category, author, publisher, page, pageSize);
+
+            return lst;
         }
     }
 }

@@ -14,6 +14,6 @@ namespace book_management_persistence.Repositories
         public IEnumerable<Book> GetAllBookPaging(out int totalRow, int searchKey, string searchTitle, int page = 1, int pageSize = 10, string[] include = null);
         Task<bool> UpdateBook(Book book, Guid id);
 
-        IEnumerable<Book> GetAllByFilter(string searchTitle);
+        IEnumerable<Book> GetAllBookForSearch(out int totalRow, string searchTitle, string category, string author, string publisher, int page, int pageSize);
     }
 }

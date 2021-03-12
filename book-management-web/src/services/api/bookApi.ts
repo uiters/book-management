@@ -15,12 +15,25 @@ const bookApi = {
     return axiosPublicClient.get(url);
   },
 
-  getAllFilter: (searchTitle: string) : Promise<AxiosResponse<BookModel[]>> => {
-    const url = API_URLS.BOOK + "/getall_for_search/";
+  getSearchBook: (
+    searchTitle: string,
+    category: string,
+    author: string,
+    publisher: string,    
+    page: number,
+    countPerPage: number
+  ) => {
+    const url = API_URLS.BOOK + "/get_for_search";
+
 
     const config = {
       params: {
         searchTitle: searchTitle,
+        category: category,
+        author: author,
+        publisher: publisher,
+        page: page,
+        countPerPage: countPerPage,
       },
     };
 

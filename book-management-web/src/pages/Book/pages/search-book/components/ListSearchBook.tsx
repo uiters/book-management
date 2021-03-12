@@ -2,6 +2,8 @@
 import { Pagination } from "@material-ui/lab";
 //@ts-ignore
 import React, { useState, useEffect } from "react";
+//@ts-ignore
+import { useParams } from "react-router-dom";
 // import Swal from "sweetalert2";
 // import { PATHS } from "../../constants/paths";
 import bookApi from "../../../../../services/api/bookApi"; 
@@ -18,20 +20,17 @@ type QueryParam = {
 
 const ListSearchBook = (queryParams: QueryParam) => {
     const [books, setBooks] = useState<BookModel[]>([]);
-  
+    const { searchTitle } = useParams();
     const [page, setPage] = useState(1);
     const [totalPage, setTotalPage] = useState(1);
     const [totalCount, setTotalCount] = useState(0);
-    const [searchTitle, setSearchTitle] = useState("");
+    // const [searchTitle, setSearchTitle] = useState("");
     const [searchKey, setSearchKey] = useState(1);
-    const countPerPage = 16;
-    console.log(queryParams.categoryPr);
-    console.log(queryParams.authorPr);
-    console.log(queryParams.publisherPr);
-  
+    const countPerPage = 12;
+
     const getBookPage = () => {
       bookApi
-        .getPagedBook(searchKey, searchTitle, page, countPerPage)
+        .getSearchBook(searchTitle, queryParams.categoryPr, queryParams.authorPr, queryParams.publisherPr, page, countPerPage)
         .then((response) => {
           console.log(response)
           setBooks(response.data.items)
@@ -45,8 +44,9 @@ const ListSearchBook = (queryParams: QueryParam) => {
     }
   
     useEffect(() => {
+      setPage(1)
       getBookPage();
-    }, [page, searchTitle, searchKey]);
+    }, [page, searchTitle, queryParams.categoryPr, queryParams.authorPr, queryParams.publisherPr ]);
   
     const handlePageChange = (event: any, value: number) => {
       console.log(value)
