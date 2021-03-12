@@ -17,8 +17,9 @@ namespace book_management_services.Services
         Task<bool> DeleteBook(Guid bookId);
         IEnumerable<Book> GetAllPaging(out int totalRow, int searchKey, string searchTitle, int page = 1, int pageSize = 10);
         BookForDetailDTO GetDetailBookData(Guid bookId);
-        IEnumerable<Book> GetAllBookByFilter(string searchTitle);
         NewBookFormData GetFormData();
+
+        IEnumerable<Book> GetAllForSearch(out int totalRow, string searchTitle, string category, string author, string publisher, int page, int pageSize);
 
     }
 }
