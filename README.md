@@ -1,4 +1,4 @@
-# DE_assignment Book Management
+# Book Management
 
 
 ## Setup Guide
