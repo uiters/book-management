@@ -10,6 +10,8 @@ export const PATHS = {
   KNOWLEDGE: "/sach-kien-thuc-tong-hop",
   RAISECHILD: "/sach-nuoi-day-con",
 
+  ACCOUNT: "/account",
+
   BOOK_NEW: "/book/new-book",
   BOOK_SEARCH: "/book/search",
   BOOK_DETAIL: "/book/:bookId",

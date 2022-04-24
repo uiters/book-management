@@ -15,6 +15,7 @@ import CartRoutes from "./sub-routes/CartRoutes";
 import CategoryRoutes from "./sub-routes/CategoryRoutes";
 import OrderRoutes from "./sub-routes/OrderRoutes";
 import UserRoutes from "./sub-routes/UserRoutes";
+import AccountRoutes from "./sub-routes/AccountRoutes";
 const HomeRoutes = () => {
   const paths = useMemo(
     () =>

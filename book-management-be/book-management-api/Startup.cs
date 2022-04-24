@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+using System.Security.Authentication;
 using System.Text;
 using System.Threading.Tasks;
 using book_management_helpers;
@@ -83,12 +84,15 @@ namespace book_management_api
                         OnTokenValidated = context =>
                         {
                             var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
-                            var userId = Guid.Parse(context.Principal.Identity.Name);
-                            var user = userService.GetById(userId);
-                            if (user == null)
+                            if (context.Principal?.Identity?.Name != null)
                             {
-                                // return unauthorized if user no longer exists
-                                context.Fail("Unauthorized");
+                                var userId = Guid.Parse(context.Principal?.Identity?.Name);
+                                var user = userService.GetById(userId);
+                                if (user == null)
+                                {
+                                    // return unauthorized if user no longer exists
+                                    context.Fail("Unauthorized");
+                                }
                             }
 
                             return Task.CompletedTask;
@@ -114,7 +118,7 @@ namespace book_management_api
             });
 
 
-            //Cloudiary config
+            //Cloudinary config
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
             
             //Mailkit config
@@ -127,9 +131,19 @@ namespace book_management_api
                 var port = config.GetValue<string>("EmailConfiguration:MailServerPort");
                 var r = new NetworkCredential(config.GetValue<string>("EmailConfiguration:UserId"), config.GetValue<string>("EmailConfiguration:UserPassword"));
 
-                var smtp = new SmtpClient()
+                var smtp = new SmtpClient
                 {
-
+                    SslProtocols = SslProtocols.None,
+                    SslCipherSuitesPolicy = null,
+                    ClientCertificates = null,
+                    CheckCertificateRevocation = false,
+                    ServerCertificateValidationCallback = null,
+                    LocalEndPoint = null,
+                    ProxyClient = null,
+                    Capabilities = SmtpCapabilities.None,
+                    Timeout = 0,
+                    LocalDomain = null,
+                    DeliveryStatusNotificationType = DeliveryStatusNotificationType.Unspecified
                 };
 
                 smtp.ServerCertificateValidationCallback = (s, c, h, e) => true;
@@ -138,7 +152,7 @@ namespace book_management_api
                 return smtp;
             });
 
-            //Repositoríes register
+            // Repositories register
             services.AddScoped<IUnitOfWorks, UnitOfWorks>();
             services.AddScoped<IBookRepository, BookRepositoryImpl>();
             services.AddScoped<ICategoryRepository, CategoryRepositoryImpl>();
@@ -151,7 +165,7 @@ namespace book_management_api
             services.AddScoped<IOrderItemRepository, OrderItemRepositoryImpl>();
             services.AddScoped<IUserRepository, UserRepositoryImpl>();
 
-            //Servies register
+            // Services register
             services.AddScoped<IBookService, BookServiceImpl>();
             services.AddScoped<IUserService, UserServiceImpl>();
             services.AddScoped<ICategoryService, CategoryServiceImpl>();

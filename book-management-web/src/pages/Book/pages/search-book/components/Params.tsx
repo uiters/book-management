@@ -113,7 +113,7 @@ const Params = ({ handleCategoryChange, handleAuthorChange, handlePublisherChang
           <FormLabel>Author</FormLabel>
           <RadioGroup aria-label="gender2" name="gender2" defaultValue={selectAuthor} value={selectAuthor} onChange={handleChangeAuthor}>
             {author?.map((item: any) => (
-              <FormControlLabel key={item.id} value={item?.name} control={<Radio />} label={item?.name} />
+              <FormControlLabel  key={item.id} value={item?.name} control={<Radio />} label={item?.name} />
             ))}
           </RadioGroup>
         </FormControl>

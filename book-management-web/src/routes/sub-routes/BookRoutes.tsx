@@ -9,14 +9,15 @@ import DetailBookPage from "../../pages/Book/pages/detail/DetailBookPage";
 import UpdateBookPage from "../../pages/Book/pages/update-book/UpdateBookPage";
 import BookPage from "../../pages/Book/BookPage";
 import SearchBookPage from "../../pages/Book/pages/search-book/SearchBookPage";
+import AdminGuard from "../AdminGuard";
 const BookRoutes = () => {
   return (
     <Switch>
-      <AuthenticatedGuard
+      <AdminGuard
         exact
         path={PATHS.BOOK_NEW}
         component={NewBookPage}
-      ></AuthenticatedGuard>
+      ></AdminGuard>
       <Route exact path={PATHS.BOOK_SEARCH} component={SearchBookPage}></Route>
       <Route exact path={PATHS.BOOK_DETAIL} component={DetailBookPage}></Route>
       <AuthenticatedGuard

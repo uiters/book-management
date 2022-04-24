@@ -136,7 +136,6 @@ namespace book_management_persistence.Implements
             IQueryable<Book> lstAuthor;
             IQueryable<Book> lstPublisher;
 
-
             _resetSet = Context.Books
                             .Include(x => x.Categories)
                             .Include(y => y.Author)

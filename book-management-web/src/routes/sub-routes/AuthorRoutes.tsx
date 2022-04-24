@@ -18,4 +18,4 @@ const AuthorRoutes = () => {
   );
 };
 
-export default React.memo(AuthorRoutes);
+export default AuthorRoutes;

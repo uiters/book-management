@@ -52,7 +52,7 @@ namespace book_management_test
         [Fact]
         public void GetBookById_ShouldReturnBook()
         {
-            Guid validBookId = new Guid("91651C69-54EB-48F6-D80B-08D8E1E77E1D");
+            Guid validBookId = new Guid("29401939-5730-4D7A-CBD1-08D8E4640ACC");
 
             var result = _bookService.GetBookById(validBookId);
 
@@ -105,14 +105,15 @@ namespace book_management_test
             var rd = new Random();
             BookForCreateDTO validData = new BookForCreateDTO()
             {
-                Title ="Test create book 123" + rd.Next().ToString(),
+                Title ="Test create book 123" + rd.Next(1,10000),
                 AuthorName = "NXB Kim Dong",
                 Description = "ABC",
                 Pages = 123,
                 Price = 120312312,
                 SKU = "123123",
                 PublisherName = "NXB Kim Dong",
-                Photos = new List<IFormFile>()
+                Photos = new List<IFormFile>(),
+                CategoryName = "Sách Học Ngoại Ngữ"
             };
 
             var result = await _bookService.AddNewBook(validData);
@@ -127,6 +128,7 @@ namespace book_management_test
         [Fact]
         public async Task CreateBook_ShouldReturnEmptyGuid()
         {
+            var rd = new Random();
             BookForCreateDTO bookWithTitleCreated = new BookForCreateDTO()
             {
                 Title ="Test create book",
@@ -136,7 +138,8 @@ namespace book_management_test
                 Price = 120312312,
                 SKU = "123123",
                 PublisherName = "NXB Kim Dong",
-                Photos = new List<IFormFile>()
+                Photos = new List<IFormFile>(),
+                CategoryName = "Sách Học Ngoại Ngữ"
             };
             
             var result = await _bookService.AddNewBook(bookWithTitleCreated);
@@ -166,16 +169,18 @@ namespace book_management_test
         [Fact]
         public async Task DeleteBook_ShouldReturnTrue()
         {
+            var rd = new Random();
             BookForCreateDTO validData = new BookForCreateDTO()
             {
-                Title ="Test create book 1",
+                Title ="Test create book 1" + rd.Next(1 , 100000),
                 AuthorName = "NXB Kim Dong",
                 Description = "ABC",
                 Pages = 123,
                 Price = 120312312,
                 SKU = "123123",
                 PublisherName = "NXB Kim Dong",
-                Photos = new List<IFormFile>()
+                Photos = new List<IFormFile>(),
+                CategoryName="Sách Học Ngoại Ngữ"
             };
 
             var newBookId = await _bookService.AddNewBook(validData);

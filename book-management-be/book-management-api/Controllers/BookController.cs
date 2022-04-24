@@ -115,7 +115,8 @@ namespace book_management_api.Controllers
             try
             {
                 int totalRow = 0;
-                var categorys = _bookService.GetAllPaging(out totalRow, searchKey, searchTitle);
+                
+                var categorys = _bookService.GetAllPaging(out totalRow, searchKey, searchTitle, page, countPerPage);
 
                 var model = _mapper.Map<List<BookForListDTO>>(categorys);
 

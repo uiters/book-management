@@ -85,23 +85,23 @@ namespace book_management_services.Implements
                 book.Description = newBook.Description;
                 book.SKU = newBook.SKU;
 
-                var uploadPhotos = await _photoService.UploadPhotos(newBook.Photos);
-                book.Photos = uploadPhotos.ToList();
-                book.ThumbnailUrl = uploadPhotos.ToArray()[0].Url;
+                // var uploadPhotos = await _photoService.UploadPhotos(newBook.Photos);
+                // book.Photos = uploadPhotos.ToList();
+                // book.ThumbnailUrl = uploadPhotos.ToArray()[0].Url;
 
-                // if (newBook.Photos.Any())
-                // {
-                //     var uploadPhotos = await _photoService.UploadPhotos(newBook.Photos);
-                //     book.Photos = uploadPhotos.ToList();
-                //     book.ThumbnailUrl = uploadPhotos.ToArray()[0].Url;
-                // }
+                if (newBook.Photos.Any())
+                {
+                    var uploadPhotos = await _photoService.UploadPhotos(newBook.Photos);
+                    book.Photos = uploadPhotos.ToList();
+                    book.ThumbnailUrl = uploadPhotos.ToArray()[0].Url;
+                }
 
                 var result = await _bookRepository.InsertAsync(book);
                 _bookRepository.SaveChange();
                 return book.Id;
             }
 
-            return new Guid("string");
+            return new Guid();
         }
 
 
