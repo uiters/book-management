@@ -20,7 +20,7 @@ namespace book_management_api.Controllers
     [Route("/api/publisher/")]
     public class PublisherController : ControllerBase
     {
-        private IPublisherService _publisherService;
+        private readonly IPublisherService _publisherService;
         private readonly IMapper _mapper;
 
         public PublisherController(IPublisherService publisherService, IMapper mapper)
@@ -61,7 +61,7 @@ namespace book_management_api.Controllers
             return Ok(model);
         }
 
-        [HttpGet("getbyid/{id}")]
+        [HttpGet("getbyid/{id:guid}")]
         public IActionResult GetById(Guid id)
         {
             var publisher = _publisherService.GetById(id);

@@ -8,7 +8,7 @@ namespace book_management_api.Controllers
     [Route("/api/cart/")]
     public class CartController : ControllerBase
     {
-        private ICartService _cartService;
+        private readonly ICartService _cartService;
 
         public CartController(ICartService cartService)
         {
@@ -20,12 +20,7 @@ namespace book_management_api.Controllers
         {
             var result = _cartService.GetCartByUserId(userId);
 
-            if (result != null)
-            {
-                return Ok(result);
-            }
-
-            return Ok("Get cart failed!");
+            return result != null ? Ok(result) : Ok("Get cart failed!");
         }
     }
 }

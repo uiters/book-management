@@ -10,7 +10,7 @@ namespace book_management_api.Controllers
     [Route("/api/cart-item/")]
     public class CartItemController : ControllerBase
     {
-        private ICartItemService _cartItemService;
+        private readonly ICartItemService _cartItemService;
 
         public CartItemController(ICartItemService cartItemService)
         {
@@ -30,7 +30,7 @@ namespace book_management_api.Controllers
             return Ok("Add cart item failed! Please try again!");
         }
 
-        [HttpDelete("{itemId}")]
+        [HttpDelete("{itemId:guid}")]
         public async Task<IActionResult> DeleteCartItem(Guid itemId)
         {
             var result = await _cartItemService.DeleteCartItem(itemId);

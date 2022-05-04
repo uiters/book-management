@@ -114,14 +114,12 @@ namespace book_management_api.Controllers
         {
             try
             {
-                int totalRow = 0;
-                
-                var categorys = _bookService.GetAllPaging(out totalRow, searchKey, searchTitle, page, countPerPage);
+                var categories = _bookService.GetAllPaging(out var totalRow, searchKey, searchTitle, page, countPerPage);
 
-                var model = _mapper.Map<List<BookForListDTO>>(categorys);
+                var model = _mapper.Map<List<BookForListDTO>>(categories);
 
                 var a = totalRow;
-                int totalPage = (int)Math.Ceiling((double)totalRow / countPerPage);
+                var totalPage = (int)Math.Ceiling((double)totalRow / countPerPage);
                 var paginationSet = new PaginationSet<BookForListDTO>()
                 {
                     Items = model,
@@ -131,7 +129,6 @@ namespace book_management_api.Controllers
                     TotalPage = totalPage
                 };
                 return Ok(paginationSet);
-
             }
             catch (AppException ex)
             {
@@ -156,13 +153,12 @@ namespace book_management_api.Controllers
         {
             try
             {
-                int totalRow = 0;
-                var categorys = _bookService.GetAllForSearch(out totalRow, searchTitle, category, author, publisher, page, countPerPage);
+                var categories = _bookService.GetAllForSearch(out var totalRow, searchTitle, category, author, publisher, page, countPerPage);
 
-                var model = _mapper.Map<List<BookForListDTO>>(categorys);
+                var model = _mapper.Map<List<BookForListDTO>>(categories);
 
                 var a = totalRow;
-                int totalPage = (int)Math.Ceiling((double)totalRow / countPerPage);
+                var totalPage = (int)Math.Ceiling((double)totalRow / countPerPage);
                 var paginationSet = new PaginationSet<BookForListDTO>()
                 {
                     Items = model,

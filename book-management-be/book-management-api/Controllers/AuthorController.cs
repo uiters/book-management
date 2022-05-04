@@ -20,7 +20,7 @@ namespace book_management_api.Controllers
     [Route("/api/author/")]
     public class AuthorController : ControllerBase
     {
-        private IAuthorService _authorService;
+        private readonly IAuthorService _authorService;
         private readonly IMapper _mapper;
 
         public AuthorController(IAuthorService authorService, IMapper mapper)

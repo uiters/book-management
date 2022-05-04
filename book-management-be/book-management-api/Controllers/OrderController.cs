@@ -15,7 +15,7 @@ namespace book_management_api.Controllers
     [Route("/api/order/")]
     public class OrderController : ControllerBase
     {
-        private IOrderService _orderService;
+        private readonly IOrderService _orderService;
 
         public OrderController(IOrderService orderService)
         {

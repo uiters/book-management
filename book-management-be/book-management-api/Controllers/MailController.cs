@@ -11,7 +11,7 @@ namespace book_management_api.Controllers
     [Route("/api/mail/")]
     public class MailController : ControllerBase
     {
-        private IEmailService _mailService;
+        private readonly IEmailService _mailService;
 
         public MailController(IEmailService mailService)
         {

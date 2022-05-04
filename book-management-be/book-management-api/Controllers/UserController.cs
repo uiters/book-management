@@ -23,8 +23,8 @@ namespace book_management_api.Controllers
     [Route("api/users")]
     public class UsersController : ControllerBase
     {
-        private IUserService _userService;
-        private IMapper _mapper;
+        private readonly IUserService _userService;
+        private readonly IMapper _mapper;
         private readonly AppSettings _appSettings;
 
         public UsersController(
@@ -107,7 +107,7 @@ namespace book_management_api.Controllers
             return Ok(model);
         }
 
-        [HttpGet("getbyid/{id}")]
+        [HttpGet("getbyid/{id:guid}")]
         public IActionResult GetById(Guid id)
         {
             var user = _userService.GetById(id);
@@ -135,7 +135,7 @@ namespace book_management_api.Controllers
             }
         }
 
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("delete/{id:guid}")]
         public IActionResult Delete(Guid id)
         {
             try
@@ -155,10 +155,9 @@ namespace book_management_api.Controllers
         {
             try
             {
-                int totalRow = 0;
-                var categorys = _userService.GetAllPaging(out totalRow, searchKey, searchTitle, page, countPerPage);
+                var categories = _userService.GetAllPaging(out var totalRow, searchKey, searchTitle, page, countPerPage);
 
-                var model = _mapper.Map<List<UserModel>>(categorys);
+                var model = _mapper.Map<List<UserModel>>(categories);
 
                 var a = totalRow;
                 int totalPage = (int)Math.Ceiling((double)totalRow / countPerPage);

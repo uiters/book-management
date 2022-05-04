@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "book-management-persistence
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "book-management-test", "book-management-test\book-management-test.csproj", "{9912622C-CE20-4482-9C1C-4C081512B891}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "book-management-identity", "book-management-identity\book-management-identity.csproj", "{5BD644CF-9F73-43FF-8BDC-9615A5A41B71}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{9912622C-CE20-4482-9C1C-4C081512B891}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9912622C-CE20-4482-9C1C-4C081512B891}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9912622C-CE20-4482-9C1C-4C081512B891}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BD644CF-9F73-43FF-8BDC-9615A5A41B71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BD644CF-9F73-43FF-8BDC-9615A5A41B71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BD644CF-9F73-43FF-8BDC-9615A5A41B71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BD644CF-9F73-43FF-8BDC-9615A5A41B71}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

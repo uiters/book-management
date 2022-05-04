@@ -10,7 +10,6 @@ using book_management_persistence.Implements;
 using book_management_persistence.Repositories;
 using book_management_services.Implements;
 using book_management_services.Services;
-using MailKit;
 using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -37,7 +36,7 @@ namespace book_management_api
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -56,7 +55,7 @@ namespace book_management_api
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "book_management_api", Version = "v1"});
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "book_management_api", Version = "v1" });
             });
 
             services.AddDbContext<AppDbContext>(options =>
@@ -116,20 +115,20 @@ namespace book_management_api
                     .AllowAnyMethod()
                     .AllowAnyHeader());
             });
-
-
+            
             //Cloudinary config
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
-            
+
             //Mailkit config
             services.Configure<EmailConfiguration>(Configuration.GetSection("EmailConfiguration"));
-            
+
             services.AddSingleton<SmtpClient>((serviceProvider) =>
             {
                 var config = serviceProvider.GetRequiredService<IConfiguration>();
                 var host = config.GetValue<string>("EmailConfiguration:MailServerAddress");
                 var port = config.GetValue<string>("EmailConfiguration:MailServerPort");
-                var r = new NetworkCredential(config.GetValue<string>("EmailConfiguration:UserId"), config.GetValue<string>("EmailConfiguration:UserPassword"));
+                var r = new NetworkCredential(config.GetValue<string>("EmailConfiguration:UserId"),
+                    config.GetValue<string>("EmailConfiguration:UserPassword"));
 
                 var smtp = new SmtpClient
                 {

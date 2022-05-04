@@ -21,7 +21,7 @@ namespace book_management_api.Controllers
     [Route("/api/category/")]
     public class CategoryController : ControllerBase
     {
-        private ICategoryService _categoryService;
+        private readonly ICategoryService _categoryService;
         private readonly IMapper _mapper;
 
         public CategoryController(ICategoryService categoryService, IMapper mapper)
@@ -35,7 +35,7 @@ namespace book_management_api.Controllers
         {
             var result = _categoryService.GetAllCategory();
 
-            if (result.Count() < 1)
+            if (!result.Any())
             {
                 throw new MyEmptyResultException(HttpStatusCode.NotAcceptable, "Cant find category");
             }
@@ -65,8 +65,8 @@ namespace book_management_api.Controllers
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
-            var categorys = _categoryService.GetAll();
-            var model = _mapper.Map<List<CategoryViewModel>>(categorys);
+            var categories = _categoryService.GetAll();
+            var model = _mapper.Map<List<CategoryViewModel>>(categories);
             if (model.Count == 0)
             {
                 throw new MyEmptyResultException(HttpStatusCode.NotAcceptable, "Can't find Category in database!");
@@ -103,7 +103,7 @@ namespace book_management_api.Controllers
             }
         }
 
-        [HttpGet("getbyid/{id}")]
+        [HttpGet("getbyid/{id:guid}")]
         public IActionResult GetById(Guid id)
         {
             var category = _categoryService.GetById(id);
@@ -127,7 +127,7 @@ namespace book_management_api.Controllers
             return Ok(model);
         }
 
-        [HttpPut("update/{id}")]
+        [HttpPut("update/{id:guid}")]
         public IActionResult Update(Guid id, [FromBody] CategoryModel model)
         {
             // map model to entity and set id
@@ -148,7 +148,7 @@ namespace book_management_api.Controllers
             }
         }
 
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("delete/{id:guid}")]
         public IActionResult Delete(Guid id)
         {
             try
